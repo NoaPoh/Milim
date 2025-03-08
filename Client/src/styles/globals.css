@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes popOffTop {
+    0% {
+        transform: translateY(0) scaleY(-1);
+    }
+    50% {
+        transform: translateY(-50px) scaleY(-1);
+    }
+    100% {
+        transform: translateY(0) scaleY(-1);
+    }
+}
+
+.pop-off-top {
+    animation: popOffTop 5s ease-in-out infinite;
+}
+
+@keyframes popOffTop {
+    0% {
+        transform: translateY(0) scaleY(-1);
+    }
+    50% {
+        transform: translateY(-50px) scaleY(-1);
+    }
+    100% {
+        transform: translateY(0) scaleY(-1);
+    }
+}
+
+.pop-off-top {
+    animation: popOffTop 5s ease-in-out infinite;
+}
