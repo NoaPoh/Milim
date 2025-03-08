@@ -1,28 +1,22 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Register from "./pages/Register";
-// import Login from "./pages/Login";
-// import Categories from "./pages/Categories";
-import Camera from "./pages/Camera";
-// import Game from "./pages/Game";
-// import Profile from "./pages/Profile";
-// import NotFound from "./pages/NotFound";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Register from "./pages/Register/Register";
+import Home from "./pages/Home/Home";
+import Camera from "./pages/Camera";
+import Login from "./components/Login";
 
-const App: React.FC = () => {
+const App = () => {
+    const location = useLocation();
+
     return (
-        <div className="min-h-screen bg-gray-100 text-gray-900">
-            <Navbar />
+        <div className="min-h-screen bg-[#FBF3DF] text-gray-900">
+            {location.pathname !== "/register" && <Navbar/>}
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/register" element={<Register />} />
-                {/*<Route path="/login" element={<Login />} />*/}
-                {/*<Route path="/categories" element={<Categories />} />*/}
-                <Route path="/camera" element={<Camera />} />
-                {/*<Route path="/game" element={<Game />} />*/}
-                {/*<Route path="/profile" element={<Profile />} />*/}
-                {/*<Route path="*" element={<NotFound />} />*/}
+                <Route path="/" element={<Home/>}/>
+                <Route path="/register" element={<Register/>}/>
+                <Route path="/camera" element={<Camera/>}/>
+                <Route path="/login" element={<Login/>}/>
             </Routes>
         </div>
     );
