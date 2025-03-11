@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Register from "./pages/Register/Register";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
+import Camera from "./pages/Camera";
 
 const App = () => {
     const location = useLocation();
@@ -15,6 +16,7 @@ const App = () => {
                 <Route path="/" element={<Home/>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/login" element={<Login/>}/>
+                <Route path="/camera" element={<Camera/>}/>
             </Routes>
         </div>
     );
