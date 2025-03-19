@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
+import React, { useState } from "react";
 import "./Register.scss"; // Regular SCSS import
 
 
 const spiritAnimals = ["🐻", "🦊", "🐸", "🦉", "🐬"];
 
 const Register = () => {
-    const { register } = useAuth();
+    // const { register } = useAuth();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,14 +16,14 @@ const Register = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        register.mutate({
-            username,
-            email,
-            password,
-            nativeLanguage,
-            learningLanguage,
-            spiritAnimal
-        });
+        // register.mutate({
+        //     username,
+        //     email,
+        //     password,
+        //     nativeLanguage,
+        //     learningLanguage,
+        //     spiritAnimal
+        // });
     };
 
     return (
@@ -103,12 +102,12 @@ const Register = () => {
                 <button
                     type="submit"
                     className="bg-blue-500 text-white p-3 rounded-full hover:bg-blue-600 transition-all font-semibold"
-                    disabled={register.isPending}
+                    // disabled={register.isPending}
                 >
-                    {register.isPending ? "Registering..." : "Let's do it!"}
+                    {/* {register.isPending ? "Registering..." : "Let's do it!"} */}
                 </button>
 
-                {register.isError && <p className="text-red-500 text-center">Error: {register.error.message}</p>}
+                {/* {register.isError && <p className="text-red-500 text-center">Error: {register.error.message}</p>} */}
             </form>
         </div>
     );

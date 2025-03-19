@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useUserDetails from "../../hooks/useUserDetails";
 
 // רשימת קטגוריות לדוגמה
 const categories = [
@@ -12,7 +11,13 @@ const categories = [
 ];
 
 const Home: React.FC = () => {
-    const userDetails = useUserDetails();
+    // const userDetails = useUserDetails();
+
+    const userDetails = {
+        username: "John Doe",
+        spiritAnimal: "/assets/images/giraffe.svg",
+    };
+
     return (
         <div className="flex flex-col flex-grow bg-[#FBF3DF] px-4 pt-10">
             {/* User Greeting */}
