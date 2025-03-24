@@ -1,12 +1,25 @@
 import React, { useState, useRef } from 'react';
+import * as cocoSsd from '@tensorflow-models/coco-ssd';
+import '@tensorflow/tfjs';
 
 export default function Camera() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [photo, setPhoto] = useState<string | null>(null);
+  const [predictions, setPredictions] = useState<cocoSsd.DetectedObject[]>([]);
+  const [isWebcamStarted, setIsWebcamStarted] = useState(false);
 
   const startCamera = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    if (videoRef.current) videoRef.current.srcObject = stream;
+    try {
+      setIsWebcamStarted(true);
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    } catch (error) {
+      setIsWebcamStarted(false);
+      console.error('Error accessing webcam:', error);
+    }
   };
 
   const takePhoto = () => {
@@ -16,13 +29,27 @@ export default function Camera() {
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       canvas.getContext('2d')?.drawImage(video, 0, 0);
-      setPhoto(canvas.toDataURL('image/png'));
+      const dataUrl = canvas.toDataURL('image/png');
+      setPhoto(dataUrl);
     }
   };
 
-  const retakePhoto = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const retakePhoto = () => {
     setPhoto(null);
     startCamera();
+  };
+
+  const predictObject = async () => {
+    if (!photo) return;
+
+    const model = await cocoSsd.load();
+
+    const img = new Image();
+    img.src = photo;
+    img.onload = async () => {
+      const predictions = await model.detect(img);
+      setPredictions(predictions);
+    };
   };
 
   return (
@@ -30,7 +57,12 @@ export default function Camera() {
       <h1 className="text-2xl font-bold mb-4">Take a Photo</h1>
       {!photo ? (
         <>
-          <video ref={videoRef} autoPlay className="h-64 bg-black"></video>
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            className="relative h-64 bg-black"
+          ></video>
           <button
             className="bg-blue-500 text-white px-4 py-2 mt-4"
             onClick={startCamera}
@@ -48,11 +80,30 @@ export default function Camera() {
         <>
           <img src={photo} alt="Captured" className="h-64" />
           <button
+            className="bg-yellow-500 text-white px-4 py-2 mt-2"
+            onClick={predictObject}
+          >
+            Predict 🔍
+          </button>
+          <button
             className="bg-red-500 text-white px-4 py-2 mt-2"
             onClick={retakePhoto}
           >
             Retake 🔄
           </button>
+
+          {predictions.length > 0 && (
+            <div className="mt-4">
+              <h2 className="text-xl font-semibold">Predictions:</h2>
+              <ul>
+                {predictions.map((pred, index) => (
+                  <li key={index}>
+                    {pred.class} - {Math.round(pred.score * 100)}%
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </>
       )}
     </div>
