@@ -22,7 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": [
-    "Milim/src"
-  ]
+  "include": ["Milim/src"]
 }
