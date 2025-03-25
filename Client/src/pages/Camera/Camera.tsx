@@ -7,6 +7,7 @@ export default function Camera() {
   const [photo, setPhoto] = useState<string | null>(null);
   const [predictions, setPredictions] = useState<cocoSsd.DetectedObject[]>([]);
   const [isWebcamStarted, setIsWebcamStarted] = useState(false);
+  const [predictionLoading, setPredictionLoading] = useState<boolean>(false);
 
   const startCamera = async () => {
     try {
@@ -42,13 +43,17 @@ export default function Camera() {
   const predictObject = async () => {
     if (!photo) return;
 
+    setPredictionLoading(true);
+
     const model = await cocoSsd.load();
 
     const img = new Image();
     img.src = photo;
     img.onload = async () => {
       const predictions = await model.detect(img);
+      console.log('Predictions:', predictions);
       setPredictions(predictions);
+      setPredictionLoading(false);
     };
   };
 
@@ -79,12 +84,16 @@ export default function Camera() {
       ) : (
         <>
           <img src={photo} alt="Captured" className="h-64" />
-          <button
-            className="bg-yellow-500 text-white px-4 py-2 mt-2"
-            onClick={predictObject}
-          >
-            Predict 🔍
-          </button>
+          {predictionLoading ? (
+            <p>Loading</p>
+          ) : (
+            <button
+              className="bg-yellow-500 text-white px-4 py-2 mt-2"
+              onClick={predictObject}
+            >
+              Predict 🔍
+            </button>
+          )}
           <button
             className="bg-red-500 text-white px-4 py-2 mt-2"
             onClick={retakePhoto}
@@ -92,7 +101,7 @@ export default function Camera() {
             Retake 🔄
           </button>
 
-          {predictions.length > 0 && (
+          {!predictionLoading && predictions.length > 0 && (
             <div className="mt-4">
               <h2 className="text-xl font-semibold">Predictions:</h2>
               <ul>
