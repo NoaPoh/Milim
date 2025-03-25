@@ -10,7 +10,10 @@
     "test": "echo \"No tests yet\" && exit 0"
   },
   "dependencies": {
+    "@google-cloud/translate": "^5.0.0",
     "@google-cloud/vision": "^3.0.0",
+    "@tensorflow-models/coco-ssd": "^2.2.3",
+    "@tensorflow/tfjs": "^4.22.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
@@ -18,8 +21,7 @@
     "firebase-admin": "^11.0.0",
     "google-translate": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
-    "uuid": "^8.3.2",
-    "@google-cloud/translate": "^5.0.0"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

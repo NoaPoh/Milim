@@ -1,5 +1,5 @@
-@import "../../styles/variables";
-@import "../../styles/mixins";
+@import '../../styles/variables';
+@import '../../styles/mixins';
 
 .register {
   display: flex;
@@ -88,7 +88,8 @@
   }
 }
 
-input, select {
+input,
+select {
   color: #1a1a1a;
-background-color: $inputs;
+  background-color: $inputs;
 }
