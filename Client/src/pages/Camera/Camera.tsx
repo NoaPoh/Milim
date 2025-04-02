@@ -60,7 +60,6 @@ export default function Camera() {
   const predictObject = async () => {
     if (!photo) return;
     setPredictionLoading(true);
-    console.log('Loading model...');
 
     const model = await cocoSsd.load();
     const img = new Image();
@@ -68,7 +67,16 @@ export default function Camera() {
     img.onload = async () => {
       const predictions = await model.detect(img);
       console.log('Predictions:', predictions);
-      setPredictions(predictions);
+
+      const filteredPredictions = predictions.filter(
+        (pred) => pred.score >= 0.6
+      );
+
+      const highestPrediction = filteredPredictions.reduce((prev, current) =>
+        prev.score > current.score ? prev : current
+      );
+
+      setPredictions([highestPrediction]);
       setPredictionLoading(false);
     };
   };
@@ -98,14 +106,10 @@ export default function Camera() {
 
           {!predictionLoading && predictions.length > 0 && (
             <div className="predictions-container">
-              <h2 className="predictions-title">Predictions:</h2>
-              <ul>
-                {predictions.map((pred, index) => (
-                  <li key={index} className="prediction-item">
-                    {pred.class} - {Math.round(pred.score * 100)}%
-                  </li>
-                ))}
-              </ul>
+              <>
+                <p className="prediction-item">{predictions[0].class}</p>
+                <p className="prediction-translation">תרגום</p>
+              </>
             </div>
           )}
         </>
