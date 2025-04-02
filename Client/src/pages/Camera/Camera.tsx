@@ -1,27 +1,44 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import * as cocoSsd from '@tensorflow-models/coco-ssd';
 import '@tensorflow/tfjs';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowsRotate, faCamera } from '@fortawesome/free-solid-svg-icons';
+import '../../styles/Camera.scss';
 
 export default function Camera() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [photo, setPhoto] = useState<string | null>(null);
   const [predictions, setPredictions] = useState<cocoSsd.DetectedObject[]>([]);
-  const [isWebcamStarted, setIsWebcamStarted] = useState(false);
   const [predictionLoading, setPredictionLoading] = useState<boolean>(false);
+  const streamRef = useRef<MediaStream | null>(null);
 
   const startCamera = async () => {
     try {
-      setIsWebcamStarted(true);
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
+      streamRef.current = stream;
     } catch (error) {
-      setIsWebcamStarted(false);
       console.error('Error accessing webcam:', error);
     }
   };
+
+  useEffect(() => {
+    startCamera();
+
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (photo) {
+      predictObject();
+    }
+  }, [photo]);
 
   const takePhoto = () => {
     const video = videoRef.current;
@@ -42,11 +59,10 @@ export default function Camera() {
 
   const predictObject = async () => {
     if (!photo) return;
-
     setPredictionLoading(true);
+    console.log('Loading model...');
 
     const model = await cocoSsd.load();
-
     const img = new Image();
     img.src = photo;
     img.onload = async () => {
@@ -58,55 +74,34 @@ export default function Camera() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">Take a Photo</h1>
+    <div className="photo-capture-container">
+      <h1 className="title">Take a Photo</h1>
       {!photo ? (
         <>
           <video
             ref={videoRef}
             autoPlay
             muted
-            className="relative h-64 bg-black"
+            className="video-preview"
           ></video>
-          <button
-            className="bg-blue-500 text-white px-4 py-2 mt-4"
-            onClick={startCamera}
-          >
-            Start Camera
-          </button>
-          <button
-            className="bg-green-500 text-white px-4 py-2 mt-2"
-            onClick={takePhoto}
-          >
-            Capture 📸
+          <button className="button" onClick={takePhoto}>
+            <FontAwesomeIcon icon={faCamera} className="icon" />
           </button>
         </>
       ) : (
         <>
-          <img src={photo} alt="Captured" className="h-64" />
-          {predictionLoading ? (
-            <p>Loading</p>
-          ) : (
-            <button
-              className="bg-yellow-500 text-white px-4 py-2 mt-2"
-              onClick={predictObject}
-            >
-              Predict 🔍
-            </button>
-          )}
-          <button
-            className="bg-red-500 text-white px-4 py-2 mt-2"
-            onClick={retakePhoto}
-          >
-            Retake 🔄
+          <img src={photo} alt="Captured" className="captured-photo" />
+          <button className="button" onClick={retakePhoto}>
+            <FontAwesomeIcon icon={faArrowsRotate} className="icon" />{' '}
           </button>
+          {predictionLoading && <div className="loading-spinner" />}
 
           {!predictionLoading && predictions.length > 0 && (
-            <div className="mt-4">
-              <h2 className="text-xl font-semibold">Predictions:</h2>
+            <div className="predictions-container">
+              <h2 className="predictions-title">Predictions:</h2>
               <ul>
                 {predictions.map((pred, index) => (
-                  <li key={index}>
+                  <li key={index} className="prediction-item">
                     {pred.class} - {Math.round(pred.score * 100)}%
                   </li>
                 ))}
