@@ -12,15 +12,23 @@
     font-weight: bold;
     margin-bottom: 1rem;
   }
+  .error-message {
+    color: red;
+    font-size: 16px;
+    margin-top: 10px;
+    text-align: center;
+  }
 
   .video-preview {
     position: relative;
     height: 16rem;
     background-color: black;
+    margin-top: 1rem;
   }
 
   .captured-photo {
     height: 16rem;
+    margin-top: 1rem;
   }
 
   .btn {
@@ -90,6 +98,10 @@
     .icon {
       font-size: 2rem;
       color: white;
+    }
+
+    &:disabled {
+      background-color: #cccccc6b;
     }
   }
 

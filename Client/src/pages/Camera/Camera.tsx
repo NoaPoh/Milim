@@ -10,6 +10,8 @@ export default function Camera() {
   const [photo, setPhoto] = useState<string | null>(null);
   const [predictions, setPredictions] = useState<cocoSsd.DetectedObject[]>([]);
   const [predictionLoading, setPredictionLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [disabledCamera, setDisabledCamera] = useState<boolean>(false);
   const streamRef = useRef<MediaStream | null>(null);
 
   const startCamera = async () => {
@@ -21,6 +23,14 @@ export default function Camera() {
       streamRef.current = stream;
     } catch (error) {
       console.error('Error accessing webcam:', error);
+      setDisabledCamera(true);
+      if (error.name === 'NotAllowedError') {
+        setErrorMessage(
+          'Permission denied. Please allow access to your webcam.'
+        );
+      } else {
+        setErrorMessage('Error accessing webcam. Please try again.');
+      }
     }
   };
 
@@ -54,36 +64,49 @@ export default function Camera() {
 
   const retakePhoto = () => {
     setPhoto(null);
+    setErrorMessage(null);
     startCamera();
   };
 
   const predictObject = async () => {
     if (!photo) return;
     setPredictionLoading(true);
+    setErrorMessage(null);
 
-    const model = await cocoSsd.load();
-    const img = new Image();
-    img.src = photo;
-    img.onload = async () => {
-      const predictions = await model.detect(img);
-      console.log('Predictions:', predictions);
+    try {
+      const model = await cocoSsd.load();
+      const img = new Image();
+      img.src = photo;
+      img.onload = async () => {
+        const predictions = await model.detect(img);
+        console.log('Predictions:', predictions);
 
-      const filteredPredictions = predictions.filter(
-        (pred) => pred.score >= 0.6
-      );
+        const filteredPredictions = predictions.filter(
+          (pred) => pred.score >= 0.6
+        );
 
-      const highestPrediction = filteredPredictions.reduce((prev, current) =>
-        prev.score > current.score ? prev : current
-      );
+        if (filteredPredictions.length === 0) {
+          setErrorMessage('No objects detected with high confidence.');
+        } else {
+          const highestPrediction = filteredPredictions.reduce(
+            (prev, current) => (prev.score > current.score ? prev : current)
+          );
 
-      setPredictions([highestPrediction]);
+          setPredictions([highestPrediction]);
+        }
+        setPredictionLoading(false);
+      };
+    } catch (error) {
+      setErrorMessage('Prediction failed. Please try again.');
       setPredictionLoading(false);
-    };
+    }
   };
 
   return (
     <div className="photo-capture-container">
       <h1 className="title">Take a Photo</h1>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
+
       {!photo ? (
         <>
           <video
@@ -92,7 +115,11 @@ export default function Camera() {
             muted
             className="video-preview"
           ></video>
-          <button className="button" onClick={takePhoto}>
+          <button
+            className="button"
+            disabled={disabledCamera}
+            onClick={takePhoto}
+          >
             <FontAwesomeIcon icon={faCamera} className="icon" />
           </button>
         </>
@@ -112,6 +139,7 @@ export default function Camera() {
               </>
             </div>
           )}
+          {/* {errorMessage && <p className="error-message">{errorMessage}</p>} */}
         </>
       )}
     </div>
