@@ -13,6 +13,9 @@ export default function Camera() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [disabledCamera, setDisabledCamera] = useState<boolean>(false);
   const streamRef = useRef<MediaStream | null>(null);
+  const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const objectVisibleSinceRef = useRef<number | null>(null);
+  const modelRef = useRef<cocoSsd.ObjectDetection | null>(null);
 
   const startCamera = async () => {
     try {
@@ -21,6 +24,13 @@ export default function Camera() {
         videoRef.current.srcObject = stream;
       }
       streamRef.current = stream;
+
+      // Load model if not already loaded
+      if (!modelRef.current) {
+        modelRef.current = await cocoSsd.load();
+      }
+
+      startDetectionLoop(); // Start detecting after camera is on
     } catch (error) {
       console.error('Error accessing webcam:', error);
       setDisabledCamera(true);
@@ -59,7 +69,38 @@ export default function Camera() {
       canvas.getContext('2d')?.drawImage(video, 0, 0);
       const dataUrl = canvas.toDataURL('image/png');
       setPhoto(dataUrl);
+
+      // Stop detection loop
+      if (detectionIntervalRef.current) {
+        clearInterval(detectionIntervalRef.current);
+      }
+      objectVisibleSinceRef.current = null;
     }
+  };
+
+  const startDetectionLoop = () => {
+    detectionIntervalRef.current = setInterval(async () => {
+      if (!videoRef.current || !modelRef.current) return;
+
+      const video = videoRef.current;
+      const model = modelRef.current;
+
+      const predictions = await model.detect(video);
+      const visibleObject = predictions.find((pred) => pred.score >= 0.6);
+
+      if (visibleObject) {
+        const now = Date.now();
+
+        if (!objectVisibleSinceRef.current) {
+          objectVisibleSinceRef.current = now;
+        } else if (now - objectVisibleSinceRef.current >= 2000) {
+          clearInterval(detectionIntervalRef.current!);
+          takePhoto(); // Auto take photo
+        }
+      } else {
+        objectVisibleSinceRef.current = null; // Reset timer if object disappears
+      }
+    }, 300); // Run detection every 300ms
   };
 
   const retakePhoto = () => {
@@ -104,7 +145,6 @@ export default function Camera() {
 
   return (
     <div className="photo-capture-container">
-      <h1 className="title">Take a Photo</h1>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       {!photo ? (
@@ -115,13 +155,6 @@ export default function Camera() {
             muted
             className="video-preview"
           ></video>
-          <button
-            className="button"
-            disabled={disabledCamera}
-            onClick={takePhoto}
-          >
-            <FontAwesomeIcon icon={faCamera} className="icon" />
-          </button>
         </>
       ) : (
         <>
@@ -139,7 +172,6 @@ export default function Camera() {
               </>
             </div>
           )}
-          {/* {errorMessage && <p className="error-message">{errorMessage}</p>} */}
         </>
       )}
     </div>
