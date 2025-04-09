@@ -3,7 +3,8 @@ import * as cocoSsd from '@tensorflow-models/coco-ssd';
 import '@tensorflow/tfjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate, faCamera } from '@fortawesome/free-solid-svg-icons';
-import '../../styles/Camera.scss';
+import './Camera.scss';
+import SpeakerButton from '../../components/SpeakerButton';
 
 export default function Camera() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -166,10 +167,11 @@ export default function Camera() {
 
           {!predictionLoading && predictions.length > 0 && (
             <div className="predictions-container">
-              <>
-                <p className="prediction-item">{predictions[0].class}</p>
-                <p className="prediction-translation">תרגום</p>
-              </>
+              <div className="predictions-container">
+                {/* <p> className="prediction-item" */}
+                <p>{predictions[0].class}</p>
+                <SpeakerButton text={predictions[0].class}></SpeakerButton>
+              </div>
             </div>
           )}
         </>
