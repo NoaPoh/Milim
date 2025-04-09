@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ObjectsCategories } from '../../consts/routes';
+import { ObjectsCategoriesRoutesValues } from '../../consts/routes';
 
 // רשימת קטגוריות לדוגמה
 const categories = [
-  { name: 'AIRPORT', icon: '✈️', path: ObjectsCategories.AIRPORT },
-  { name: 'SCHOOL', icon: '🏫', path: ObjectsCategories.SCHOOL },
-  { name: 'FOOD', icon: '🍎', path: ObjectsCategories.FOOD },
-  { name: 'GARDEN', icon: '🌱', path: ObjectsCategories.GARDEN },
-  { name: 'BEDROOM', icon: '🛏️', path: ObjectsCategories.BEDROOM },
+  { name: 'AIRPORT', icon: '✈️', path: ObjectsCategoriesRoutesValues.AIRPORT },
+  { name: 'SCHOOL', icon: '🏫', path: ObjectsCategoriesRoutesValues.SCHOOL },
+  { name: 'FOOD', icon: '🍎', path: ObjectsCategoriesRoutesValues.FOOD },
+  { name: 'GARDEN', icon: '🌱', path: ObjectsCategoriesRoutesValues.GARDEN },
+  { name: 'BEDROOM', icon: '🛏️', path: ObjectsCategoriesRoutesValues.BEDROOM },
 ];
 
 const Home: React.FC = () => {
