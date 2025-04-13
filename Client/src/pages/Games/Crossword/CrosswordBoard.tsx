@@ -1,47 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useCrossword } from '../../../hooks/useCrossword';
+import { Directions } from '../../../consts/directions';
 
 interface Props {
   boardSize: number;
   word: string;
-  boardLengthAddition: number;
 }
 
-const CrosswordBoard = ({ boardSize, word, boardLengthAddition }: Props) => {
-  const { displayeWord, displayDirection } = useCrossword(word);
+const CrosswordBoard = ({ boardSize, word }: Props) => {
+  const [boardLetters, setBoardLetters] = useState<string[][]>([]);
   const [clickedCells, setClickedCells] = useState<
     { row: number; col: number }[]
   >([]);
-  const [boardLetters, setBoardLetters] = useState<string[][]>([]);
 
-  const getRandomLetter = () => {
-    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-    return alphabet[Math.floor(Math.random() * alphabet.length)];
-  };
+  const {} = useCrossword(word, boardSize, setBoardLetters);
 
-  console.log(displayDirection, displayeWord);
-
-  useEffect(() => {
-    const letters: string[][] = [];
-    let wordIndex = 0;
-
-    for (let row = 0; row < boardSize; row++) {
-      const currentRow: string[] = [];
-      for (let col = 0; col < boardSize; col++) {
-        if (wordIndex < word.length) {
-          currentRow.push(word[wordIndex]);
-          wordIndex++;
-        } else {
-          currentRow.push(getRandomLetter());
-        }
-      }
-      letters.push(currentRow);
-    }
-
-    setBoardLetters(letters);
-  }, [boardSize, word]);
-
-  const isClicked = (row: number, col: number) => {
+  const isCellClicked = (row: number, col: number) => {
     return clickedCells.some((cell) => cell.row === row && cell.col === col);
   };
 
@@ -78,7 +52,7 @@ const CrosswordBoard = ({ boardSize, word, boardLengthAddition }: Props) => {
                     height: '100%',
                     border: 'none',
                     cursor: 'pointer',
-                    backgroundColor: isClicked(rowIndex, colIndex)
+                    backgroundColor: isCellClicked(rowIndex, colIndex)
                       ? '#add8e6'
                       : 'white',
                   }}
