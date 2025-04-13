@@ -3,7 +3,8 @@ import CrosswordBoard from './CrosswordBoard';
 
 const Crossword = () => {
   const word = 'hello';
-  const boardSize = word.length + Math.floor(Math.random() * 3);
+  const boardLengthAddition = Math.floor(Math.random() * 3);
+  const boardSize = word.length + boardLengthAddition;
 
   return (
     <div>
