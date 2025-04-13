@@ -45,6 +45,7 @@ export const useCrossword = (
 
     const maxStart = boardSize - displayedWord.length;
 
+    // Place the word on the board based on the chosen direction
     if (displayDirection === Directions.HORIZONTAL) {
       const row = Math.floor(Math.random() * boardSize);
       const startCol = Math.floor(Math.random() * (maxStart + 1));
@@ -59,6 +60,21 @@ export const useCrossword = (
       for (let i = 0; i < displayedWord.length; i++) {
         letters[startRow + i][col] = displayedWord[i];
       }
+    } else if (displayDirection === Directions.DIAGONAL) {
+      const startRow = Math.floor(Math.random() * (maxStart + 1));
+      const startCol = Math.floor(Math.random() * (maxStart + 1));
+
+      for (let i = 0; i < displayedWord.length; i++) {
+        letters[startRow + i][startCol + i] = displayedWord[i];
+      }
+    } else if (displayDirection === Directions.REVERSE_DIAGONAL) {
+      const startRow =
+        Math.floor(Math.random() * (maxStart + 1)) + displayedWord.length - 1;
+      const startCol = Math.floor(Math.random() * (maxStart + 1));
+
+      for (let i = 0; i < displayedWord.length; i++) {
+        letters[startRow - i][startCol + i] = displayedWord[i];
+      }
     }
 
     setBoardLetters(letters);
@@ -66,5 +82,6 @@ export const useCrossword = (
 
   return {
     displayedWord,
+    displayDirection,
   };
 };

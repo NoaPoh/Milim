@@ -7,13 +7,14 @@ interface Props {
   word: string;
 }
 
+//TODO: When clicking on an already selected cell again it will uncolour it
 const CrosswordBoard = ({ boardSize, word }: Props) => {
   const [boardLetters, setBoardLetters] = useState<string[][]>([]);
   const [clickedCells, setClickedCells] = useState<
     { row: number; col: number }[]
   >([]);
 
-  const {} = useCrossword(word, boardSize, setBoardLetters);
+  const { displayDirection } = useCrossword(word, boardSize, setBoardLetters);
 
   const isCellClicked = (row: number, col: number) => {
     return clickedCells.some((cell) => cell.row === row && cell.col === col);
