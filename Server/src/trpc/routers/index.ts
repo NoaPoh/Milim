@@ -1,8 +1,8 @@
 import { router } from '../trpc';
-import { userRouter } from './word';
+import { wordRouter } from './word';
 
 export const appRouter = router({
-  user: userRouter,
+  word: wordRouter,
 });
 
 export type AppRouter = typeof appRouter;
