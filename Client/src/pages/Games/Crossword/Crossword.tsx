@@ -7,8 +7,8 @@ const Crossword = () => {
   const boardSize = word.length + boardLengthAddition;
 
   return (
-    <div>
-      <CrosswordBoard boardSize={boardSize} word={word}></CrosswordBoard>
+    <div style={{ textAlign: 'center' }}>
+      <CrosswordBoard boardSize={boardSize} word={word} />
     </div>
   );
 };
