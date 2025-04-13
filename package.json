@@ -1,0 +1,13 @@
+{
+  "name": "milim",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run dev --workspace=Client & npm run dev --workspace=Server"
+  },
+  "workspaces": [
+    "./Client",
+    "./Server"
+  ],
+  "license": "ISC"
+}
