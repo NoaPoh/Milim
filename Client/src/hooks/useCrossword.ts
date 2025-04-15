@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Directions } from '../consts/directions';
+import { Directions } from '../utils/constants/directions';
 
 export const useCrossword = (
   word: string,
