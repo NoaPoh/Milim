@@ -18,5 +18,5 @@ app.use(
 );
 
 app.listen(4000, () => {
-  console.log('Milim backend is running on http://localhost:4000');
+  console.log('Milim backend is running on http://localhost:4000/trpc');
 });
