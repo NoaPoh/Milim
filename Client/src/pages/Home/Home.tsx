@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ObjectsCategoriesRoutesValues } from '../../consts/routes';
+import { trpc } from '../../utils/trpc';
 
 // רשימת קטגוריות לדוגמה
 const categories = [
@@ -13,6 +14,7 @@ const categories = [
 
 const Home: React.FC = () => {
   // const userDetails = useUserDetails();
+  const { data: helloWorld } = trpc.hello.world.useQuery({ userName: 'John' });
 
   const userDetails = {
     username: 'John Doe',
@@ -21,7 +23,6 @@ const Home: React.FC = () => {
 
   return (
     <div className="flex flex-col flex-grow bg-[#FBF3DF] px-4 pt-10">
-      {/* User Greeting */}
       {userDetails && (
         <div className="flex flex-col items-start">
           <img
