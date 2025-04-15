@@ -3,6 +3,7 @@ export enum RoutesValues {
   REGISTER = '/register',
   LOGIN = '/login',
   CAMERA = '/camera',
+  GAMES = '/games',
 }
 
 export enum ObjectsCategoriesRoutesValues {
@@ -14,7 +15,7 @@ export enum ObjectsCategoriesRoutesValues {
 }
 
 export enum GamesRoutesValues {
-  FLASH_CARDS = '/games/flashcards',
-  SPELLING = '/games/spelling',
-  CROSSWORD = '/games/crossword',
+  FLASH_CARDS = '/flashcards',
+  SPELLING = '/spelling',
+  CROSSWORD = '/crossword',
 }
