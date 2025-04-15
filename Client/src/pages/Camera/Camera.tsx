@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate, faCamera } from '@fortawesome/free-solid-svg-icons';
 import './Camera.scss';
 import SpeakerButton from '../../components/SpeakerButton';
+import { trpc } from '../../utils/trpc';
 
 export default function Camera() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -17,6 +18,9 @@ export default function Camera() {
   const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const objectVisibleSinceRef = useRef<number | null>(null);
   const modelRef = useRef<cocoSsd.ObjectDetection | null>(null);
+
+  const { mutateAsync: addWord, isPending: addWordIsLoading } =
+    trpc.word.insertWord.useMutation();
 
   const startCamera = async () => {
     try {
