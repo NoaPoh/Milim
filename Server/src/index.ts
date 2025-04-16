@@ -1,1 +1,1 @@
-export * from './trpc/routers';
+export * from './routers';

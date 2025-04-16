@@ -1,7 +1,7 @@
 import express from 'express';
 import * as trpcExpress from '@trpc/server/adapters/express';
-import { appRouter } from './trpc/routers';
-import { createContext } from './trpc/context';
+import { appRouter } from './routers';
+import { createContext } from './core/trpc/context';
 import cors from 'cors';
 
 const app = express();
