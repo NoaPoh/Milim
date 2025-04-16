@@ -1,7 +1,7 @@
 import { router } from './core/trpc/trpc';
-import { helloRouter } from './features/testing/helloWorld';
-import { wordRouter } from './features/word/word';
-import { authRouter } from './features/auth/auth';
+import { helloRouter } from './features/testing/hello.router';
+import { wordRouter } from './features/word/word.router';
+import { authRouter } from './features/auth/auth.router';
 
 export const appRouter = router({
   word: wordRouter,
