@@ -14,6 +14,7 @@ export const authRouter = router({
     .mutation(async ({ ctx, input }) => {
       return register(ctx.prisma, input);
     }),
+
   login: protectedProcedure
     .input(registerSchema)
     .mutation(async ({ ctx, input }) => {
@@ -22,5 +23,9 @@ export const authRouter = router({
 
   logout: protectedProcedure.mutation(async ({ ctx }) => {
     return logout(ctx.res);
+  }),
+
+  getMe: protectedProcedure.query(async ({ ctx }) => {
+    return { userId: ctx.userId };
   }),
 });
