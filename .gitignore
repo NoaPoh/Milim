@@ -65,11 +65,11 @@ fastlane/test_output/
 firebase.json
 
 # Misc
-.env
-.env.production
-.env.development
-.env.test
-.env.local
+*.env
+*.env.production
+*.env.development
+*.env.test
+*.env.local
 *.keystore
 *.p8
 *.p12

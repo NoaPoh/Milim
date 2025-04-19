@@ -5,5 +5,5 @@ loadEnv();
 
 export default defineConfig({
   earlyAccess: true,
-  schema: path.join('src', 'prisma', 'schema.prisma'),
+  schema: path.join('src', 'core', 'prisma', 'schema.prisma'),
 });

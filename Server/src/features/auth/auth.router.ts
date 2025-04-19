@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { publicProcedure, router } from '../../core/trpc/trpc';
-import { register } from './auth.service';
+import { protectedProcedure, router } from '../../core/trpc/trpc';
+import { login, logout, register } from './auth.service';
 
 const registerSchema = z.object({
   username: z.string(),
@@ -9,9 +9,18 @@ const registerSchema = z.object({
 });
 
 export const authRouter = router({
-  register: publicProcedure
+  register: protectedProcedure
     .input(registerSchema)
     .mutation(async ({ ctx, input }) => {
       return register(ctx.prisma, input);
     }),
+  login: protectedProcedure
+    .input(registerSchema)
+    .mutation(async ({ ctx, input }) => {
+      return login(ctx.prisma, input, ctx.res);
+    }),
+
+  logout: protectedProcedure.mutation(async ({ ctx }) => {
+    return logout(ctx.res);
+  }),
 });
