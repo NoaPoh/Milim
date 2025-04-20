@@ -5,7 +5,7 @@ import Register from './pages/Register/Register';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Camera from './pages/Camera/Camera';
-import { RoutesValues } from './consts/routes';
+import { RoutesValues } from './constants/routes';
 
 const App = () => {
   const location = useLocation();

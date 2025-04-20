@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ObjectsCategoriesRoutesValues } from '../../consts/routes';
+import { ObjectsCategoriesRoutesValues } from '../../constants/routes';
 import { trpc } from '../../utils/trpc';
 
 // רשימת קטגוריות לדוגמה
