@@ -4,25 +4,17 @@ import { appRouter } from './routers';
 import { createContext } from './core/trpc/context';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 
 app.use(
   cors({
-    origin: 'http://localhost:5173/',
+    origin: process.env.CLIENT_URL,
     credentials: true,
   })
 );
-
-app.use((req, res, next) => {
-  console.log('Incoming request:', req.method, req.url); // Log the incoming request
-  next();
-});
-
-app.use((req, res, next) => {
-  console.log('CORS Headers:', res.getHeaders());
-  next();
-});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

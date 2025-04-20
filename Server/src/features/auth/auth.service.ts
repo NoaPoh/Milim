@@ -3,7 +3,7 @@ import { TRPCError } from '@trpc/server';
 import { compare, genSalt, hash } from 'bcrypt';
 import { Response } from 'express';
 import jwt, { SignOptions } from 'jsonwebtoken';
-import { MessageResponse } from '../../utils/types';
+import { MessageResponse } from '../../@types/types';
 
 const generateAccessToken = (userId: User['id']) => {
   return jwt.sign({ userId }, process.env.JWT_ACCESS_SECRET || '', {

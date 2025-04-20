@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Register.scss';
 import { trpc } from '../../utils/trpc';
 import Loader from '../../components/Loader/Loader';
@@ -12,19 +12,6 @@ const Register = () => {
   const [learningLanguage, setLearningLanguage] = useState('');
   const [nativeLanguage, setNativeLanguage] = useState('');
   const [spiritAnimal, setSpiritAnimal] = useState(spiritAnimals[0]);
-
-  useEffect(() => {
-    fetch('http://localhost:4000/trpc/hello.world', {
-      method: 'OPTIONS', // Preflight request
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    })
-      .then((res) => res.text())
-      .then((data) => console.log(data))
-      .catch((error) => console.error('Fetch error:', error));
-  }, []);
 
   const { mutateAsync: register, isPending: registerIsPending } =
     trpc.auth.register.useMutation();
