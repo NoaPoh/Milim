@@ -1,28 +1,42 @@
-import React, { useState } from 'react';
-import './Register.scss'; // Regular SCSS import
+import React, { useEffect, useState } from 'react';
+import './Register.scss';
+import { trpc } from '../../utils/trpc';
+import Loader from '../../components/Loader/Loader';
 
 const spiritAnimals = ['🐻', '🦊', '🐸', '🦉', '🐬'];
 
 const Register = () => {
-  // const { register } = useAuth();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [learningLanguage, setLearningLanguage] = useState('');
   const [nativeLanguage, setNativeLanguage] = useState('');
-  const [spiritAnimal, setSpiritAnimal] = useState(spiritAnimals[0]); // Default selection
+  const [spiritAnimal, setSpiritAnimal] = useState(spiritAnimals[0]);
+
+  useEffect(() => {
+    fetch('http://localhost:4000/trpc/hello.world', {
+      method: 'OPTIONS', // Preflight request
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    })
+      .then((res) => res.text())
+      .then((data) => console.log(data))
+      .catch((error) => console.error('Fetch error:', error));
+  }, []);
+
+  const { mutateAsync: register, isPending: registerIsPending } =
+    trpc.auth.register.useMutation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // register.mutate({
-    //     username,
-    //     email,
-    //     password,
-    //     nativeLanguage,
-    //     learningLanguage,
-    //     spiritAnimal
-    // });
+    register({
+      username,
+      email,
+      password,
+    });
   };
 
   return (
@@ -68,8 +82,6 @@ const Register = () => {
             I speak
           </option>
           <option value="English">English</option>
-          <option value="French">French</option>
-          <option value="Hebrew">Hebrew</option>
         </select>
 
         <select
@@ -79,9 +91,7 @@ const Register = () => {
           <option value="" disabled hidden>
             I want to learn
           </option>
-          <option value="Spanish">Spanish</option>
-          <option value="German">German</option>
-          <option value="Japanese">Japanese</option>
+          <option value="Spanish">Hebrew</option>
         </select>
 
         <label className="text-gray-700 font-medium text-lg">
@@ -107,12 +117,10 @@ const Register = () => {
         <button
           type="submit"
           className="bg-blue-500 text-white p-3 rounded-full hover:bg-blue-600 transition-all font-semibold"
-          // disabled={register.isPending}
+          disabled={registerIsPending}
         >
-          {/* {register.isPending ? "Registering..." : "Let's do it!"} */}
+          {registerIsPending ? <Loader /> : "Let's do it!"}
         </button>
-
-        {/* {register.isError && <p className="text-red-500 text-center">Error: {register.error.message}</p>} */}
       </form>
     </div>
   );
