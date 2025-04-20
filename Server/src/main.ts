@@ -1,14 +1,25 @@
 import express from 'express';
 import * as trpcExpress from '@trpc/server/adapters/express';
-import { appRouter } from './trpc/routers';
-import { createContext } from './trpc/context';
+import { appRouter } from './routers';
+import { createContext } from './core/trpc/context';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 
-app.use(express.json());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  })
+);
+
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(express.json());
+app.use(cookieParser());
+
 app.use(
   '/trpc',
   trpcExpress.createExpressMiddleware({

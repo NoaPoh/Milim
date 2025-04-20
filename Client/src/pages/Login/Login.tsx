@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
+import { RoutesValues } from '../../constants/routes';
+import { trpc } from '../../utils/trpc';
+import Loader from '../../components/Loader/Loader';
 
 const Login: React.FC = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { isPending: loginIsPending, mutateAsync: login } =
+    trpc.auth.login.useMutation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    login({ email, password });
   };
 
   return (
@@ -32,11 +39,11 @@ const Login: React.FC = () => {
             className="space-y-4 items-center text-center"
           >
             <input
-              type="username"
+              type="email"
               className="w-72 px-4 py-2 mt-1 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
 
@@ -52,16 +59,16 @@ const Login: React.FC = () => {
             <button
               type="submit"
               className="w-72 text-xl bg-[#808080] text-white py-2 rounded-full font-bold hover:bg-blue-600 transition"
+              disabled={loginIsPending}
             >
-              GO
+              {!loginIsPending ? 'GO' : <Loader />}
             </button>
           </form>
 
-          {/* Register Link */}
           <p className="text-center text-gray-600 mt-4">
             Don't have an account yet?{' '}
             <a
-              href="/register"
+              href={RoutesValues.REGISTER}
               className="text-black-500 text-sm font-bold hover:underline"
             >
               sign up
