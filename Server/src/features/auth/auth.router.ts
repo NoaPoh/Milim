@@ -8,6 +8,11 @@ const registerSchema = z.object({
   password: z.string(),
 });
 
+const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});
+
 export const authRouter = router({
   register: protectedProcedure
     .input(registerSchema)
@@ -16,7 +21,7 @@ export const authRouter = router({
     }),
 
   login: protectedProcedure
-    .input(registerSchema)
+    .input(loginSchema)
     .mutation(async ({ ctx, input }) => {
       return login(ctx.prisma, input, ctx.res);
     }),

@@ -1,9 +1,8 @@
-import { initTRPC } from '@trpc/server';
-import { Context } from './context';
+import { base } from './base';
 import { isAuthed } from '../middlewares/auth.middleware';
 
-const t = initTRPC.context<Context>().create();
-
-export const router = t.router;
-export const middleware = t.middleware;
-export const protectedProcedure = t.procedure.use(isAuthed);
+export const router = base.router;
+export const middleware = base.middleware;
+export const publicProcedure = base.procedure;
+export const protectedProcedure = base.procedure;
+// .use(isAuthed);

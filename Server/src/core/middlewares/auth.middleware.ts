@@ -1,14 +1,19 @@
 import { TRPCError } from '@trpc/server';
 import jwt from 'jsonwebtoken';
 import { Context } from '../trpc/context';
-import { middleware } from '../trpc/trpc';
+import { base } from '../trpc/base';
 
 export type JWTPayload = {
   userId: string;
 };
 
-export const isAuthed = middleware<Context>(({ ctx, next }) => {
-  const token = ctx.req.cookies.token;
+export const isAuthed = base.middleware<Context>(({ ctx, next }) => {
+  if (ctx.req.url.includes('/auth')) {
+    return next();
+  }
+
+  const token = ctx.req.cookies['access-token'];
+
   if (!token) {
     throw new TRPCError({ code: 'UNAUTHORIZED' });
   }
