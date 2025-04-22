@@ -8,7 +8,7 @@ export type JWTPayload = {
 };
 
 export const isAuthed = base.middleware<Context>(({ ctx, next }) => {
-  if (ctx.req.url.includes('/auth')) {
+  if (ctx.req.url.includes('/auth') || ctx.req.url.includes('/hello')) {
     return next();
   }
 
