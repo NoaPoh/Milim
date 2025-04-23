@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './Register.scss';
 import { trpc } from '../../utils/trpc';
 import Loader from '../../components/Loader/Loader';
+import { useNavigate } from 'react-router';
+import { RoutesValues } from '../../constants/routes';
 
 const spiritAnimals = ['🐻', '🦊', '🐸', '🦉', '🐬'];
 
@@ -12,9 +14,14 @@ const Register = () => {
   const [learningLanguage, setLearningLanguage] = useState('');
   const [nativeLanguage, setNativeLanguage] = useState('');
   const [spiritAnimal, setSpiritAnimal] = useState(spiritAnimals[0]);
+  const navigate = useNavigate();
+
+  const navToLogin = () => {
+    navigate(RoutesValues.LOGIN);
+  };
 
   const { mutateAsync: register, isPending: registerIsPending } =
-    trpc.auth.register.useMutation();
+    trpc.auth.register.useMutation({ onSuccess: navToLogin });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
