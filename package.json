@@ -9,5 +9,12 @@
     "./Client",
     "./Server"
   ],
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2",
+    "@prisma/client": "^6.6.0"
+  }
 }
