@@ -16,6 +16,7 @@
     "@tensorflow/tfjs": "^4.22.0",
     "@trpc/client": "^11.1.0",
     "@trpc/react-query": "^11.1.0",
+    "canvas-confetti": "^1.9.3",
     "milim-server": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
