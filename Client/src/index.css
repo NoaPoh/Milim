@@ -8,13 +8,16 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: #fbf3df;
-  background-color: #242424;
+  background-color: #fbf3df;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  select {
+    color: black;
+  }
 }
 
 a {
