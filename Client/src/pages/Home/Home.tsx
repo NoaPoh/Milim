@@ -18,7 +18,7 @@ const Home: React.FC = () => {
 
   const userDetails = {
     username: 'John Doe',
-    spiritAnimal: '/assets/images/giraffe.svg',
+    spiritAnimal: '/assets/images/animals/giraffe.svg',
   };
 
   return (
@@ -26,7 +26,7 @@ const Home: React.FC = () => {
       {userDetails && (
         <div className="flex flex-col items-start">
           <img
-            src={userDetails.spiritAnimal || '/assets/images/giraffe.svg'}
+            src={userDetails.spiritAnimal || '/assets/images/animals/giraffe.svg'}
             className="w-32 h-32 rounded-full"
           />
           <p className="text-xl text-gray-700 mb-6">

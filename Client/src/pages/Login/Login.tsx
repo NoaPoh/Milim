@@ -28,12 +28,12 @@ const Login: React.FC = () => {
     <div className="flex flex-col min-h-screen bg-[#FBF3DF]">
       <div className="flex justify-between items-start mt-0">
         <img
-          src="/assets/images/signup-hippo.svg"
+          src="/assets/images/animals/signup-hippo.svg"
           alt="Hippo"
           className="w-28 transform rotate-90 ml-0 mt-6"
         />
         <img
-          src="/assets/images/signup-hippo.svg"
+          src="/assets/images/animals/signup-hippo.svg"
           alt="Hippo"
           className="w-20 -scale-y-100 mr-6 pop-off-top"
         />
@@ -88,7 +88,7 @@ const Login: React.FC = () => {
 
       <div className="flex justify-center">
         <img
-          src="/assets/images/signup-hippo.svg"
+          src="/assets/images/animals/signup-hippo.svg"
           alt="Hippo"
           className="w-44"
         />
