@@ -5,11 +5,14 @@ import { trpc } from '../../utils/trpc';
 
 // רשימת קטגוריות לדוגמה
 const categories = [
-  { name: 'AIRPORT', icon: '✈️', path: ObjectsCategoriesRoutesValues.AIRPORT },
-  { name: 'SCHOOL', icon: '🏫', path: ObjectsCategoriesRoutesValues.SCHOOL },
-  { name: 'FOOD', icon: '🍎', path: ObjectsCategoriesRoutesValues.FOOD },
-  { name: 'GARDEN', icon: '🌱', path: ObjectsCategoriesRoutesValues.GARDEN },
-  { name: 'BEDROOM', icon: '🛏️', path: ObjectsCategoriesRoutesValues.BEDROOM },
+  { name: 'AIRPORT', icon: '/assets/images/categories/airport.png', path: ObjectsCategoriesRoutesValues.AIRPORT },
+  { name: 'SCHOOL', icon: '/assets/images/categories/school.png', path: ObjectsCategoriesRoutesValues.SCHOOL },
+  { name: 'PARK', icon: '/assets/images/categories/park.png', path: ObjectsCategoriesRoutesValues.PARK },
+  { name: 'KITCHEN', icon: '/assets/images/categories/kitchen.png', path: ObjectsCategoriesRoutesValues.KITCHEN },
+  { name: 'BEDROOM', icon: '/assets/images/categories/bedroom.png', path: ObjectsCategoriesRoutesValues.BEDROOM },
+  { name: 'SUPERMARKET', icon: '/assets/images/categories/supermarket.png', path: ObjectsCategoriesRoutesValues.SUPERMARKET },
+  { name: 'LIVING ROOM', icon: '/assets/images/categories/living_room.png', path: ObjectsCategoriesRoutesValues.LIVING_ROOM },
+  { name: '', icon: '/assets/images/categories/add.jpg', path: ObjectsCategoriesRoutesValues.ADD },
 ];
 
 const Home: React.FC = () => {
@@ -41,9 +44,13 @@ const Home: React.FC = () => {
           <Link
             to={category.path}
             key={category.name}
-            className="flex flex-col items-center justify-center p-6 bg-white rounded-2xl shadow-md hover:shadow-lg transition"
+            className="flex flex-col items-center justify-center p-2 bg-white rounded-2xl shadow-md hover:shadow-lg transition"
           >
-            <span className="text-5xl">{category.icon}</span>
+            <img
+              src={category.icon}
+              alt={category.name}
+              className="w-19 h-19"
+            />
             <span className="mt-2 text-lg font-semibold text-gray-700">
               {category.name}
             </span>

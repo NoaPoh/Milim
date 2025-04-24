@@ -8,9 +8,12 @@ export enum RoutesValues {
 export enum ObjectsCategoriesRoutesValues {
   AIRPORT = '/categories/airport',
   SCHOOL = '/categories/school',
-  FOOD = '/categories/food',
-  GARDEN = '/categories/garden',
+  KITCHEN = '/categories/KITCHEN',
+  PARK = '/categories/garden',
   BEDROOM = '/categories/bedroom',
+  SUPERMARKET = '/categories/supermarket',
+  LIVING_ROOM = '/categories/livingroom',
+  ADD = '/categories/add',
 }
 
 export enum GamesRoutesValues {
