@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ObjectsCategoriesRoutesValues } from '../../constants/routes';
 import { trpc } from '../../utils/trpc';
+import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
 
 // רשימת קטגוריות לדוגמה
 const categories = [
@@ -25,10 +26,7 @@ const Home: React.FC = () => {
     <div className="flex flex-col flex-grow bg-[#FBF3DF] px-4 pt-10">
       {userDetails && (
         <div className="flex flex-col items-start">
-          <img
-            src={userDetails.spiritAnimal || '/assets/images/giraffe.svg'}
-            className="w-32 h-32 rounded-full"
-          />
+          <AnimalIcon path=""></AnimalIcon>
           <p className="text-xl text-gray-700 mb-6">
             Hello {userDetails.username}, <br /> Where are you now?
           </p>
