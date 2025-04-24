@@ -3,6 +3,7 @@ export enum RoutesValues {
   REGISTER = '/register',
   LOGIN = '/login',
   CAMERA = '/camera',
+  PROFILE = '/profile',
 }
 
 export enum ObjectsCategoriesRoutesValues {
