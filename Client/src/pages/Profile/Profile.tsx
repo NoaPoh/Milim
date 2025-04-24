@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { RoutesValues } from '../../constants/routes';
-import { trpc } from '../../utils/trpc';
-import Loader from '../../components/Loader/Loader';
-import { useNavigate } from 'react-router-dom';
+import './Profile.scss';
 import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
 
 const Profile: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
-
+  const [username, setUsername] = useState<string>('Sheleg');
 
   return (
-    <AnimalIcon path="/assets/images/giraffe.svg" />
+    <div>
+      <AnimalIcon path="/assets/images/giraffe.svg" />
+      <p className="text-xl text-gray-700 mb-6">
+        Happy to see you back, {username}
+      </p>
+    </div>
   );
 };
+
 
 export default Profile;
