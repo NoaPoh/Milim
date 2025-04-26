@@ -6,20 +6,25 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Camera from './pages/Camera/Camera';
 import { RoutesValues } from './constants/routes';
+import './App.scss';
 
 const App = () => {
   const location = useLocation();
+  const showNavbar =
+    location.pathname !== RoutesValues.REGISTER &&
+    location.pathname !== RoutesValues.LOGIN;
 
   return (
-    <div>
-      {location.pathname !== RoutesValues.REGISTER &&
-        location.pathname !== RoutesValues.LOGIN && <Navbar />}
-      <Routes>
-        <Route path={RoutesValues.HOME} element={<Home />} />
-        <Route path={RoutesValues.REGISTER} element={<Register />} />
-        <Route path={RoutesValues.LOGIN} element={<Login />} />
-        <Route path={RoutesValues.CAMERA} element={<Camera />} />
-      </Routes>
+    <div className="app">
+      <div className="app__content">
+        <Routes>
+          <Route path={RoutesValues.HOME} element={<Home />} />
+          <Route path={RoutesValues.REGISTER} element={<Register />} />
+          <Route path={RoutesValues.LOGIN} element={<Login />} />
+          <Route path={RoutesValues.CAMERA} element={<Camera />} />
+        </Routes>
+      </div>
+      {showNavbar && <Navbar />}
     </div>
   );
 };

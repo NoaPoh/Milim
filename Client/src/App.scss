@@ -1,0 +1,10 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app__content {
+  min-height: calc(100vh - 60px); // make sure page ends where navbar begins
+  overflow-y: auto;
+}
