@@ -7,7 +7,7 @@ import './Camera.scss';
 import SpeakerButton from '../../components/SpeakerButton';
 import { trpc } from '../../utils/trpc';
 import Loader from '../../components/Loader/Loader';
-import confetti from 'canvas-confetti';
+import { sprinkleConfettiOnScreen } from '../../utils/confetti';
 
 export default function Camera() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -66,16 +66,6 @@ export default function Camera() {
       predictObject();
     }
   }, [photo]);
-
-  useEffect(() => {
-    if (predictions.length > 0) {
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
-    }
-  }, [predictions]);
 
   const takePhoto = () => {
     const video = videoRef.current;
@@ -151,6 +141,7 @@ export default function Camera() {
           );
 
           setPredictions([highestPrediction]);
+          sprinkleConfettiOnScreen();
         }
         setPredictionLoading(false);
       };
