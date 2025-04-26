@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ObjectsCategoriesRoutesValues } from '../../constants/routes';
 import { trpc } from '../../utils/trpc';
-
+import './Home.scss';
 // רשימת קטגוריות לדוגמה
 const categories = [
   { name: 'AIRPORT', icon: '/assets/images/categories/airport.png', path: ObjectsCategoriesRoutesValues.AIRPORT },
@@ -49,7 +49,7 @@ const Home: React.FC = () => {
             <img
               src={category.icon}
               alt={category.name}
-              className="w-19 h-19"
+              className="w-19 h-19 category-icon"
             />
             <span className="mt-2 text-lg font-semibold text-gray-700">
               {category.name}
