@@ -6,6 +6,7 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Camera from './pages/Camera/Camera';
 import { RoutesValues } from './constants/routes';
+import Profile from './pages/Profile/Profile';
 import './App.scss';
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
           <Route path={RoutesValues.REGISTER} element={<Register />} />
           <Route path={RoutesValues.LOGIN} element={<Login />} />
           <Route path={RoutesValues.CAMERA} element={<Camera />} />
+          <Route path={RoutesValues.PROFILE} element={<Profile />} />
         </Routes>
       </div>
       {showNavbar && <Navbar />}
