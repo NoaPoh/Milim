@@ -114,6 +114,7 @@ export default function Camera() {
     setPhoto(null);
     setErrorMessage(null);
     startCamera();
+    setPredictions([]);
   };
 
   const predictObject = async () => {
@@ -163,6 +164,14 @@ export default function Camera() {
             muted
             className="video-preview"
           ></video>
+
+          <button
+            className="button"
+            disabled={disabledCamera}
+            onClick={takePhoto}
+          >
+            <FontAwesomeIcon icon={faCamera} className="icon" />
+          </button>
         </>
       ) : (
         <>
@@ -172,9 +181,7 @@ export default function Camera() {
           </button>
           {predictionLoading && <Loader />}
           {!predictionLoading && predictions.length > 0 && (
-            <div
-              className="predictions-container"
-            >
+            <div className="predictions-container">
               <p className="prediction-item">{predictions[0].class}</p>
               <SpeakerButton text={predictions[0].class}></SpeakerButton>
             </div>
