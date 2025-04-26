@@ -8,6 +8,7 @@ import './Navbar.scss';
 
 const Navbar = () => {
   return (
+    //bottom navigation bar
     <nav className="navbar">
       <Link to="/" className="navbar__link">
         <HomeIcon />
