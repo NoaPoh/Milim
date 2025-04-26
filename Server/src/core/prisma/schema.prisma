@@ -60,6 +60,7 @@ model Animal {
   id        Int      @id @default(autoincrement())
   name      String
   imagePath String
+  price     Int
 
   users     User[]
 }
