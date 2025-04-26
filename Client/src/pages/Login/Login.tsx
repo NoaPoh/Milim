@@ -31,7 +31,7 @@ const Login: React.FC = () => {
         <img
           src={hippoPicture}
           alt="Hippo"
-          className="w-28 transform rotate-90 ml-0 mt-6"
+          className="w-28 rotate-90 ml-0 mt-6"
         />
         <img
           src={hippoPicture}
@@ -88,11 +88,7 @@ const Login: React.FC = () => {
       </div>
 
       <div className="flex justify-center">
-        <img
-          src="/assets/images/signup-hippo.svg"
-          alt="Hippo"
-          className="w-44"
-        />
+        <img src={hippoPicture} alt="Hippo" className="w-44" />
       </div>
     </div>
   );
