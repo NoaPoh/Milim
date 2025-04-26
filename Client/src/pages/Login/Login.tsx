@@ -2,13 +2,22 @@ import React, { useState } from 'react';
 import { RoutesValues } from '../../constants/routes';
 import { trpc } from '../../utils/trpc';
 import Loader from '../../components/Loader/Loader';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const navToRegister = () => {
+    navigate(RoutesValues.REGISTER);
+  };
+  const navToHome = () => {
+    navigate(RoutesValues.HOME);
+  };
 
   const { isPending: loginIsPending, mutateAsync: login } =
-    trpc.auth.login.useMutation();
+    trpc.auth.login.useMutation({ onSuccess: navToHome });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,7 +77,7 @@ const Login: React.FC = () => {
           <p className="text-center text-gray-600 mt-4">
             Don't have an account yet?{' '}
             <a
-              href={RoutesValues.REGISTER}
+              onClick={navToRegister}
               className="text-black-500 text-sm font-bold hover:underline"
             >
               sign up

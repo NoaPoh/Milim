@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './Register.scss';
 import { trpc } from '../../utils/trpc';
 import Loader from '../../components/Loader/Loader';
+import { useNavigate } from 'react-router';
+import { RoutesValues } from '../../constants/routes';
 
 const spiritAnimals = ['🐻', '🦊', '🐸', '🦉', '🐬'];
 
@@ -12,9 +14,14 @@ const Register = () => {
   const [learningLanguage, setLearningLanguage] = useState('');
   const [nativeLanguage, setNativeLanguage] = useState('');
   const [spiritAnimal, setSpiritAnimal] = useState(spiritAnimals[0]);
+  const navigate = useNavigate();
+
+  const navToLogin = () => {
+    navigate(RoutesValues.LOGIN);
+  };
 
   const { mutateAsync: register, isPending: registerIsPending } =
-    trpc.auth.register.useMutation();
+    trpc.auth.register.useMutation({ onSuccess: navToLogin });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +34,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-200 to-purple-300">
+    <div className="flex justify-center items-center min-h-screen">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-4 p-6 shadow-lg w-96"
@@ -103,7 +110,7 @@ const Register = () => {
 
         <button
           type="submit"
-          className="bg-blue-500 text-white p-3 rounded-full hover:bg-blue-600 transition-all font-semibold"
+          className="bg-blue-500 text-white p-3 rounded-full hover:from-blue-400 hover:to-purple-500 hover:shadow-lg transition-all font-semibold bg-gradient-to-r from-blue-200 to-purple-300"
           disabled={registerIsPending}
         >
           {registerIsPending ? <Loader /> : "Let's do it!"}
