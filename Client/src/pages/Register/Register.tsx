@@ -34,7 +34,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="register">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-4 p-6 shadow-lg w-96"
@@ -91,7 +91,7 @@ const Register = () => {
         <label className="text-gray-700 font-medium text-lg">
           Pick Your Spirit Animal:
         </label>
-        <div className="flex justify-center gap-3">
+        <div className="register__animals gap-3">
           {spiritAnimals.map((animal) => (
             <button
               key={animal}
