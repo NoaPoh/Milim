@@ -4,7 +4,6 @@ import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import HomeIcon from '@mui/icons-material/Home';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import PersonIcon from '@mui/icons-material/Person';
-import './Navbar.scss';
 
 const Navbar = () => {
   return (
