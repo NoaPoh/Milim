@@ -53,7 +53,7 @@ const Router: FunctionComponent<RouterProps> = (props) => {
         const { path, component, navbar } = route;
         return (
           <Route
-            key={index}
+            key={path}
             path={path}
             element={
               navbar ? (
