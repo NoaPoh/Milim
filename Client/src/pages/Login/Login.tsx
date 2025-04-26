@@ -3,6 +3,7 @@ import { RoutesValues } from '../../constants/routes';
 import { trpc } from '../../utils/trpc';
 import Loader from '../../components/Loader/Loader';
 import { useNavigate } from 'react-router-dom';
+import hippoPicture from '../../assets/images/animals/hippo.png';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -28,12 +29,12 @@ const Login: React.FC = () => {
     <div className="flex flex-col min-h-screen bg-[#FBF3DF]">
       <div className="flex justify-between items-start mt-0">
         <img
-          src="/assets/images/signup-hippo.svg"
+          src={hippoPicture}
           alt="Hippo"
           className="w-28 transform rotate-90 ml-0 mt-6"
         />
         <img
-          src="/assets/images/signup-hippo.svg"
+          src={hippoPicture}
           alt="Hippo"
           className="w-20 -scale-y-100 mr-6 pop-off-top"
         />
