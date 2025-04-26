@@ -17,7 +17,7 @@ const categories = [
 
 const Home: React.FC = () => {
   // const userDetails = useUserDetails();
-  const { data: helloWorld } = trpc.hello.world.useQuery({ userName: 'John' });
+  const { data: helloWorld } = trpc.hello.world.useQuery();
 
   const userDetails = {
     username: 'John Doe',
