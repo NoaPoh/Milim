@@ -6,7 +6,6 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-
   &__form {
     display: flex;
     flex-direction: column;
@@ -14,7 +13,6 @@
     padding: 2rem;
     border-radius: 12px;
     box-shadow: $shadow;
-    width: 350px;
   }
 
   &__title {
@@ -27,7 +25,7 @@
   &__input {
     padding: 10px;
     border: 1px solid $border-color;
-    border-radius: 8px;
+    border-radius: 30px;
     font-size: 1rem;
     transition: border 0.3s ease;
     background-color: $inputs;
@@ -42,13 +40,20 @@
     border: 1px solid $border-color;
   }
 
+  &__spirit-animals {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
   &__animals {
     display: flex;
     justify-content: center;
     gap: 10px;
 
     &-button {
-      padding: 8px;
+      padding: 0.1rem;
       font-size: 1.5rem;
       border: 1px solid $border-color;
       background-color: $light-grey;

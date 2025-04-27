@@ -4,8 +4,19 @@ import { trpc } from '../../utils/trpc';
 import Loader from '../../components/Loader/Loader';
 import { useNavigate } from 'react-router';
 import { RoutesValues } from '../../constants/routes';
+import hippoPicture from '../../assets/images/animals/hippo.png';
+import zebraPicture from '../../assets/images/animals/zebra.png';
+import monkeyPicture from '../../assets/images/animals/monkey.png';
+import boarPicture from '../../assets/images/animals/boar.png';
+import antilopePicture from '../../assets/images/animals/antilope.png';
 
-const spiritAnimals = ['🐻', '🦊', '🐸', '🦉', '🐬'];
+const spiritAnimals = [
+  hippoPicture,
+  zebraPicture,
+  monkeyPicture,
+  boarPicture,
+  antilopePicture,
+];
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -34,21 +45,16 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4 p-6 shadow-lg w-96"
-      >
-        <h2 className="text-4xl font-bold text-center text-gray-700">
-          Let's get to know you !
-        </h2>
+    <div className="register">
+      <form onSubmit={handleSubmit} className="register__form">
+        <h2 className="register__title">Let's get to know you !</h2>
 
         <input
           type="text"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="register__input"
         />
 
         <input
@@ -56,7 +62,7 @@ const Register = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="register__input"
         />
 
         <input
@@ -64,13 +70,13 @@ const Register = () => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="register__input"
         />
 
         <select
           value={nativeLanguage}
           onChange={(e) => setNativeLanguage(e.target.value)}
-          className="p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="register__input"
         >
           <option value="" disabled hidden>
             I speak
@@ -80,7 +86,7 @@ const Register = () => {
 
         <select
           onChange={(e) => setLearningLanguage(e.target.value)}
-          className="p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="register__input"
         >
           <option value="" disabled hidden>
             I want to learn
@@ -88,22 +94,20 @@ const Register = () => {
           <option value="Spanish">Hebrew</option>
         </select>
 
-        <label className="text-gray-700 font-medium text-lg">
-          Pick Your Spirit Animal:
-        </label>
-        <div className="flex justify-center gap-3">
+        <label className="register__text">Pick Your Spirit Animal:</label>
+        <div className="register__spirit-animals">
           {spiritAnimals.map((animal) => (
             <button
               key={animal}
               type="button"
-              className={`p-3 text-2xl border rounded-md transition-all ${
-                spiritAnimal === animal
-                  ? 'bg-blue-400 text-white scale-110'
-                  : 'bg-gray-200'
-              }`}
+              className="register__animals-button"
               onClick={() => setSpiritAnimal(animal)}
             >
-              {animal}
+              <img
+                src={animal}
+                alt="Spirit Animal"
+                className="w-16 h-16 object-cover rounded-full"
+              />
             </button>
           ))}
         </div>
