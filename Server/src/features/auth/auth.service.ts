@@ -3,7 +3,12 @@ import { TRPCError } from '@trpc/server';
 import { compare, genSalt, hash } from 'bcrypt';
 import { Response } from 'express';
 import jwt, { SignOptions } from 'jsonwebtoken';
-import { MessageResponse } from '../../@types/types';
+import {
+  LoginInput,
+  LoginResponse,
+  MessageResponse,
+  RegisterInput,
+} from '../../@types/dtos';
 
 const generateAccessToken = (userId: User['id']) => {
   return jwt.sign({ userId }, process.env.JWT_ACCESS_SECRET || '', {
@@ -19,23 +24,6 @@ const generateRefreshToken = (userId: User['id']) => {
       (process.env.JWT_REFRESH_EXPIRATION as SignOptions['expiresIn']) || '7d',
   });
 };
-
-export interface RegisterInput {
-  username: User['username'];
-  email: User['email'];
-  password: string;
-}
-
-export interface LoginInput {
-  email: User['email'];
-  password: string;
-}
-
-export interface LoginResponse {
-  userId: User['id'];
-  // accessToken: string;
-  // refreshToken: string;
-}
 
 export const register = async (
   prisma: PrismaClient,
