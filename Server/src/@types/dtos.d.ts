@@ -22,3 +22,13 @@ export interface LoginResponse {
   // accessToken: string;
   // refreshToken: string;
 }
+
+export interface GoogleTranslateResponse {
+  data: {
+    translations: Array<{
+      translatedText: string;
+      detectedSourceLanguage: string;
+      model: string;
+    }>;
+  };
+}

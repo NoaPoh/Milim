@@ -10,18 +10,4 @@ export const wordRouter = router({
         where: { userId: input.userId },
       });
     }),
-  insertWord: protectedProcedure
-    .input(z.object({ userId: z.number(), text: z.string() }))
-    .mutation(({ ctx, input }) => {
-      const categoryId = 1; // TODO: figure out
-      const newWord = ctx.prisma.word.create({
-        data: {
-          userId: input.userId,
-          text: input.text,
-          categoryId,
-        },
-      });
-
-      return newWord;
-    }),
 });
