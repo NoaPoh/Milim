@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import Camera from '../pages/Camera/Camera';
 import Register from '../pages/Register/Register';
 import Login from '../pages/Login/Login';
+import Profile from '../pages/Profile/Profile';
 
 const Page = ({ children }: { children: React.ReactNode }) => {
   return <div className="page-w-navbar">{children}</div>;
@@ -41,6 +42,11 @@ const routes: RouteProps[] = [
     path: RoutesValues.LOGIN,
     component: <Login />,
     navbar: false,
+  },
+  {
+    path: RoutesValues.PROFILE,
+    component: <Profile />,
+    navbar: true,
   },
 ];
 
