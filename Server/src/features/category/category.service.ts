@@ -1,5 +1,6 @@
 import { Category, PrismaClient } from '@prisma/client';
 import { DisplayCategory } from '../../@types/dtos';
+import { SYSTEM_USER_ID } from '../../utils/constants';
 
 export const fetchUserCategories = async (
   userId: number,
@@ -8,7 +9,7 @@ export const fetchUserCategories = async (
   const categories = await prisma.category.findMany({
     where: {
       OR: [
-        { createdById: null }, // System categories
+        { createdById: SYSTEM_USER_ID }, // System categories
         { createdById: userId }, // User's own categories
       ],
     },
