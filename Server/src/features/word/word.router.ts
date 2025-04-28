@@ -14,7 +14,7 @@ export const wordRouter = router({
 
   translateWord: protectedProcedure
     .input(z.object({ word: z.string() }))
-    .mutation(async ({ ctx, input }) => {
+    .query(async ({ ctx, input }) => {
       return await translateWord(input.word);
     }),
 });
