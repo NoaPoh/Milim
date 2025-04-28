@@ -10,9 +10,6 @@ export interface AnimalResponse {
   imagePath: Animal['imagePath'];
   price: Animal['price'];
   // users: Animal['users'];
-
-  // accessToken: string;
-  // refreshToken: string;
 }
 
 export const getFreeAnimals = async (
