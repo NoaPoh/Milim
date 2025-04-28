@@ -1,5 +1,5 @@
 import { Category, PrismaClient } from '@prisma/client';
-import { DisplayCategory } from '../../@types/dtos';
+import { DisplayCategory } from '../../types/dtos';
 import { SYSTEM_USER_ID } from '../../utils/constants';
 
 export const fetchUserCategories = async (
