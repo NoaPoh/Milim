@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import giraffeIcon from '../../assets/images/animals/giraffe.png';
 import './Home.scss';
-import { RoutesValues } from '../../routes/routes';
 import { useGetCategories } from './hooks/useGetCategories';
+import { CategoryCard } from './components/CategoryCard';
+import addIcon from '../../assets/images/categories/add.jpg';
 
 const Home: React.FC = () => {
   // const userDetails = useUserDetails();
@@ -33,21 +33,13 @@ const Home: React.FC = () => {
       {categories && (
         <div className="grid grid-cols-2 gap-6 w-full max-w-md items-center flex-grow">
           {categories.map((category) => (
-            <Link
-              to={`${RoutesValues.CATEGORIES}/${category.name}`}
+            <CategoryCard
               key={category.id}
-              className="flex flex-col items-center justify-center p-2 bg-white rounded-2xl shadow-md hover:shadow-lg transition"
-            >
-              <img
-                src={category.picture}
-                alt={category.name}
-                className="w-19 h-19 category-icon"
-              />
-              <span className="mt-2 text-lg font-semibold text-gray-700">
-                {category.name}
-              </span>
-            </Link>
+              name={category.name}
+              picture={category.picture}
+            />
           ))}
+          <CategoryCard name="add" picture={addIcon} />
         </div>
       )}
     </div>
