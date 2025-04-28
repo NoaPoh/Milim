@@ -37,7 +37,7 @@ model Category {
 
   // Relations
   createdBy        User?    @relation("CreatedCategories", fields: [createdById], references: [id])
-  createdById      Int?
+  createdById      Int
 
   words            Word[]
 }
