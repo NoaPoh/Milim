@@ -17,8 +17,6 @@ export const useGetCategories = () => {
       };
     });
 
-  console.log('categoriesWithDefaultPictures', categoriesWithDefaultPictures);
-
   return {
     ...query,
     data: categoriesWithDefaultPictures,
