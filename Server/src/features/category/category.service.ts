@@ -26,10 +26,22 @@ export const fetchUserCategories = async (
     },
   });
 
-  const displayCategories: DisplayCategory[] = categories.map((category) => ({
-    ...category,
-    picture: category.words[0]?.picture,
-  }));
+  const displayCategories: DisplayCategory[] = categories.map((category) => {
+    if (category.words.length === 0) {
+      return {
+        ...category,
+        picture: '', // No words available, set picture to empty string
+      };
+    }
+
+    const buffer = Buffer.from(category.words[0].picture);
+    const base64Image = buffer.toString('base64');
+
+    return {
+      ...category,
+      picture: base64Image,
+    };
+  });
 
   return displayCategories;
 };
