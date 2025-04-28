@@ -11,7 +11,6 @@ export const CategoryCard = (props: CategoryCardProps) => {
   return (
     <Link
       to={`${RoutesValues.CATEGORIES}/${props.name}`}
-      // key={category.id}
       className="flex flex-col items-center justify-center p-2 bg-white rounded-2xl shadow-md hover:shadow-lg transition"
     >
       <img
