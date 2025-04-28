@@ -1,22 +1,9 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './Register.scss';
 import { trpc } from '../../utils/trpc';
 import Loader from '../../components/Loader/Loader';
 import { useNavigate } from 'react-router';
 import { RoutesValues } from '../../constants/routes';
-import hippoPicture from '../../assets/images/animals/hippo.png';
-import zebraPicture from '../../assets/images/animals/zebra.png';
-import monkeyPicture from '../../assets/images/animals/monkey.png';
-import boarPicture from '../../assets/images/animals/boar.png';
-import antilopePicture from '../../assets/images/animals/antilope.png';
-
-const spiritAnimals = [
-  hippoPicture,
-  zebraPicture,
-  monkeyPicture,
-  boarPicture,
-  antilopePicture,
-];
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -24,12 +11,18 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [learningLanguage, setLearningLanguage] = useState('');
   const [nativeLanguage, setNativeLanguage] = useState('');
-  const [spiritAnimal, setSpiritAnimal] = useState(spiritAnimals[0]);
+  const [spiritAnimal, setSpiritAnimal] = useState('');
   const navigate = useNavigate();
 
   const navToLogin = () => {
     navigate(RoutesValues.LOGIN);
   };
+
+  const {
+    data: freeAnimals,
+    isLoading,
+    error,
+  } = trpc.animal.getFreeAnimals.useQuery();
 
   const { mutateAsync: register, isPending: registerIsPending } =
     trpc.auth.register.useMutation({ onSuccess: navToLogin });
@@ -96,15 +89,15 @@ const Register = () => {
 
         <label className="register__text">Pick Your Spirit Animal:</label>
         <div className="register__spirit-animals">
-          {spiritAnimals.map((animal) => (
+          {freeAnimals?.map((animal) => (
             <button
-              key={animal}
+              key={animal.id}
               type="button"
               className="register__animals-button"
-              onClick={() => setSpiritAnimal(animal)}
+              onClick={() => setSpiritAnimal(animal.name)}
             >
               <img
-                src={animal}
+                src={`src/assets/images/animals/${animal.imagePath}`}
                 alt="Spirit Animal"
                 className="w-16 h-16 object-cover rounded-full"
               />
