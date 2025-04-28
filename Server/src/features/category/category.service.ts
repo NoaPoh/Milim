@@ -1,6 +1,7 @@
 import { Category, PrismaClient } from '@prisma/client';
 import { DisplayCategory } from '../../types/dtos';
 import { SYSTEM_USER_ID } from '../../utils/constants';
+import _ from 'lodash';
 
 export const fetchUserCategories = async (
   userId: number,
@@ -27,19 +28,19 @@ export const fetchUserCategories = async (
   });
 
   const displayCategories: DisplayCategory[] = categories.map((category) => {
-    if (category.words.length === 0) {
-      return {
-        ...category,
-        picture: '', // No words available, set picture to empty string
-      };
+    let picture = '';
+
+    if (category.words.length !== 0) {
+      const buffer = Buffer.from(category.words[0].picture);
+      const base64Image = buffer.toString('base64');
+      picture = base64Image;
     }
 
-    const buffer = Buffer.from(category.words[0].picture);
-    const base64Image = buffer.toString('base64');
+    const CategoryObjToUse = _.omit(category, 'words');
 
     return {
-      ...category,
-      picture: base64Image,
+      ...CategoryObjToUse,
+      picture,
     };
   });
 

@@ -11,10 +11,13 @@ export const useGetCategories = () => {
         ...category,
         picture:
           // TODO: if pictures format will be PNG, replace the string here
-          `data:image/jpeg;base64,${category.picture}` ||
-          defaultCategoriesIcons[category.id],
+          category.picture
+            ? `data:image/jpeg;base64,${category.picture}`
+            : defaultCategoriesIcons[category.id],
       };
     });
+
+  console.log('categoriesWithDefaultPictures', categoriesWithDefaultPictures);
 
   return {
     ...query,
