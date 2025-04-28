@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { GoogleTranslateResponse } from '../../@types/dtos';
 
-const GOOGLE_API_KEY = process.env.GOOGLE_TRANSLATE_API_KEY!; // put it in .env for safety
+const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY; // put it in .env for safety
 
 export const translateWord = async (word: string): Promise<string> => {
   const url = `https://translation.googleapis.com/language/translate/v2`;
