@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { GoogleLabelDetectionResponse } from '../../@types/dtos';
+import { GoogleLabelDetectionResponse } from '../../types/dtos';
 
 const googleAPIKey = process.env.GOOGLE_API_KEY;
 
-export async function detectLabelsFromBase64(
+export async function detectLabelFromBase64(
   base64Image: string
 ): Promise<string> {
   if (!googleAPIKey) {

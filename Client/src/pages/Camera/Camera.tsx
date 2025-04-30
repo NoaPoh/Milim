@@ -16,7 +16,16 @@ export default function Camera() {
   const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const objectVisibleSinceRef = useRef<number | null>(null);
 
-  const;
+  const {
+    data: imageLabel,
+    isPending: detectLabelIsPending,
+    refetch: detectLabel,
+  } = trpc.word.detectLabel.useQuery(
+    { image: photo! },
+    {
+      enabled: false,
+    }
+  );
 
   const startCamera = async () => {
     try {
@@ -25,10 +34,6 @@ export default function Camera() {
         videoRef.current.srcObject = stream;
       }
       streamRef.current = stream;
-
-      // Load model if not already loaded
-
-      startDetectionLoop(); // Start detecting after camera is on
     } catch (error) {
       console.error('Error accessing webcam:', error);
       setDisabledCamera(true);
@@ -42,21 +47,20 @@ export default function Camera() {
     }
   };
 
+  const stopCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      // streamRef.current = null;
+    }
+  };
+
   useEffect(() => {
     startCamera();
 
     return () => {
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach((track) => track.stop());
-      }
+      stopCamera();
     };
   }, []);
-
-  useEffect(() => {
-    if (photo) {
-      predictObject();
-    }
-  }, [photo]);
 
   const takePhoto = () => {
     const video = videoRef.current;
@@ -78,13 +82,9 @@ export default function Camera() {
 
   const startDetectionLoop = () => {
     detectionIntervalRef.current = setInterval(async () => {
-      if (!videoRef.current || !modelRef.current) return;
+      if (!videoRef.current) return;
 
       const video = videoRef.current;
-      const model = modelRef.current;
-
-      const predictions = await model.detect(video);
-      const visibleObject = predictions.find((pred) => pred.score >= 0.6);
 
       if (visibleObject) {
         const now = Date.now();
@@ -105,42 +105,6 @@ export default function Camera() {
     setPhoto(null);
     setErrorMessage(null);
     startCamera();
-    setPredictions([]);
-  };
-
-  const predictObject = async () => {
-    if (!photo) return;
-    setPredictionLoading(true);
-    setErrorMessage(null);
-
-    try {
-      const model = await cocoSsd.load();
-      const img = new Image();
-      img.src = photo;
-      img.onload = async () => {
-        const predictions = await model.detect(img);
-        console.log('Predictions:', predictions);
-
-        const filteredPredictions = predictions.filter(
-          (pred) => pred.score >= 0.6
-        );
-
-        if (filteredPredictions.length === 0) {
-          setErrorMessage('No objects detected with high confidence.');
-        } else {
-          const highestPrediction = filteredPredictions.reduce(
-            (prev, current) => (prev.score > current.score ? prev : current)
-          );
-
-          setPredictions([highestPrediction]);
-          sprinkleConfettiOnScreen();
-        }
-        setPredictionLoading(false);
-      };
-    } catch (error) {
-      setErrorMessage('Prediction failed. Please try again.');
-      setPredictionLoading(false);
-    }
   };
 
   return (
@@ -170,11 +134,11 @@ export default function Camera() {
           <button className="button" onClick={retakePhoto}>
             <FontAwesomeIcon icon={faArrowsRotate} className="icon" />{' '}
           </button>
-          {predictionLoading && <Loader />}
-          {!predictionLoading && predictions.length > 0 && (
+          {detectLabelIsPending && <Loader />}
+          {!detectLabelIsPending && imageLabel && (
             <div className="predictions-container">
-              <p className="prediction-item">{predictions[0].class}</p>
-              <SpeakerButton text={predictions[0].class}></SpeakerButton>
+              <p className="prediction-item">{imageLabel}</p>
+              <SpeakerButton text={imageLabel}></SpeakerButton>
             </div>
           )}
         </>
