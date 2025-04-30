@@ -1,6 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import * as cocoSsd from '@tensorflow-models/coco-ssd';
-import '@tensorflow/tfjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate, faCamera } from '@fortawesome/free-solid-svg-icons';
 import './Camera.scss';
@@ -12,14 +10,13 @@ import { sprinkleConfettiOnScreen } from '../../utils/confetti';
 export default function Camera() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [photo, setPhoto] = useState<string | null>(null);
-  const [predictions, setPredictions] = useState<cocoSsd.DetectedObject[]>([]);
-  const [predictionLoading, setPredictionLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [disabledCamera, setDisabledCamera] = useState<boolean>(false);
   const streamRef = useRef<MediaStream | null>(null);
   const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const objectVisibleSinceRef = useRef<number | null>(null);
-  const modelRef = useRef<cocoSsd.ObjectDetection | null>(null);
+
+  const;
 
   const startCamera = async () => {
     try {
@@ -30,9 +27,6 @@ export default function Camera() {
       streamRef.current = stream;
 
       // Load model if not already loaded
-      if (!modelRef.current) {
-        modelRef.current = await cocoSsd.load();
-      }
 
       startDetectionLoop(); // Start detecting after camera is on
     } catch (error) {
