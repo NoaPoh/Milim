@@ -1,6 +1,6 @@
 import React from 'react';
 import './CollectionDrawer.scss';
-import { categories } from '../Home/Home';
+// import { categories } from '../Home/Home';
 
 const CollectionDrawer = ({
   isOpen,
@@ -9,7 +9,7 @@ const CollectionDrawer = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  const categoriesToChoose = categories;
+  //   const categoriesToChoose = categories;
   return (
     <div className={`drawer-overlay ${isOpen ? 'open' : ''}`} onClick={onClose}>
       <div
@@ -18,7 +18,7 @@ const CollectionDrawer = ({
       >
         <h3 className="drawer-title">Choose a Collection</h3>
         <ul className="drawer-list">
-          {categoriesToChoose.map((category) => (
+          {/* {categoriesToChoose.map((category) => (
             <>
               <li key={category.name} className="drawer-item">
                 <img
@@ -29,7 +29,7 @@ const CollectionDrawer = ({
                 <span className="drawer-text">{category.name}</span>
               </li>
             </>
-          ))}
+          ))} */}
           {/* <li className="drawer-item">Animals</li>
           <li className="drawer-item">Fruits</li>
           <li className="drawer-item">My Words</li> */}

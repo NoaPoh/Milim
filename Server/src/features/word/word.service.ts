@@ -33,8 +33,7 @@ export const saveWordInCategory = async (
       userId,
       categoryId,
       discoveredAt: new Date(),
-      // picture: '', // Placeholder for picture, can be updated later
-      // userId: SYSTEM_USER_ID, // Assuming SYSTEM_USER_ID is a constant for the system user
+      picture: new Uint8Array(), // Provide a default empty Uint8Array for the picture field
     },
   });
   return newWord;
