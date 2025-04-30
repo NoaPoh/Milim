@@ -30,6 +30,7 @@
   &.open {
     transform: translateY(0);
     max-height: 60vh;
+    overflow: scroll;
   }
 }
 

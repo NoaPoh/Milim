@@ -1,17 +1,18 @@
 import { z } from 'zod';
 import { protectedProcedure, router } from '../../core/trpc/trpc';
 import type { Word } from '@prisma/client';
-import { saveWordInCategory, translateWord } from './word.service';
+import {
+  saveWordInCategory,
+  translateWord,
+  fetchRandomUserWords,
+} from './word.service';
 
 export const wordRouter = router({
-  fetchUserWords: protectedProcedure
-    .input(z.object({ userId: z.number() }))
-    .query(({ ctx, input }): Promise<Word[]> => {
-      return ctx.prisma.word.findMany({
-        where: { userId: input.userId },
-      });
+  fetchRandomUserWords: protectedProcedure
+    .input(z.object({ amount: z.number() }))
+    .query(async ({ ctx, input }): Promise<Word[]> => {
+      return await fetchRandomUserWords(ctx.userId, ctx.prisma, input.amount);
     }),
-
   translateWord: protectedProcedure
     .input(z.object({ word: z.string() }))
     .query(async ({ ctx, input }) => {
