@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GoogleLabelDetectionResponse } from '../../@types/dtos';
+import { GoogleLabelDetectionResponse } from '../../types/dtos';
 
 const googleAPIKey = process.env.GOOGLE_API_KEY;
 
