@@ -7,6 +7,11 @@
     "esModuleInterop": true,
     "strict": true
   },
+  "baseUrl": ".",
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "exclude": ["node_modules", "**/*.spec.ts"],
+  "paths": {
+    "milim-server/types": ["src/types/index.ts"],
+    "milim-server": ["src/index.ts"]
+  }
 }

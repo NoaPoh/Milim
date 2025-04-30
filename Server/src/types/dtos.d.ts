@@ -1,6 +1,6 @@
 import { Category, User, Word } from '@prisma/client';
 
-export type DisplayCategory = Category & Partial<Pick<Word, 'picture'>>;
+export type DisplayCategory = Category & { picture: string };
 
 export type MessageResponse = {
   message: string;
