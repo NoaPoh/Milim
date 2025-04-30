@@ -3,7 +3,7 @@ import './Register.scss';
 import { trpc } from '../../utils/trpc';
 import Loader from '../../components/Loader/Loader';
 import { useNavigate } from 'react-router';
-import { RoutesValues } from '../../constants/routes';
+import { RoutesValues } from '../../routes/routes';
 
 const Register = () => {
   const [username, setUsername] = useState('');
