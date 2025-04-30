@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
+import './CollectionDrawer.scss';
+import { categories } from '../Home/Home';
 
 const CollectionDrawer = ({
   isOpen,
@@ -7,29 +9,30 @@ const CollectionDrawer = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
+  const categoriesToChoose = categories;
   return (
-    <div
-      className={`fixed inset-0 bg-black bg-opacity-40 z-40 transition-opacity duration-300 ${
-        isOpen
-          ? 'opacity-100 pointer-events-auto'
-          : 'opacity-0 pointer-events-none'
-      }`}
-      onClick={onClose}
-    >
+    <div className={`drawer-overlay ${isOpen ? 'open' : ''}`} onClick={onClose}>
       <div
-        className={`fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-lg z-50 p-6 transition-transform duration-300 ${
-          isOpen ? 'translate-y-0' : 'translate-y-full'
-        }`}
-        onClick={(e) => e.stopPropagation()} // prevents close on inner click
+        className={`drawer-content ${isOpen ? 'open' : ''}`}
+        onClick={(e) => e.stopPropagation()}
       >
-        <h3 className="text-xl font-semibold mb-4">Choose a Collection</h3>
-        <ul className="space-y-2">
-          <li className="p-3 bg-gray-100 rounded-md cursor-pointer">Animals</li>
-          <li className="p-3 bg-gray-100 rounded-md cursor-pointer">Fruits</li>
-          <li className="p-3 bg-gray-100 rounded-md cursor-pointer">
-            My Words
-          </li>
-          {/* ...more collections */}
+        <h3 className="drawer-title">Choose a Collection</h3>
+        <ul className="drawer-list">
+          {categoriesToChoose.map((category) => (
+            <>
+              <li key={category.name} className="drawer-item">
+                <img
+                  src={category.icon}
+                  alt={category.name}
+                  className="drawer-icon"
+                />
+                <span className="drawer-text">{category.name}</span>
+              </li>
+            </>
+          ))}
+          {/* <li className="drawer-item">Animals</li>
+          <li className="drawer-item">Fruits</li>
+          <li className="drawer-item">My Words</li> */}
         </ul>
       </div>
     </div>
