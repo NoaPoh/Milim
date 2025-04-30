@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { translateWord as googleTranslate } from '../../externalAPIs/googleTranslate/googleTranslate';
 
 export const fetchRandomUserWords = async (
   userId: number,
@@ -14,4 +15,8 @@ export const fetchRandomUserWords = async (
     .slice(0, amount);
 
   return randomWords;
+};
+
+export const translateWord = async (word: string): Promise<string> => {
+  return await googleTranslate(word);
 };
