@@ -8,7 +8,7 @@ import {
   LoginResponse,
   MessageResponse,
   RegisterInput,
-} from '../../@types/dtos';
+} from '../../types/dtos';
 
 const generateAccessToken = (userId: User['id']) => {
   return jwt.sign({ userId }, process.env.JWT_ACCESS_SECRET || '', {
