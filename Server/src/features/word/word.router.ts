@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { protectedProcedure, router } from '../../core/trpc/trpc';
 import type { Word } from '@prisma/client';
+import { translateWord } from './word.service';
 
 export const wordRouter = router({
   fetchUserWords: protectedProcedure
@@ -10,18 +11,10 @@ export const wordRouter = router({
         where: { userId: input.userId },
       });
     }),
-  insertWord: protectedProcedure
-    .input(z.object({ userId: z.number(), text: z.string() }))
-    .mutation(({ ctx, input }) => {
-      const categoryId = 1; // TODO: figure out
-      const newWord = ctx.prisma.word.create({
-        data: {
-          userId: input.userId,
-          text: input.text,
-          categoryId,
-        },
-      });
 
-      return newWord;
+  translateWord: protectedProcedure
+    .input(z.object({ word: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return await translateWord(input.word);
     }),
 });
