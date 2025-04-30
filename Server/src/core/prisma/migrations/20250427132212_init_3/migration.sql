@@ -18,7 +18,6 @@ CREATE TABLE "Category" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "createdById" INTEGER,
-    "createdBySystem" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Category_pkey" PRIMARY KEY ("id")
 );
@@ -28,6 +27,7 @@ CREATE TABLE "Word" (
     "id" SERIAL NOT NULL,
     "text" TEXT NOT NULL,
     "discoveredAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "picture" BYTEA NOT NULL,
     "userId" INTEGER NOT NULL,
     "categoryId" INTEGER NOT NULL,
 
@@ -39,6 +39,7 @@ CREATE TABLE "Animal" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "imagePath" TEXT NOT NULL,
+    "price" INTEGER NOT NULL,
 
     CONSTRAINT "Animal_pkey" PRIMARY KEY ("id")
 );

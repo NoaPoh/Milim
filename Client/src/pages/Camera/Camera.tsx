@@ -21,9 +21,6 @@ export default function Camera() {
   const objectVisibleSinceRef = useRef<number | null>(null);
   const modelRef = useRef<cocoSsd.ObjectDetection | null>(null);
 
-  const { mutateAsync: addWord, isPending: addWordIsLoading } =
-    trpc.word.insertWord.useMutation();
-
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });

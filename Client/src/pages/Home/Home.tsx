@@ -2,15 +2,28 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ObjectsCategoriesRoutesValues } from '../../constants/routes';
 import { trpc } from '../../utils/trpc';
+import airportIcon from '../../assets/images/categories/airport.png';
+import schoolIcon from '../../assets/images/categories/school.png';
+import parkIcon from '../../assets/images/categories/park.png';
+import kitchenIcon from '../../assets/images/categories/kitchen.png';
+import bedroomIcon from '../../assets/images/categories/bedroom.png';
+import supermarketIcon from '../../assets/images/categories/supermarket.png';
+import livingRoomIcon from '../../assets/images/categories/living_room.png';
+import addIcon from '../../assets/images/categories/add.jpg';
+import giraffeIcon from '../../assets/images/animals/giraffe.png';
+import './Home.scss';
 import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
 
 // רשימת קטגוריות לדוגמה
 const categories = [
-  { name: 'AIRPORT', icon: '✈️', path: ObjectsCategoriesRoutesValues.AIRPORT },
-  { name: 'SCHOOL', icon: '🏫', path: ObjectsCategoriesRoutesValues.SCHOOL },
-  { name: 'FOOD', icon: '🍎', path: ObjectsCategoriesRoutesValues.FOOD },
-  { name: 'GARDEN', icon: '🌱', path: ObjectsCategoriesRoutesValues.GARDEN },
-  { name: 'BEDROOM', icon: '🛏️', path: ObjectsCategoriesRoutesValues.BEDROOM },
+  { name: 'AIRPORT', icon: airportIcon, path: ObjectsCategoriesRoutesValues.AIRPORT },
+  { name: 'SCHOOL', icon: schoolIcon, path: ObjectsCategoriesRoutesValues.SCHOOL },
+  { name: 'PARK', icon: parkIcon, path: ObjectsCategoriesRoutesValues.PARK },
+  { name: 'KITCHEN', icon: kitchenIcon, path: ObjectsCategoriesRoutesValues.KITCHEN },
+  { name: 'BEDROOM', icon: bedroomIcon, path: ObjectsCategoriesRoutesValues.BEDROOM },
+  { name: 'SUPERMARKET', icon: supermarketIcon, path: ObjectsCategoriesRoutesValues.SUPERMARKET },
+  { name: 'LIVING ROOM', icon: livingRoomIcon, path: ObjectsCategoriesRoutesValues.LIVING_ROOM },
+  { name: '', icon: addIcon, path: ObjectsCategoriesRoutesValues.ADD },
 ];
 
 const Home: React.FC = () => {
@@ -19,7 +32,7 @@ const Home: React.FC = () => {
 
   const userDetails = {
     username: 'John Doe',
-    spiritAnimal: '/assets/images/giraffe.svg',
+    spiritAnimal: giraffeIcon,
   };
 
   return (
@@ -39,9 +52,13 @@ const Home: React.FC = () => {
           <Link
             to={category.path}
             key={category.name}
-            className="flex flex-col items-center justify-center p-6 bg-white rounded-2xl shadow-md hover:shadow-lg transition"
+            className="flex flex-col items-center justify-center p-2 bg-white rounded-2xl shadow-md hover:shadow-lg transition"
           >
-            <span className="text-5xl">{category.icon}</span>
+            <img
+              src={category.icon}
+              alt={category.name}
+              className="w-19 h-19 category-icon"
+            />
             <span className="mt-2 text-lg font-semibold text-gray-700">
               {category.name}
             </span>
