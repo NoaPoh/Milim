@@ -3,6 +3,8 @@ export enum RoutesValues {
   REGISTER = '/register',
   LOGIN = '/login',
   CAMERA = '/camera',
+  CATEGORIES = '/categories',
+  ADD_CATEGORY = '/categories/add',
   PROFILE = '/profile',
 }
 

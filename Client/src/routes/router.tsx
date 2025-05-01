@@ -1,6 +1,6 @@
 import React from 'react';
 import { FunctionComponent } from 'react';
-import { RoutesValues } from '../constants/routes';
+import { RoutesValues } from './routes';
 import Home from '../pages/Home/Home';
 import { Route, Routes } from 'react-router-dom';
 import Camera from '../pages/Camera/Camera';
