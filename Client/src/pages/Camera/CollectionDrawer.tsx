@@ -1,6 +1,7 @@
 import React from 'react';
 import './CollectionDrawer.scss';
 import { useGetCategories } from '../Home/hooks/useGetCategories';
+import { trpc } from '../../utils/trpc';
 // import { categories } from '../Home/Home';
 
 const CollectionDrawer = ({
@@ -16,7 +17,17 @@ const CollectionDrawer = ({
 }) => {
   const { data: categories } = useGetCategories();
 
-  const handleCategoryClick = (category: any) => {
+  const {
+    isPending: saveWordInCategoryIsPending,
+    mutateAsync: saveWordInCategory,
+  } = trpc.word.saveWordInCategory.useMutation({ onSuccess: onClose });
+
+  const handleCategoryClick = async (category: any) => {
+    await saveWordInCategory({
+      text: newWord,
+      categoryId: category,
+      picture: picture,
+    });
     // Handle category click here
     console.log('Category clicked:', category);
   };
@@ -32,20 +43,19 @@ const CollectionDrawer = ({
           {categories &&
             categories.map((category) => (
               <>
-                <li
-                  key={category.name}
-                  className="drawer-item"
-                  onClick={() => handleCategoryClick(category)}
-                >
+                <li key={category.name} className="drawer-item">
                   <img
                     src={category.picture}
                     alt={category.name}
                     className="drawer-icon"
                   />
                   <span className="drawer-text">{category.name}</span>
-                </li>
+                </li>{' '}
               </>
             ))}
+          <button className="btn" onClick={() => handleCategoryClick(1)}>
+            add
+          </button>
           {/* <li className="drawer-item">Animals</li>
           <li className="drawer-item">Fruits</li>
           <li className="drawer-item">My Words</li> */}

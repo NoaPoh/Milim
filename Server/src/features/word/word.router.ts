@@ -19,19 +19,41 @@ export const wordRouter = router({
       return await translateWord(input.word);
     }),
 
+  //   saveWordInCategory: protectedProcedure
+  //     .input(
+  //       z.object({
+  //         text: z.string(),
+  //         picture: z.string(),
+  //         // userId: z.number(),
+  //         categoryId: z.number(),
+  //       })
+  //     )
+  //     .mutation(async ({ ctx, input }) => {
+  //       return await saveWordInCategory(
+  //         input.text,
+  //         input.picture,
+  //         ctx.userId,
+  //         input.categoryId,
+  //         ctx.prisma
+  //       );
+  //     }),
+  // });
+
   saveWordInCategory: protectedProcedure
     .input(
       z.object({
         text: z.string(),
-        userId: z.number(),
         categoryId: z.number(),
+        picture: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
+      const { text, categoryId, picture } = input;
       return await saveWordInCategory(
-        input.text,
+        text,
+        picture,
         ctx.userId,
-        input.categoryId,
+        categoryId,
         ctx.prisma
       );
     }),
