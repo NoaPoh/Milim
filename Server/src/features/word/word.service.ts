@@ -23,17 +23,22 @@ export const translateWord = async (word: string): Promise<string> => {
 
 export const saveWordInCategory = async (
   text: string,
+  picture: string,
   userId: number,
   categoryId: number,
   prisma: PrismaClient
 ): Promise<Word> => {
+  const buffer = Buffer.from(picture.split(',')[1], 'base64');
+
+  // Save to BYTEA column (e.g., Prisma)
+
   const newWord = await prisma.word.create({
     data: {
       text,
       userId,
       categoryId,
       discoveredAt: new Date(),
-      picture: new Uint8Array(), // Provide a default empty Uint8Array for the picture field
+      picture: buffer, // Provide a default empty Uint8Array for the picture field
     },
   });
   return newWord;

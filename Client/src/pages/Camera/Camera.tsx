@@ -195,6 +195,8 @@ export default function Camera() {
           <CollectionDrawer
             isOpen={drawerOpen}
             onClose={() => setDrawerOpen(false)}
+            newWord={predictions[0]?.class || ''}
+            picture={photo || ''}
           />
         </>
       )}

@@ -1,15 +1,26 @@
 import React from 'react';
 import './CollectionDrawer.scss';
+import { useGetCategories } from '../Home/hooks/useGetCategories';
 // import { categories } from '../Home/Home';
 
 const CollectionDrawer = ({
   isOpen,
   onClose,
+  newWord,
+  picture,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  newWord: string;
+  picture: string;
 }) => {
-  //   const categoriesToChoose = categories;
+  const { data: categories } = useGetCategories();
+
+  const handleCategoryClick = (category: any) => {
+    // Handle category click here
+    console.log('Category clicked:', category);
+  };
+
   return (
     <div className={`drawer-overlay ${isOpen ? 'open' : ''}`} onClick={onClose}>
       <div
@@ -18,18 +29,23 @@ const CollectionDrawer = ({
       >
         <h3 className="drawer-title">Choose a Collection</h3>
         <ul className="drawer-list">
-          {/* {categoriesToChoose.map((category) => (
-            <>
-              <li key={category.name} className="drawer-item">
-                <img
-                  src={category.icon}
-                  alt={category.name}
-                  className="drawer-icon"
-                />
-                <span className="drawer-text">{category.name}</span>
-              </li>
-            </>
-          ))} */}
+          {categories &&
+            categories.map((category) => (
+              <>
+                <li
+                  key={category.name}
+                  className="drawer-item"
+                  onClick={() => handleCategoryClick(category)}
+                >
+                  <img
+                    src={category.picture}
+                    alt={category.name}
+                    className="drawer-icon"
+                  />
+                  <span className="drawer-text">{category.name}</span>
+                </li>
+              </>
+            ))}
           {/* <li className="drawer-item">Animals</li>
           <li className="drawer-item">Fruits</li>
           <li className="drawer-item">My Words</li> */}
