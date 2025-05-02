@@ -1,7 +1,7 @@
 import React from 'react';
 import './CollectionDrawer.scss';
 import { useGetCategories } from '../Home/hooks/useGetCategories';
-import { trpc } from '../../utils/trpc';
+import { api } from '../../utils/trpc';
 // import { categories } from '../Home/Home';
 
 const CollectionDrawer = ({
@@ -20,7 +20,7 @@ const CollectionDrawer = ({
   const {
     isPending: saveWordInCategoryIsPending,
     mutateAsync: saveWordInCategory,
-  } = trpc.word.saveWordInCategory.useMutation({ onSuccess: onClose });
+  } = api.word.saveWordInCategory.useMutation({ onSuccess: onClose });
 
   const handleCategoryClick = async (category: number) => {
     await saveWordInCategory({

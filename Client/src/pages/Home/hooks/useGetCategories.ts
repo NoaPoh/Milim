@@ -1,9 +1,9 @@
 import { DisplayCategory } from 'milim-server/types';
-import { trpc } from '../../../utils/trpc';
+import { api } from '../../../utils/trpc';
 import defaultCategoriesIcons from '../../../constants/defaultCategoriesIcons';
 
 export const useGetCategories = () => {
-  const query = trpc.category.fetchUserCategories.useQuery();
+  const query = api.category.fetchUserCategories.useQuery();
 
   const categoriesWithDefaultPictures: DisplayCategory[] | undefined =
     query.data?.map((category) => {

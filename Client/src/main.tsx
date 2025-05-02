@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { trpc, trpcClient } from './utils/trpc';
+import { api, trpcClient } from './utils/trpc';
 import {
   QueryCache,
   QueryClient,
@@ -20,11 +20,11 @@ const queryClient = new QueryClient({
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <api.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
           <App />
         </QueryClientProvider>
-      </trpc.Provider>
+      </api.Provider>
     </BrowserRouter>
   </React.StrictMode>
 );

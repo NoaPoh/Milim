@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RoutesValues } from '../../routes/routes';
-import { trpc } from '../../utils/trpc';
+import { api } from '../../utils/trpc';
 import Loader from '../../components/Loader/Loader';
 import { useNavigate } from 'react-router-dom';
 import hippoPicture from '../../assets/images/animals/hippo.png';
@@ -18,7 +18,7 @@ const Login: React.FC = () => {
   };
 
   const { isPending: loginIsPending, mutateAsync: login } =
-    trpc.auth.login.useMutation({ onSuccess: navToHome });
+    api.auth.login.useMutation({ onSuccess: navToHome });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

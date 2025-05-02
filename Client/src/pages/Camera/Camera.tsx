@@ -6,7 +6,7 @@ import SpeakerButton from '../../components/SpeakerButton';
 import Loader from '../../components/Loader/Loader';
 import CollectionDrawer from './CollectionDrawer';
 import { sprinkleConfettiOnScreen } from '../../utils/confetti';
-import { trpc } from '../../utils/trpc';
+import { api } from '../../utils/trpc';
 
 export default function Camera() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -22,7 +22,7 @@ export default function Camera() {
     data: imageLabel,
     isPending: detectLabelIsPending,
     mutateAsync: detectLabel,
-  } = trpc.word.detectLabel.useMutation({
+  } = api.word.detectLabel.useMutation({
     onSuccess: () => {
       takePhoto();
       sprinkleConfettiOnScreen();
