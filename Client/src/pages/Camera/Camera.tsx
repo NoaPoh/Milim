@@ -22,10 +22,9 @@ export default function Camera() {
     data: detectedObject,
     isPending: detectObjectIsPending,
     mutateAsync: detectObject,
-    variables: lastUsedImage,
   } = api.word.detectObject.useMutation({
-    onSuccess: () => {
-      lastUsedImage && freezeFrame(lastUsedImage.image);
+    onSuccess: (data, variables) => {
+      freezeFrame(variables.image);
       sprinkleConfettiOnScreen();
     },
   });
