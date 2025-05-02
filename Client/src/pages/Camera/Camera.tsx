@@ -13,7 +13,7 @@ export default function Camera() {
   const streamRef = useRef<MediaStream | null>(null);
   const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const [photo, setPhoto] = useState<string | null>(null);
+  const [stalePhoto, setStalePhoto] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [cantUseCamera, setCantUseCamera] = useState<boolean>(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -22,12 +22,18 @@ export default function Camera() {
     data: detectedObject,
     isPending: detectObjectIsPending,
     mutateAsync: detectObject,
+    variables: lastUsedImage,
   } = api.word.detectObject.useMutation({
     onSuccess: () => {
-      takePhoto();
+      lastUsedImage && freezeFrame(lastUsedImage.image);
       sprinkleConfettiOnScreen();
     },
   });
+
+  const detectObjectIsPendingRef = useRef(detectObjectIsPending);
+  useEffect(() => {
+    detectObjectIsPendingRef.current = detectObjectIsPending;
+  }, [detectObjectIsPending]);
 
   const captureFrameAsBase64 = (): string | null => {
     const video = videoRef.current;
@@ -45,11 +51,12 @@ export default function Camera() {
   };
 
   const sendDetectObjects = useCallback(async () => {
-    if (detectObjectIsPending) return;
+    console.log('Detect object is pending:', detectObjectIsPendingRef.current);
+    if (detectObjectIsPendingRef.current) return;
 
     const frameBase64 = captureFrameAsBase64();
     if (frameBase64) await detectObject({ image: frameBase64 });
-  }, [detectObject, detectObjectIsPending]);
+  }, [detectObject]);
 
   const startDetectionLoop = () => {
     detectionIntervalRef.current = setInterval(sendDetectObjects, 2000);
@@ -57,6 +64,7 @@ export default function Camera() {
 
   const stopDetectionLoop = () => {
     if (detectionIntervalRef.current) {
+      console.log('Stopping detection loop...');
       clearInterval(detectionIntervalRef.current);
     }
     detectionIntervalRef.current = null;
@@ -87,15 +95,20 @@ export default function Camera() {
     streamRef.current = null;
   };
 
-  const takePhoto = () => {
-    const dataUrl = captureFrameAsBase64();
-    setPhoto(dataUrl);
+  const freezeFrame = (dataUrl: string | null) => {
+    setStalePhoto(dataUrl);
     stopDetectionLoop();
+  };
+
+  const onTakePictureButton = () => {
+    const dataUrl = captureFrameAsBase64();
+    freezeFrame(dataUrl);
+
     if (dataUrl) detectObject({ image: dataUrl });
   };
 
   const restartFeed = () => {
-    setPhoto(null);
+    setStalePhoto(null);
     setErrorMessage(null);
     setCantUseCamera(false);
     startFeed();
@@ -110,20 +123,20 @@ export default function Camera() {
     <div className="photo-capture-container">
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      {!photo ? (
+      {!stalePhoto ? (
         <>
           <video ref={videoRef} autoPlay muted className="video-preview" />
           <button
             className="button"
             disabled={cantUseCamera}
-            onClick={takePhoto}
+            onClick={onTakePictureButton}
           >
             <FontAwesomeIcon icon={faCamera} className="icon" />
           </button>
         </>
       ) : (
         <>
-          <img src={photo} alt="Captured" className="captured-photo" />
+          <img src={stalePhoto} alt="Captured" className="captured-photo" />
           <button className="button" onClick={restartFeed}>
             <FontAwesomeIcon icon={faArrowsRotate} className="icon" />
           </button>
@@ -141,7 +154,7 @@ export default function Camera() {
             isOpen={drawerOpen}
             onClose={() => setDrawerOpen(false)}
             newWord={detectedObject || ''}
-            picture={photo || ''}
+            picture={stalePhoto || ''}
           />
         </>
       )}
