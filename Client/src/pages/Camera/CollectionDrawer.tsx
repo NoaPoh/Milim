@@ -22,7 +22,7 @@ const CollectionDrawer = ({
     mutateAsync: saveWordInCategory,
   } = trpc.word.saveWordInCategory.useMutation({ onSuccess: onClose });
 
-  const handleCategoryClick = async (category: any) => {
+  const handleCategoryClick = async (category: number) => {
     await saveWordInCategory({
       text: newWord,
       categoryId: category,
@@ -43,7 +43,11 @@ const CollectionDrawer = ({
           {categories &&
             categories.map((category) => (
               <>
-                <li key={category.name} className="drawer-item">
+                <li
+                  key={category.name}
+                  className="drawer-item"
+                  onClick={() => handleCategoryClick(category.id)}
+                >
                   <img
                     src={category.picture}
                     alt={category.name}
@@ -53,12 +57,9 @@ const CollectionDrawer = ({
                 </li>{' '}
               </>
             ))}
-          <button className="btn" onClick={() => handleCategoryClick(1)}>
+          {/* <button className="btn" onClick={() => handleCategoryClick(1)}>
             add
-          </button>
-          {/* <li className="drawer-item">Animals</li>
-          <li className="drawer-item">Fruits</li>
-          <li className="drawer-item">My Words</li> */}
+          </button> */}
         </ul>
       </div>
     </div>
