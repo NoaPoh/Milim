@@ -1,45 +1,22 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate, faCamera } from '@fortawesome/free-solid-svg-icons';
 import './Camera.scss';
 import SpeakerButton from '../../components/SpeakerButton';
-import { trpc } from '../../utils/trpc';
 import Loader from '../../components/Loader/Loader';
-import { sprinkleConfettiOnScreen } from '../../utils/confetti';
 import CollectionDrawer from './CollectionDrawer';
+import { sprinkleConfettiOnScreen } from '../../utils/confetti';
+import { trpc } from '../../utils/trpc';
 
 export default function Camera() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+  const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
   const [photo, setPhoto] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [cantUseCamera, setCantUseCamera] = useState<boolean>(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-
-  const streamRef = useRef<MediaStream | null>(null);
-  const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  const startDetectionLoop = () => {
-    detectionIntervalRef.current = setInterval(sendDetectLabels, 2000);
-  };
-
-  const stopDetectionLoop = () => {
-    if (detectionIntervalRef.current) {
-      clearInterval(detectionIntervalRef.current);
-      console.log('Detection loop stopped, interval cleared.');
-    }
-    detectionIntervalRef.current = null;
-  };
-
-  const takePhoto = () => {
-    const dataUrl = captureFrameAsBase64();
-    setPhoto(dataUrl);
-
-    stopDetectionLoop();
-
-    if (dataUrl) {
-      detectLabel({ image: dataUrl });
-    }
-  };
 
   const {
     data: imageLabel,
@@ -51,53 +28,6 @@ export default function Camera() {
       sprinkleConfettiOnScreen();
     },
   });
-
-  const startFeed = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
-      streamRef.current = stream;
-
-      // Start detection loop after video feed is live
-      startDetectionLoop();
-    } catch (error) {
-      console.error('Error accessing webcam:', error);
-      setCantUseCamera(true);
-      if (error.name === 'NotAllowedError') {
-        setErrorMessage(
-          'Permission denied. Please allow access to your webcam.'
-        );
-      } else {
-        setErrorMessage('Error accessing webcam. Please try again.');
-      }
-    }
-  };
-
-  const stopFeed = () => {
-    stopDetectionLoop();
-
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach((track) => track.stop());
-      streamRef.current = null;
-    }
-  };
-
-  useEffect(() => {
-    startFeed();
-
-    return () => {
-      stopFeed();
-    };
-  }, []);
-
-  const restartFeed = () => {
-    setPhoto(null);
-    setErrorMessage(null);
-    setCantUseCamera(false);
-    startFeed();
-  };
 
   const captureFrameAsBase64 = (): string | null => {
     const video = videoRef.current;
@@ -114,12 +44,65 @@ export default function Camera() {
     return canvas.toDataURL('image/png');
   };
 
-  const sendDetectLabels = async () => {
+  const sendDetectLabels = useCallback(async () => {
     const frameBase64 = captureFrameAsBase64();
-    if (frameBase64) {
-      await detectLabel({ image: frameBase64 });
+    if (frameBase64) await detectLabel({ image: frameBase64 });
+  }, [detectLabel]);
+
+  const startDetectionLoop = () => {
+    detectionIntervalRef.current = setInterval(sendDetectLabels, 2000);
+  };
+
+  const stopDetectionLoop = () => {
+    if (detectionIntervalRef.current) {
+      clearInterval(detectionIntervalRef.current);
+    }
+    detectionIntervalRef.current = null;
+  };
+
+  const startFeed = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+      streamRef.current = stream;
+      startDetectionLoop();
+    } catch (error: any) {
+      console.error('Error accessing webcam:', error);
+      setCantUseCamera(true);
+      setErrorMessage(
+        error.name === 'NotAllowedError'
+          ? 'Permission denied. Please allow access to your webcam.'
+          : 'Error accessing webcam. Please try again.'
+      );
     }
   };
+
+  const stopFeed = () => {
+    stopDetectionLoop();
+    streamRef.current?.getTracks().forEach((track) => track.stop());
+    streamRef.current = null;
+  };
+
+  const takePhoto = () => {
+    const dataUrl = captureFrameAsBase64();
+    setPhoto(dataUrl);
+    stopDetectionLoop();
+    if (dataUrl) detectLabel({ image: dataUrl });
+  };
+
+  const restartFeed = () => {
+    setPhoto(null);
+    setErrorMessage(null);
+    setCantUseCamera(false);
+    startFeed();
+  };
+
+  useEffect(() => {
+    startFeed();
+    return () => stopFeed();
+  }, []);
 
   return (
     <div className="photo-capture-container">
@@ -128,7 +111,6 @@ export default function Camera() {
       {!photo ? (
         <>
           <video ref={videoRef} autoPlay muted className="video-preview" />
-
           <button
             className="button"
             disabled={cantUseCamera}
@@ -141,13 +123,13 @@ export default function Camera() {
         <>
           <img src={photo} alt="Captured" className="captured-photo" />
           <button className="button" onClick={restartFeed}>
-            <FontAwesomeIcon icon={faArrowsRotate} className="icon" />{' '}
+            <FontAwesomeIcon icon={faArrowsRotate} className="icon" />
           </button>
           {detectLabelIsPending && <Loader />}
           {!detectLabelIsPending && imageLabel && (
             <div className="predictions-container">
               <p className="prediction-item">{imageLabel}</p>
-              <SpeakerButton text={imageLabel}></SpeakerButton>
+              <SpeakerButton text={imageLabel} />
             </div>
           )}
           <button className="btn" onClick={() => setDrawerOpen(true)}>
