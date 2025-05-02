@@ -17,14 +17,27 @@ export default function Camera() {
 
   const streamRef = useRef<MediaStream | null>(null);
   const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const objectVisibleSinceRef = useRef<number | null>(null);
+
+  const startDetectionLoop = () => {
+    detectionIntervalRef.current = setInterval(sendDetectLabels, 2000);
+  };
+
+  const stopDetectionLoop = () => {
+    if (detectionIntervalRef.current) {
+      clearInterval(detectionIntervalRef.current);
+    }
+    detectionIntervalRef.current = null;
+  };
 
   const {
     data: imageLabel,
     isPending: detectLabelIsPending,
     mutateAsync: detectLabel,
   } = trpc.word.detectLabel.useMutation({
-    onSuccess: () => sprinkleConfettiOnScreen(),
+    onSuccess: () => {
+      sprinkleConfettiOnScreen();
+      stopDetectionLoop();
+    },
   });
 
   const startCamera = async () => {
@@ -54,9 +67,7 @@ export default function Camera() {
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => track.stop());
       streamRef.current = null;
-      if (detectionIntervalRef.current) {
-        clearInterval(detectionIntervalRef.current);
-      }
+      stopDetectionLoop();
     }
   };
 
@@ -79,10 +90,7 @@ export default function Camera() {
       setPhoto(dataUrl);
 
       // Stop detection loop
-      if (detectionIntervalRef.current) {
-        clearInterval(detectionIntervalRef.current);
-      }
-      objectVisibleSinceRef.current = null;
+      stopDetectionLoop();
     }
   };
 
@@ -112,11 +120,6 @@ export default function Camera() {
     if (frameBase64) {
       await detectLabel({ image: frameBase64 });
     }
-  };
-
-  const startDetectionLoop = () => {
-    detectionIntervalRef.current = setInterval(sendDetectLabels, 2000);
-    // sendDetectLabels();
   };
 
   return (
