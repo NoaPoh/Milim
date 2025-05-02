@@ -184,14 +184,11 @@ export default function Camera() {
             <div className="predictions-container">
               <p className="prediction-item">{predictions[0].class}</p>
               <SpeakerButton text={predictions[0].class}></SpeakerButton>
-              {/* <button className="btn" onClick={() => setDrawerOpen(true)}>
+              <button className="btn" onClick={() => setDrawerOpen(true)}>
                 Add To Collection
-              </button> */}
+              </button>
             </div>
           )}
-          <button className="btn" onClick={() => setDrawerOpen(true)}>
-            Add To Collection
-          </button>
           <CollectionDrawer
             isOpen={drawerOpen}
             onClose={() => setDrawerOpen(false)}
