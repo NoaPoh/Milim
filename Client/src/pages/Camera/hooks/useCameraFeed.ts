@@ -24,7 +24,6 @@ function useCameraFeed() {
       streamRef.current = stream;
       onStart && onStart();
     } catch (error: any) {
-      console.error('Error accessing webcam:', error);
       setCantUseCamera(true);
       setErrorMessage(
         error.name === 'NotAllowedError'

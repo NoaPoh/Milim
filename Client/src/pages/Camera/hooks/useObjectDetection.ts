@@ -28,7 +28,6 @@ function useObjectDetection(props: UseObjectDetectionProps) {
   }, [detectObjectIsPending]);
 
   const sendDetectObjects = useCallback(async () => {
-    console.log('Detect object is pending:', detectObjectIsPendingRef.current);
     if (detectObjectIsPendingRef.current) return;
 
     const frameBase64 = convertVideoToBase64(props.videoRef.current);
@@ -41,7 +40,6 @@ function useObjectDetection(props: UseObjectDetectionProps) {
 
   const stopDetectionLoop = () => {
     if (detectionIntervalRef.current) {
-      console.log('Stopping detection loop...');
       clearInterval(detectionIntervalRef.current);
     }
     detectionIntervalRef.current = null;
