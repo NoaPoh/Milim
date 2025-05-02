@@ -34,6 +34,9 @@ export default function Camera() {
         videoRef.current.srcObject = stream;
       }
       streamRef.current = stream;
+
+      // Start detection loop after video feed is live
+      startDetectionLoop();
     } catch (error) {
       console.error('Error accessing webcam:', error);
       setDisabledCamera(true);
@@ -50,7 +53,10 @@ export default function Camera() {
   const stopCamera = () => {
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => track.stop());
-      // streamRef.current = null;
+      streamRef.current = null;
+      if (detectionIntervalRef.current) {
+        clearInterval(detectionIntervalRef.current);
+      }
     }
   };
 
@@ -80,31 +86,34 @@ export default function Camera() {
     }
   };
 
-  const startDetectionLoop = () => {
-    detectionIntervalRef.current = setInterval(async () => {
-      if (!videoRef.current) return;
-
-      const video = videoRef.current;
-
-      if (visibleObject) {
-        const now = Date.now();
-
-        if (!objectVisibleSinceRef.current) {
-          objectVisibleSinceRef.current = now;
-        } else if (now - objectVisibleSinceRef.current >= 2000) {
-          clearInterval(detectionIntervalRef.current!);
-          takePhoto(); // Auto take photo
-        }
-      } else {
-        objectVisibleSinceRef.current = null; // Reset timer if object disappears
-      }
-    }, 300); // Run detection every 300ms
-  };
-
   const retakePhoto = () => {
     setPhoto(null);
     setErrorMessage(null);
     startCamera();
+  };
+
+  const captureFrameAsBase64 = (): string | null => {
+    const video = videoRef.current;
+    if (!video || video.videoWidth === 0 || video.videoHeight === 0)
+      return null;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const context = canvas.getContext('2d');
+    if (!context) return null;
+
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    return canvas.toDataURL('image/png');
+  };
+
+  const startDetectionLoop = () => {
+    detectionIntervalRef.current = setInterval(async () => {
+      const frameBase64 = captureFrameAsBase64();
+      if (frameBase64) {
+        await detectLabel({ image: frameBase64 });
+      }
+    }, 300);
   };
 
   return (
@@ -113,12 +122,7 @@ export default function Camera() {
 
       {!photo ? (
         <>
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            className="video-preview"
-          ></video>
+          <video ref={videoRef} autoPlay muted className="video-preview" />
 
           <button
             className="button"
