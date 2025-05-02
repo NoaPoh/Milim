@@ -189,9 +189,6 @@ export default function Camera() {
               </button>
             </div>
           )}
-          {/* <button className="btn" onClick={() => setDrawerOpen(true)}>
-            Add To Collection
-          </button> */}
           <CollectionDrawer
             isOpen={drawerOpen}
             onClose={() => setDrawerOpen(false)}
