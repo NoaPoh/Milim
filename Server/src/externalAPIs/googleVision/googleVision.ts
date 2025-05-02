@@ -15,7 +15,7 @@ const getBoxArea = (vertices: NormalizedVertices[]) => {
   return width * height;
 };
 
-export async function detectLabelFromBase64(
+export async function detectObjectFromBase64(
   base64Image: string
 ): Promise<string> {
   if (!googleAPIKey) {
@@ -51,7 +51,6 @@ export async function detectLabelFromBase64(
       },
     };
 
-    console.log('Sending request to Google Vision API:');
     const response = await axios.post<GoogleObjectDetectionResponse>(
       url,
       requestBody,
@@ -62,10 +61,8 @@ export async function detectLabelFromBase64(
       response.data.responses[0].localizedObjectAnnotations || [];
 
     if (objects.length === 0) {
-      throw new Error('No labels found in the image.');
+      throw new Error('No objects found in the image.');
     }
-
-    console.log('Labels detected:', objects);
 
     const sortedByArea = objects.sort(
       (a, b) =>
@@ -81,6 +78,6 @@ export async function detectLabelFromBase64(
     return mostDominantObject.name;
   } catch (error) {
     console.error('Error in detectObjectFromBase64:', error);
-    throw new Error('Failed to detect label from base64 image.');
+    throw new Error('Failed to detect object from base64 image.');
   }
 }

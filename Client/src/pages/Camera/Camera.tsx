@@ -19,10 +19,10 @@ export default function Camera() {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const {
-    data: imageLabel,
-    isPending: detectLabelIsPending,
-    mutateAsync: detectLabel,
-  } = api.word.detectLabel.useMutation({
+    data: detectedObject,
+    isPending: detectObjectIsPending,
+    mutateAsync: detectObject,
+  } = api.word.detectObject.useMutation({
     onSuccess: () => {
       takePhoto();
       sprinkleConfettiOnScreen();
@@ -44,13 +44,15 @@ export default function Camera() {
     return canvas.toDataURL('image/png');
   };
 
-  const sendDetectLabels = useCallback(async () => {
+  const sendDetectObjects = useCallback(async () => {
+    if (detectObjectIsPending) return;
+
     const frameBase64 = captureFrameAsBase64();
-    if (frameBase64) await detectLabel({ image: frameBase64 });
-  }, [detectLabel]);
+    if (frameBase64) await detectObject({ image: frameBase64 });
+  }, [detectObject, detectObjectIsPending]);
 
   const startDetectionLoop = () => {
-    detectionIntervalRef.current = setInterval(sendDetectLabels, 2000);
+    detectionIntervalRef.current = setInterval(sendDetectObjects, 2000);
   };
 
   const stopDetectionLoop = () => {
@@ -89,7 +91,7 @@ export default function Camera() {
     const dataUrl = captureFrameAsBase64();
     setPhoto(dataUrl);
     stopDetectionLoop();
-    if (dataUrl) detectLabel({ image: dataUrl });
+    if (dataUrl) detectObject({ image: dataUrl });
   };
 
   const restartFeed = () => {
@@ -125,11 +127,11 @@ export default function Camera() {
           <button className="button" onClick={restartFeed}>
             <FontAwesomeIcon icon={faArrowsRotate} className="icon" />
           </button>
-          {detectLabelIsPending && <Loader />}
-          {!detectLabelIsPending && imageLabel && (
+          {detectObjectIsPending && <Loader />}
+          {!detectObjectIsPending && detectedObject && (
             <div className="predictions-container">
-              <p className="prediction-item">{imageLabel}</p>
-              <SpeakerButton text={imageLabel} />
+              <p className="prediction-item">{detectedObject}</p>
+              <SpeakerButton text={detectedObject} />
               <button className="btn" onClick={() => setDrawerOpen(true)}>
                 Add To Collection
               </button>
@@ -138,7 +140,7 @@ export default function Camera() {
           <CollectionDrawer
             isOpen={drawerOpen}
             onClose={() => setDrawerOpen(false)}
-            newWord={imageLabel || ''}
+            newWord={detectedObject || ''}
             picture={photo || ''}
           />
         </>

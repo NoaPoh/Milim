@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { protectedProcedure, router } from '../../core/trpc/trpc';
 import type { Word } from '@prisma/client';
 import {
-  detectLabel,
+  detectObject,
   saveWordInCategory,
   translateWord,
   fetchRandomUserWords,
@@ -19,10 +19,10 @@ export const wordRouter = router({
     .query(async ({ ctx, input }) => {
       return await translateWord(input.word);
     }),
-  detectLabel: protectedProcedure
+  detectObject: protectedProcedure
     .input(z.object({ image: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      return await detectLabel(input.image);
+      return await detectObject(input.image);
     }),
 
   saveWordInCategory: protectedProcedure
