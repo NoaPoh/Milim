@@ -79,7 +79,7 @@ export const login = async (
   const isPasswordValid = await compare(password, user.passwordHash);
   if (!isPasswordValid) {
     throw new TRPCError({
-      code: 'UNAUTHORIZED',
+      code: 'FORBIDDEN',
       message: 'invalid password.',
     });
   }
