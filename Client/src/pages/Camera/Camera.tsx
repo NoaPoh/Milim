@@ -107,13 +107,16 @@ export default function Camera() {
     return canvas.toDataURL('image/png');
   };
 
+  const sendDetectLabels = async () => {
+    const frameBase64 = captureFrameAsBase64();
+    if (frameBase64) {
+      await detectLabel({ image: frameBase64 });
+    }
+  };
+
   const startDetectionLoop = () => {
-    detectionIntervalRef.current = setInterval(async () => {
-      const frameBase64 = captureFrameAsBase64();
-      if (frameBase64) {
-        await detectLabel({ image: frameBase64 });
-      }
-    }, 1000);
+    detectionIntervalRef.current = setInterval(sendDetectLabels, 10000);
+    // sendDetectLabels();
   };
 
   return (
