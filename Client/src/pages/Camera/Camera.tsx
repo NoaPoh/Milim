@@ -115,7 +115,7 @@ export default function Camera() {
   };
 
   const startDetectionLoop = () => {
-    detectionIntervalRef.current = setInterval(sendDetectLabels, 10000);
+    detectionIntervalRef.current = setInterval(sendDetectLabels, 2000);
     // sendDetectLabels();
   };
 
