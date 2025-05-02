@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { convertVideoToBase64 } from '../../../utils/video';
 
 function useCameraFeed() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -10,17 +11,8 @@ function useCameraFeed() {
 
   const captureFrameAsBase64 = (): string | null => {
     const video = videoRef.current;
-    if (!video || video.videoWidth === 0 || video.videoHeight === 0)
-      return null;
 
-    const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    const context = canvas.getContext('2d');
-    if (!context) return null;
-
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    return canvas.toDataURL('image/png');
+    return convertVideoToBase64(video);
   };
 
   const startFeed = async (onStart?: () => void) => {

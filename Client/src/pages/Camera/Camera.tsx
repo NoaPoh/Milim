@@ -12,7 +12,6 @@ export default function Camera() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const {
     videoRef,
-    captureFrameAsBase64,
     startFeed,
     stopFeed,
     freezeFrame,
@@ -23,21 +22,18 @@ export default function Camera() {
   } = useCameraFeed();
 
   const {
-    detectObject,
+    singleDetectObject,
     detectedObject,
     detectObjectIsPending,
     startDetectionLoop,
     stopDetectionLoop,
   } = useObjectDetection({
     freezeFrame,
-    captureFrameAsBase64,
+    videoRef,
   });
 
   const onTakePictureButton = () => {
-    const dataUrl = captureFrameAsBase64();
-    freezeFrame(dataUrl, stopDetectionLoop);
-
-    if (dataUrl) detectObject({ image: dataUrl });
+    singleDetectObject();
   };
 
   useEffect(() => {
