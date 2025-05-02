@@ -64,12 +64,12 @@ export async function detectObjectFromBase64(
       throw new Error('No objects found in the image.');
     }
 
-    const sortedByArea = objects.sort(
-      (a, b) =>
-        getBoxArea(b.boundingPoly.normalizedVertices) -
-        getBoxArea(a.boundingPoly.normalizedVertices)
-    );
-    const mostDominantObject = sortedByArea[0];
+    const mostDominantObject = objects.reduce((prev, current) => {
+      const prevArea = getBoxArea(prev.boundingPoly.normalizedVertices);
+      const currentArea = getBoxArea(current.boundingPoly.normalizedVertices);
+
+      return prevArea > currentArea ? prev : current;
+    });
 
     const bestObject = objects.reduce((prev, current) =>
       prev.score > current.score ? prev : current
