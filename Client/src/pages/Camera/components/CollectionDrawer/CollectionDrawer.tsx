@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './CollectionDrawer.scss';
-import { useGetCategories } from '../Home/hooks/useGetCategories';
-import { api } from '../../utils/trpc';
-import Loader from '../../components/Loader/Loader';
+import { useGetCategories } from '../../../Home/hooks/useGetCategories';
+import { api } from '../../../../utils/trpc';
+import Loader from '../../../../components/Loader/Loader';
 
 interface CollectionDrawerProps {
   isOpen: boolean;

@@ -4,7 +4,7 @@ import { faArrowsRotate, faCamera } from '@fortawesome/free-solid-svg-icons';
 import './Camera.scss';
 import SpeakerButton from '../../components/SpeakerButton';
 import Loader from '../../components/Loader/Loader';
-import CollectionDrawer from './CollectionDrawer';
+import CollectionDrawer from './components/CollectionDrawer/CollectionDrawer';
 import { sprinkleConfettiOnScreen } from '../../utils/confetti';
 import { api } from '../../utils/trpc';
 
