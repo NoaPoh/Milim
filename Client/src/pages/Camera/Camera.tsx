@@ -12,7 +12,7 @@ export default function Camera() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [photo, setPhoto] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [disabledCamera, setDisabledCamera] = useState<boolean>(false);
+  const [cantUseCamera, setCantUseCamera] = useState<boolean>(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const streamRef = useRef<MediaStream | null>(null);
@@ -25,8 +25,20 @@ export default function Camera() {
   const stopDetectionLoop = () => {
     if (detectionIntervalRef.current) {
       clearInterval(detectionIntervalRef.current);
+      console.log('Detection loop stopped, interval cleared.');
     }
     detectionIntervalRef.current = null;
+  };
+
+  const takePhoto = () => {
+    const dataUrl = captureFrameAsBase64();
+    setPhoto(dataUrl);
+
+    stopDetectionLoop();
+
+    if (dataUrl) {
+      detectLabel({ image: dataUrl });
+    }
   };
 
   const {
@@ -35,12 +47,12 @@ export default function Camera() {
     mutateAsync: detectLabel,
   } = trpc.word.detectLabel.useMutation({
     onSuccess: () => {
+      takePhoto();
       sprinkleConfettiOnScreen();
-      stopDetectionLoop();
     },
   });
 
-  const startCamera = async () => {
+  const startFeed = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       if (videoRef.current) {
@@ -52,7 +64,7 @@ export default function Camera() {
       startDetectionLoop();
     } catch (error) {
       console.error('Error accessing webcam:', error);
-      setDisabledCamera(true);
+      setCantUseCamera(true);
       if (error.name === 'NotAllowedError') {
         setErrorMessage(
           'Permission denied. Please allow access to your webcam.'
@@ -63,41 +75,28 @@ export default function Camera() {
     }
   };
 
-  const stopCamera = () => {
+  const stopFeed = () => {
+    stopDetectionLoop();
+
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => track.stop());
       streamRef.current = null;
-      stopDetectionLoop();
     }
   };
 
   useEffect(() => {
-    startCamera();
+    startFeed();
 
     return () => {
-      stopCamera();
+      stopFeed();
     };
   }, []);
 
-  const takePhoto = () => {
-    const video = videoRef.current;
-    if (video) {
-      const canvas = document.createElement('canvas');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      canvas.getContext('2d')?.drawImage(video, 0, 0);
-      const dataUrl = canvas.toDataURL('image/png');
-      setPhoto(dataUrl);
-
-      // Stop detection loop
-      stopDetectionLoop();
-    }
-  };
-
-  const retakePhoto = () => {
+  const restartFeed = () => {
     setPhoto(null);
     setErrorMessage(null);
-    startCamera();
+    setCantUseCamera(false);
+    startFeed();
   };
 
   const captureFrameAsBase64 = (): string | null => {
@@ -132,7 +131,7 @@ export default function Camera() {
 
           <button
             className="button"
-            disabled={disabledCamera}
+            disabled={cantUseCamera}
             onClick={takePhoto}
           >
             <FontAwesomeIcon icon={faCamera} className="icon" />
@@ -141,7 +140,7 @@ export default function Camera() {
       ) : (
         <>
           <img src={photo} alt="Captured" className="captured-photo" />
-          <button className="button" onClick={retakePhoto}>
+          <button className="button" onClick={restartFeed}>
             <FontAwesomeIcon icon={faArrowsRotate} className="icon" />{' '}
           </button>
           {detectLabelIsPending && <Loader />}
