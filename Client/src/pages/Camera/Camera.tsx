@@ -19,13 +19,10 @@ export default function Camera() {
   const {
     data: imageLabel,
     isPending: detectLabelIsPending,
-    refetch: detectLabel,
-  } = trpc.word.detectLabel.useQuery(
-    { image: photo! },
-    {
-      enabled: false,
-    }
-  );
+    mutate: detectLabel,
+  } = trpc.word.detectLabel.useMutation({
+    onSuccess: () => sprinkleConfettiOnScreen(),
+  });
 
   const startCamera = async () => {
     try {
@@ -113,7 +110,7 @@ export default function Camera() {
       if (frameBase64) {
         await detectLabel({ image: frameBase64 });
       }
-    }, 300);
+    }, 1000);
   };
 
   return (

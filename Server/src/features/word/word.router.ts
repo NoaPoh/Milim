@@ -20,7 +20,7 @@ export const wordRouter = router({
     }),
   detectLabel: protectedProcedure
     .input(z.object({ image: z.string() }))
-    .query(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       return await detectLabel(input.image);
     }),
 });
