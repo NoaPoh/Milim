@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import './Camera.scss';
 import useCameraFeed from './hooks/useCameraFeed';
 import useObjectDetection from './hooks/useObjectDetection';
