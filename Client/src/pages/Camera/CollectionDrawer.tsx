@@ -1,35 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './CollectionDrawer.scss';
 import { useGetCategories } from '../Home/hooks/useGetCategories';
 import { api } from '../../utils/trpc';
-// import { categories } from '../Home/Home';
+import Loader from '../../components/Loader/Loader';
+
+interface CollectionDrawerProps {
+  isOpen: boolean;
+  onClose: () => void;
+  newWord: string;
+  picture: string;
+}
 
 const CollectionDrawer = ({
   isOpen,
   onClose,
   newWord,
   picture,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-  newWord: string;
-  picture: string;
-}) => {
+}: CollectionDrawerProps) => {
   const { data: categories } = useGetCategories();
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
+    null
+  );
 
   const {
     isPending: saveWordInCategoryIsPending,
     mutateAsync: saveWordInCategory,
   } = api.word.saveWordInCategory.useMutation({ onSuccess: onClose });
 
-  const handleCategoryClick = async (category: number) => {
+  const handleCategoryClick = (categoryId: number) => {
+    setSelectedCategoryId(categoryId);
+  };
+
+  const handleAddClick = async () => {
+    if (selectedCategoryId === null) return;
+
     await saveWordInCategory({
       text: newWord,
-      categoryId: category,
-      picture: picture,
+      categoryId: selectedCategoryId,
+      picture,
     });
-    // Handle category click here
-    console.log('Category clicked:', category);
   };
 
   return (
@@ -42,25 +51,35 @@ const CollectionDrawer = ({
         <ul className="drawer-list">
           {categories &&
             categories.map((category) => (
-              <>
-                <li
-                  key={category.name}
-                  className="drawer-item"
-                  onClick={() => handleCategoryClick(category.id)}
-                >
-                  <img
-                    src={category.picture}
-                    alt={category.name}
-                    className="drawer-icon"
-                  />
-                  <span className="drawer-text">{category.name}</span>
-                </li>{' '}
-              </>
+              <li
+                key={category.id}
+                className={`drawer-item ${
+                  selectedCategoryId === category.id ? 'selected' : ''
+                }`}
+                onClick={() => handleCategoryClick(category.id)}
+              >
+                <img
+                  src={category.picture}
+                  alt={category.name}
+                  className="drawer-icon"
+                />
+                <span className="drawer-text">{category.name}</span>
+              </li>
             ))}
-          {/* <button className="btn" onClick={() => handleCategoryClick(1)}>
-            add
-          </button> */}
         </ul>
+        {saveWordInCategoryIsPending ? (
+          <Loader />
+        ) : (
+          <button
+            className="btn add-button"
+            onClick={handleAddClick}
+            disabled={
+              selectedCategoryId === null || saveWordInCategoryIsPending
+            }
+          >
+            Add To Collection
+          </button>
+        )}
       </div>
     </div>
   );

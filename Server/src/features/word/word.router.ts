@@ -25,26 +25,6 @@ export const wordRouter = router({
       return await detectLabel(input.image);
     }),
 
-  //   saveWordInCategory: protectedProcedure
-  //     .input(
-  //       z.object({
-  //         text: z.string(),
-  //         picture: z.string(),
-  //         // userId: z.number(),
-  //         categoryId: z.number(),
-  //       })
-  //     )
-  //     .mutation(async ({ ctx, input }) => {
-  //       return await saveWordInCategory(
-  //         input.text,
-  //         input.picture,
-  //         ctx.userId,
-  //         input.categoryId,
-  //         ctx.prisma
-  //       );
-  //     }),
-  // });
-
   saveWordInCategory: protectedProcedure
     .input(
       z.object({
