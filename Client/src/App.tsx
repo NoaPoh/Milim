@@ -4,6 +4,7 @@ import Navbar from './components/Navabr/Navbar';
 import './App.scss';
 import Router from './routes/router';
 import { RoutesValues } from './routes/routes';
+import { RequireAuth } from './components/RequireAuth';
 
 const App = () => {
   const location = useLocation();
@@ -13,8 +14,10 @@ const App = () => {
 
   return (
     <div className="app">
-      <Router />
-      {showNavbar && <Navbar />}
+      <RequireAuth>
+        <Router />
+        {showNavbar && <Navbar />}
+      </RequireAuth>
     </div>
   );
 };
