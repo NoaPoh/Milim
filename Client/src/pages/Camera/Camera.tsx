@@ -19,7 +19,7 @@ export default function Camera() {
   const {
     data: imageLabel,
     isPending: detectLabelIsPending,
-    mutate: detectLabel,
+    mutateAsync: detectLabel,
   } = trpc.word.detectLabel.useMutation({
     onSuccess: () => sprinkleConfettiOnScreen(),
   });
