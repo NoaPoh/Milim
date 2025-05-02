@@ -15,13 +15,37 @@ import './Home.scss';
 
 // רשימת קטגוריות לדוגמה
 const categories = [
-  { name: 'AIRPORT', icon: airportIcon, path: ObjectsCategoriesRoutesValues.AIRPORT },
-  { name: 'SCHOOL', icon: schoolIcon, path: ObjectsCategoriesRoutesValues.SCHOOL },
+  {
+    name: 'AIRPORT',
+    icon: airportIcon,
+    path: ObjectsCategoriesRoutesValues.AIRPORT,
+  },
+  {
+    name: 'SCHOOL',
+    icon: schoolIcon,
+    path: ObjectsCategoriesRoutesValues.SCHOOL,
+  },
   { name: 'PARK', icon: parkIcon, path: ObjectsCategoriesRoutesValues.PARK },
-  { name: 'KITCHEN', icon: kitchenIcon, path: ObjectsCategoriesRoutesValues.KITCHEN },
-  { name: 'BEDROOM', icon: bedroomIcon, path: ObjectsCategoriesRoutesValues.BEDROOM },
-  { name: 'SUPERMARKET', icon: supermarketIcon, path: ObjectsCategoriesRoutesValues.SUPERMARKET },
-  { name: 'LIVING ROOM', icon: livingRoomIcon, path: ObjectsCategoriesRoutesValues.LIVING_ROOM },
+  {
+    name: 'KITCHEN',
+    icon: kitchenIcon,
+    path: ObjectsCategoriesRoutesValues.KITCHEN,
+  },
+  {
+    name: 'BEDROOM',
+    icon: bedroomIcon,
+    path: ObjectsCategoriesRoutesValues.BEDROOM,
+  },
+  {
+    name: 'SUPERMARKET',
+    icon: supermarketIcon,
+    path: ObjectsCategoriesRoutesValues.SUPERMARKET,
+  },
+  {
+    name: 'LIVING ROOM',
+    icon: livingRoomIcon,
+    path: ObjectsCategoriesRoutesValues.LIVING_ROOM,
+  },
   { name: '', icon: addIcon, path: ObjectsCategoriesRoutesValues.ADD },
 ];
 

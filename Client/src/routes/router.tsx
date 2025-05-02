@@ -1,11 +1,15 @@
 import React from 'react';
 import { FunctionComponent } from 'react';
-import { RoutesValues } from '../constants/routes';
+import { RoutesValues, GamesRoutesValues } from '../constants/routes';
 import Home from '../pages/Home/Home';
 import { Route, Routes } from 'react-router-dom';
 import Camera from '../pages/Camera/Camera';
 import Register from '../pages/Register/Register';
 import Login from '../pages/Login/Login';
+import GamesHome from '../pages/Games/GamesHome/GamesHome';
+import Crossword from '../pages/Games/Crossword/Crossword';
+import FlashCards from '../pages/Games/FlashCards/FlashCards';
+import Spelling from '../pages/Games/Spelling/Spelling';
 
 const Page = ({ children }: { children: React.ReactNode }) => {
   return <div className="page-w-navbar">{children}</div>;
@@ -40,6 +44,26 @@ const routes: RouteProps[] = [
   {
     path: RoutesValues.LOGIN,
     component: <Login />,
+    navbar: false,
+  },
+  {
+    path: RoutesValues.GAMES,
+    component: <GamesHome />,
+    navbar: false,
+  },
+  {
+    path: GamesRoutesValues.CROSSWORD,
+    component: <Crossword />,
+    navbar: false,
+  },
+  {
+    path: GamesRoutesValues.FLASH_CARDS,
+    component: <FlashCards />,
+    navbar: false,
+  },
+  {
+    path: GamesRoutesValues.SPELLING,
+    component: <Spelling />,
     navbar: false,
   },
 ];
