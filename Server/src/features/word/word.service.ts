@@ -7,7 +7,7 @@ export const fetchRandomUserWords = async (
   userId: number,
   prisma: PrismaClient,
   amount: number = 10
-) => {
+): Promise<Word[]> => {
   const userWords = await prisma.word.findMany({
     where: { userId: userId },
   });
@@ -23,7 +23,7 @@ export const translateWord = async (word: string): Promise<string> => {
   return await googleTranslate(word);
 };
 
-export const detectObject = async (image: string) => {
+export const detectObject = async (image: string): Promise<string> => {
   return await detectObjectFromBase64(image);
 };
 
@@ -47,5 +47,6 @@ export const saveWordInCategory = async (
       picture: buffer, // Provide a default empty Uint8Array for the picture field
     },
   });
+
   return newWord;
 };
