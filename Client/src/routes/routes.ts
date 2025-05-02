@@ -5,6 +5,8 @@ export enum RoutesValues {
   CAMERA = '/camera',
   GAMES = '/games',
   PROFILE = '/profile',
+  CATEGORIES = '/categories',
+  ADD_CATEGORY = '/categories/add',
 }
 
 export enum ObjectsCategoriesRoutesValues {

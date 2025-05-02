@@ -1,6 +1,6 @@
 import React from 'react';
 import { FunctionComponent } from 'react';
-import { RoutesValues, GamesRoutesValues } from '../constants/routes';
+import { GamesRoutesValues, RoutesValues } from './routes';
 import Home from '../pages/Home/Home';
 import { Route, Routes } from 'react-router-dom';
 import Camera from '../pages/Camera/Camera';
@@ -49,22 +49,22 @@ const routes: RouteProps[] = [
   {
     path: RoutesValues.GAMES,
     component: <GamesHome />,
-    navbar: false,
+    navbar: true,
   },
   {
     path: GamesRoutesValues.CROSSWORD,
     component: <Crossword />,
-    navbar: false,
+    navbar: true,
   },
   {
     path: GamesRoutesValues.FLASH_CARDS,
     component: <FlashCards />,
-    navbar: false,
+    navbar: true,
   },
   {
     path: GamesRoutesValues.SPELLING,
     component: <Spelling />,
-    navbar: false,
+    navbar: true,
   },
 ];
 

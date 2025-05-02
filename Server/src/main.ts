@@ -1,11 +1,12 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import * as trpcExpress from '@trpc/server/adapters/express';
 import { appRouter } from './routers';
 import { createContext } from './core/trpc/context';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import dotenv from 'dotenv';
-dotenv.config();
 
 const app = express();
 
@@ -17,7 +18,7 @@ app.use(
 );
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.json({ limit: '1000mb' }));
 app.use(cookieParser());
 
 app.use(
