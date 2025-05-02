@@ -6,12 +6,15 @@ import SpeakerButton from '../../components/SpeakerButton';
 import { trpc } from '../../utils/trpc';
 import Loader from '../../components/Loader/Loader';
 import { sprinkleConfettiOnScreen } from '../../utils/confetti';
+import CollectionDrawer from './CollectionDrawer';
 
 export default function Camera() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [photo, setPhoto] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [disabledCamera, setDisabledCamera] = useState<boolean>(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   const streamRef = useRef<MediaStream | null>(null);
   const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const objectVisibleSinceRef = useRef<number | null>(null);
@@ -142,6 +145,15 @@ export default function Camera() {
               <SpeakerButton text={imageLabel}></SpeakerButton>
             </div>
           )}
+          <button className="btn" onClick={() => setDrawerOpen(true)}>
+            Add To Collection
+          </button>
+          <CollectionDrawer
+            isOpen={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+            newWord={imageLabel || ''}
+            picture={photo || ''}
+          />
         </>
       )}
     </div>

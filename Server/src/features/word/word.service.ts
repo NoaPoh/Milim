@@ -1,6 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Word } from '@prisma/client';
 import { translateWord as googleTranslate } from '../../externalAPIs/googleTranslate/googleTranslate';
 import { detectLabelFromBase64 } from '../../externalAPIs/googleVision/googleVision';
+import { base64ToUint8Array } from '../../utils/images.util';
 
 export const fetchRandomUserWords = async (
   userId: number,
@@ -24,4 +25,27 @@ export const translateWord = async (word: string): Promise<string> => {
 
 export const detectLabel = async (image: string) => {
   return await detectLabelFromBase64(image);
+};
+
+export const saveWordInCategory = async (
+  text: string,
+  picture: string,
+  userId: number,
+  categoryId: number,
+  prisma: PrismaClient
+): Promise<Word> => {
+  const base64 = picture.replace(/^data:image\/\w+;base64,/, '');
+
+  const buffer = base64ToUint8Array(base64);
+
+  const newWord = await prisma.word.create({
+    data: {
+      text,
+      userId,
+      categoryId,
+      discoveredAt: new Date(),
+      picture: buffer, // Provide a default empty Uint8Array for the picture field
+    },
+  });
+  return newWord;
 };

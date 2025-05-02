@@ -3,8 +3,9 @@ import { protectedProcedure, router } from '../../core/trpc/trpc';
 import type { Word } from '@prisma/client';
 import {
   detectLabel,
-  fetchRandomUserWords,
+  saveWordInCategory,
   translateWord,
+  fetchRandomUserWords,
 } from './word.service';
 
 export const wordRouter = router({
@@ -22,5 +23,44 @@ export const wordRouter = router({
     .input(z.object({ image: z.string() }))
     .mutation(async ({ ctx, input }) => {
       return await detectLabel(input.image);
+    }),
+
+  //   saveWordInCategory: protectedProcedure
+  //     .input(
+  //       z.object({
+  //         text: z.string(),
+  //         picture: z.string(),
+  //         // userId: z.number(),
+  //         categoryId: z.number(),
+  //       })
+  //     )
+  //     .mutation(async ({ ctx, input }) => {
+  //       return await saveWordInCategory(
+  //         input.text,
+  //         input.picture,
+  //         ctx.userId,
+  //         input.categoryId,
+  //         ctx.prisma
+  //       );
+  //     }),
+  // });
+
+  saveWordInCategory: protectedProcedure
+    .input(
+      z.object({
+        text: z.string(),
+        categoryId: z.number(),
+        picture: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { text, categoryId, picture } = input;
+      return await saveWordInCategory(
+        text,
+        picture,
+        ctx.userId,
+        categoryId,
+        ctx.prisma
+      );
     }),
 });
