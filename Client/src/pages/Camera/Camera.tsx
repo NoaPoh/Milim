@@ -1,15 +1,11 @@
 import { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowsRotate, faCamera } from '@fortawesome/free-solid-svg-icons';
 import './Camera.scss';
-import SpeakerButton from '../../components/SpeakerButton';
-import Loader from '../../components/Loader/Loader';
-import CollectionDrawer from './components/CollectionDrawer/CollectionDrawer';
 import useCameraFeed from './hooks/useCameraFeed';
 import useObjectDetection from './hooks/useObjectDetection';
+import CameraFeed from './components/Feed/CameraFeed';
+import PicturePreview from './components/Feed/PicturePreview';
 
 export default function Camera() {
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const {
     videoRef,
     startFeed,
@@ -46,42 +42,18 @@ export default function Camera() {
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       {!stalePhoto ? (
-        <>
-          <video ref={videoRef} autoPlay muted className="video-preview" />
-          <button
-            className="button"
-            disabled={cantUseCamera}
-            onClick={onTakePictureButton}
-          >
-            <FontAwesomeIcon icon={faCamera} className="icon" />
-          </button>
-        </>
+        <CameraFeed
+          ref={videoRef}
+          onTakePicture={onTakePictureButton}
+          cantUseCamera={cantUseCamera}
+        />
       ) : (
-        <>
-          <img src={stalePhoto} alt="Captured" className="captured-photo" />
-          <button
-            className="button"
-            onClick={() => restartFeed(startDetectionLoop)}
-          >
-            <FontAwesomeIcon icon={faArrowsRotate} className="icon" />
-          </button>
-          {detectObjectIsPending && <Loader />}
-          {!detectObjectIsPending && detectedObject && (
-            <div className="predictions-container">
-              <p className="prediction-item">{detectedObject}</p>
-              <SpeakerButton text={detectedObject} />
-              <button className="btn" onClick={() => setDrawerOpen(true)}>
-                Add To Collection
-              </button>
-            </div>
-          )}
-          <CollectionDrawer
-            isOpen={drawerOpen}
-            onClose={() => setDrawerOpen(false)}
-            newWord={detectedObject || ''}
-            picture={stalePhoto || ''}
-          />
-        </>
+        <PicturePreview
+          image={stalePhoto}
+          onRestart={() => restartFeed(startDetectionLoop)}
+          detectedObject={detectedObject}
+          isDetecting={detectObjectIsPending}
+        />
       )}
     </div>
   );
