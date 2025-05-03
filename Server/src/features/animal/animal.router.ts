@@ -1,6 +1,4 @@
-import { z } from 'zod';
 import {
-  protectedProcedure,
   publicProcedure,
   router,
 } from '../../core/trpc/trpc';

@@ -1,7 +1,7 @@
 import React from 'react';
+import './AnimalIcon.scss';
 
-
-interface props {
+interface Props {
   path: string;
   accessories?: Accessory[];
 }
