@@ -1,4 +1,4 @@
-div {
+.profile-container {
   padding: 0.5rem;
   display: flex;
     flex-direction: column;
@@ -7,16 +7,19 @@ div {
 
   .coins-section {
     align-self: flex-start;
+    margin-top: 2rem;
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     .image {
       width: 4.5rem;
-      margin-top: 2rem;
     }
 
     .text {
       font-size: 1.5rem;
       font-weight: bold;
-      margin-left: 0.5rem;
       color: #5D5C5C;
     }
   }

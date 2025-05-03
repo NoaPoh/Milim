@@ -12,8 +12,8 @@ const Profile: React.FC = () => {
     return <Loader />;
 
   return (
-    <div>
-      <AnimalIcon iconWidth={230} path={`src/assets/images/animals/${user.spiritAnimal}`} />
+    <div className="profile-container">
+      <AnimalIcon iconWidth={230} path={ user.spiritAnimal } />
       <div className="coins-section">
         <img
           src={coinsIcon}
