@@ -1,0 +1,30 @@
+.game-card-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.game-card-button {
+  height: 120px;
+  width: 230px;
+  background-color: #e7e7e7;
+  border-radius: 20px;
+  position: relative;
+  border: none;
+  cursor: pointer;
+
+  // optional: remove outline when clicked
+  &:focus {
+    outline: none;
+  }
+}
+
+.game-card-title {
+  font-size: 20px;
+}
+
+.game-card-image {
+  height: 60px;
+  position: absolute;
+  transform: translateX(-75%) translateY(-65%);
+}

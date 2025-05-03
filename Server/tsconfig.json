@@ -5,9 +5,9 @@
     "rootDir": "./src",
     "outDir": "./dist",
     "esModuleInterop": true,
-    "strict": true
+    "strict": true,
+    "baseUrl": "."
   },
-  "baseUrl": ".",
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"],
   "paths": {
