@@ -2,7 +2,7 @@ import { Animal, PrismaClient, User } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { UserDTO } from '../../types';
 
-export const addCoinsToUser = async (
+export const winAGame = async (
   userId: number,
   coins: number,
   prisma: PrismaClient
@@ -15,7 +15,9 @@ export const addCoinsToUser = async (
 
   const updatedUser = await prisma.user.update({
     where: { id: userId },
-    data: { coinBalance: user.coinBalance + coins },
+    data: {
+      coinBalance: user.coinBalance + coins,
+    },
   });
 
   return updatedUser;

@@ -12,7 +12,7 @@ export const appRouter = router({
   auth: authRouter,
   category: categoryRouter,
   animal: animalRouter,
-  user: userRouter
+  user: userRouter,
 });
 
 export type AppRouter = typeof appRouter;
