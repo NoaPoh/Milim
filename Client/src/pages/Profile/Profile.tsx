@@ -3,7 +3,9 @@ import './Profile.scss';
 import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
 
 const Profile: React.FC = () => {
-  const [username, setUsername] = useState<string>('Sheleg');
+  const { user, isLoading }: {user: UserDTO, isLoading: boolean} = useUser();
+  if (isLoading)
+    return <Loader />;
 
   return (
     <div>
