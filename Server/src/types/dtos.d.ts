@@ -23,6 +23,11 @@ export interface LoginResponse {
   // refreshToken: string;
 }
 
+export interface WinAGameInput {
+  coins: number;
+  addedStreak: number;
+}
+
 export interface GoogleTranslateResponse {
   data: {
     translations: Array<{
