@@ -4,6 +4,7 @@ import './AnimalIcon.scss';
 interface Props {
   path: string;
   accessories?: Accessory[];
+  iconWidth: number;
 }
 
 interface Accessory {
@@ -11,12 +12,12 @@ interface Accessory {
   name: string;
 }
 
-const AnimalIcon: React.FC = ({path}: props) => {
+const AnimalIcon: React.FC = ({path, iconWidth}: Props) => {
 
   return (
     <img
-      src={path || '/assets/images/giraffe.svg'}
-      className="w-32 h-32 rounded-full"
+      src={path || './assets/images/giraffe.png'}
+      className={`animal rounded-full`} style={{ width: `${iconWidth}px` }}
      alt="missing your photo!"/>
   )
 }
