@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import './Register.scss';
 import { trpc } from '../../utils/trpc';
-import Loader from '../../components/Loader/Loader';
 import { useNavigate } from 'react-router';
 import { RoutesValues } from '../../routes/routes';
 
@@ -110,7 +109,7 @@ const Register = () => {
           className="bg-blue-500 text-white p-3 rounded-full hover:from-blue-400 hover:to-purple-500 hover:shadow-lg transition-all font-semibold bg-gradient-to-r from-blue-200 to-purple-300"
           disabled={registerIsPending}
         >
-          {registerIsPending ? <Loader /> : "Let's do it!"}
+          {!registerIsPending ? "Let's do it!" : ''}
         </button>
       </form>
     </div>
