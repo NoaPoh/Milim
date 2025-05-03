@@ -16,7 +16,7 @@ const AnimalIcon: React.FC = ({path, iconWidth}: Props) => {
 
   return (
     <img
-      src={path || './assets/images/giraffe.png'}
+      src={`src/assets/images/animals/${path}`}
       className={`animal rounded-full`} style={{ width: `${iconWidth}px` }}
      alt="missing your photo!"/>
   )

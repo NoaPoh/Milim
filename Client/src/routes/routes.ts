@@ -7,7 +7,6 @@ export enum RoutesValues {
   PROFILE = '/profile',
   CATEGORIES = '/categories',
   ADD_CATEGORY = '/categories/add',
-  PROFILE = '/profile',
 }
 
 export enum ObjectsCategoriesRoutesValues {
