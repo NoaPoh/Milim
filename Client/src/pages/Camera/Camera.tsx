@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate, faCamera } from '@fortawesome/free-solid-svg-icons';
 import './Camera.scss';
 import SpeakerButton from '../../components/SpeakerButton';
-import Loader from '../../components/Loader/Loader';
 import { sprinkleConfettiOnScreen } from '../../utils/confetti';
 import CollectionDrawer from './CollectionDrawer';
 
@@ -178,7 +177,6 @@ export default function Camera() {
           <button className="button" onClick={retakePhoto}>
             <FontAwesomeIcon icon={faArrowsRotate} className="icon" />{' '}
           </button>
-          {predictionLoading && <Loader />}
           {!predictionLoading && predictions.length > 0 && (
             <div className="predictions-container">
               <p className="prediction-item">{predictions[0].class}</p>
