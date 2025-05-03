@@ -1,5 +1,5 @@
 import React from 'react';
-import GameCard from './GameCard';
+import GameCard from '../components/GameCard/GameCard';
 import { games } from '../../../constants/games';
 
 const GamesHome: React.FC = () => {

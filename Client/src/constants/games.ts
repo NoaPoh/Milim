@@ -3,13 +3,13 @@ import crosswordIcon from '../assets/images/games/crossword.png';
 import flashcardsIcon from '../assets/images/games/flashcards.png';
 import spellingIcon from '../assets/images/games/spelling.png';
 
-export interface gamesProps {
+export interface GameProps {
   name: string;
   path: GamesRoutesValues;
   image: string;
 }
 
-export const games: gamesProps[] = [
+export const games: GameProps[] = [
   {
     name: 'crossword',
     path: GamesRoutesValues.CROSSWORD,
