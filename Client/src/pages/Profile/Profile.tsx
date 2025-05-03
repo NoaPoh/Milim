@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Profile.scss';
 import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
+import coinsIcon from '../../assets/images/coins.png';
+import { useUser } from '../../context/UserContext';
+import Loader from '../../components/Loader/Loader';
+import { UserDTO } from 'milim-server/src/@types/dtos';
 
 const Profile: React.FC = () => {
   const { user, isLoading }: {user: UserDTO, isLoading: boolean} = useUser();
@@ -9,10 +13,16 @@ const Profile: React.FC = () => {
 
   return (
     <div>
-      <AnimalIcon path="/assets/images/giraffe.svg" />
-      <p className="text-xl text-gray-700 mb-6">
-        Happy to see you back, {username}
-      </p>
+      <AnimalIcon iconWidth={230} path={`src/assets/images/animals/${user.spiritAnimal}`} />
+      <div className="coins-section">
+        <img
+          src={coinsIcon}
+          className="image rounded-full"
+          alt="missing your info!" />
+        <span className="text">
+        {user.coins}
+        </span>
+      </div>
     </div>
   );
 };

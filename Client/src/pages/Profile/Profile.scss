@@ -4,4 +4,21 @@ div {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+
+  .coins-section {
+    align-self: flex-start;
+
+    .image {
+      width: 4.5rem;
+      margin-top: 2rem;
+    }
+
+    .text {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-left: 0.5rem;
+      color: #5D5C5C;
+    }
+  }
+
 }
