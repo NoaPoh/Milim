@@ -45,3 +45,15 @@ export type GoogleLabelDetectionResponse = {
     labelAnnotations?: GoogleLabelAnnotation[];
   }>;
 };
+
+export interface UserDTO {
+  id: number;
+  username: string | null;
+  email: string | null;
+  createdAt: string | null;
+  currentStreak: number | null;
+  longestStreak: number | null;
+  lastUsedDate: string | null;
+  spiritAnimal: string;
+  coins: number | 0;
+}
