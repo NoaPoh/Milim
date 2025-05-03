@@ -1,9 +1,9 @@
-import { GamesRoutesValues } from './routes';
+import { GamesRoutesValues } from '../routes/routes';
 import crosswordIcon from '../assets/images/games/crossword.png';
 import flashcardsIcon from '../assets/images/games/flashcards.png';
 import spellingIcon from '../assets/images/games/spelling.png';
 
-interface gamesProps {
+export interface gamesProps {
   name: string;
   path: GamesRoutesValues;
   image: string;

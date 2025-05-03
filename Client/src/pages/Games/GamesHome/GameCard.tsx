@@ -1,13 +1,8 @@
 import React from 'react';
 import { Route, useNavigate } from 'react-router-dom';
+import { gamesProps } from '../../../constants/games';
 
-interface GameCardProps {
-  name: string;
-  image: string;
-  path: string;
-}
-
-const GameCard = ({ name, image, path }: GameCardProps) => {
+const GameCard = ({ name, image, path }: gamesProps) => {
   const navigate = useNavigate();
   return (
     <div
@@ -29,7 +24,7 @@ const GameCard = ({ name, image, path }: GameCardProps) => {
           navigate(path);
         }}
       >
-        <p>{name}</p>
+        <p style={{ fontSize: '20px' }}>{name}</p>
         <img
           style={{
             height: '60px',
