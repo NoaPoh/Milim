@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Register.scss';
-import { trpc } from '../../utils/trpc';
+import { trpc } from '../../utils/trpc/trpc';
 import { useNavigate } from 'react-router';
 import { RoutesValues } from '../../routes/routes';
 
