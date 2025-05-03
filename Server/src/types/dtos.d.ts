@@ -25,7 +25,6 @@ export interface LoginResponse {
 
 export interface WinAGameInput {
   coins: number;
-  addedStreak: number;
 }
 
 export interface GoogleTranslateResponse {
