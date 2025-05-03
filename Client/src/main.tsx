@@ -13,7 +13,7 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <trpc.Provider client={client} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
           <UserProvider>
             <App />
