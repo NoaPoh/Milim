@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './CollectionDrawer.scss';
 import { useGetCategories } from '../Home/hooks/useGetCategories';
 import { trpc } from '../../utils/trpc';
-import Loader from '../../components/Loader/Loader';
 
 const CollectionDrawer = ({
   isOpen,
@@ -65,9 +64,7 @@ const CollectionDrawer = ({
               </li>
             ))}
         </ul>
-        {saveWordInCategoryIsPending ? (
-          <Loader />
-        ) : (
+        {!saveWordInCategoryIsPending && (
           <button
             className="btn add-button"
             onClick={handleAddClick}
