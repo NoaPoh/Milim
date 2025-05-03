@@ -5,7 +5,7 @@ import {
   useContext,
   ReactNode,
 } from 'react';
-import { trpc } from '../utils/trpc';
+import { trpc } from '../utils/trpc/trpc';
 
 type UserContextValue = {
   user: ReturnType<typeof trpc.user.getUser.useQuery>['data'];

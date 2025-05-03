@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RoutesValues } from '../../routes/routes';
-import { trpc } from '../../utils/trpc';
+import { trpc } from '../../utils/trpc/trpc';
 import Loader from '../../components/Loader/Loader';
 import { useNavigate } from 'react-router-dom';
 import hippoPicture from '../../assets/images/animals/hippo.png';
