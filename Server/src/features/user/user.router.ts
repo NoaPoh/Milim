@@ -1,4 +1,4 @@
-import { protectedProcedure, router } from 'src/core/trpc/trpc';
+import { protectedProcedure, router } from '../../core/trpc/trpc';
 import { winAGame } from './user.service';
 import { z } from 'zod';
 
