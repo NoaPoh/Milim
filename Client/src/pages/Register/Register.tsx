@@ -11,18 +11,14 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [learningLanguage, setLearningLanguage] = useState('');
   const [nativeLanguage, setNativeLanguage] = useState('');
-  const [spiritAnimal, setSpiritAnimal] = useState('');
+  const [spiritAnimal, setSpiritAnimal] = useState<number>(0);
   const navigate = useNavigate();
 
   const navToLogin = () => {
     navigate(RoutesValues.LOGIN);
   };
 
-  const {
-    data: freeAnimals,
-    isLoading,
-    error,
-  } = trpc.animal.getFreeAnimals.useQuery();
+  const { data: freeAnimals } = trpc.animal.getFreeAnimals.useQuery();
 
   const { mutateAsync: register, isPending: registerIsPending } =
     trpc.auth.register.useMutation({ onSuccess: navToLogin });
@@ -30,10 +26,15 @@ const Register = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!username || !email || !password || !spiritAnimal) {
+      return;
+    }
+
     register({
       username,
       email,
       password,
+      animalId: spiritAnimal,
     });
   };
 
@@ -94,7 +95,7 @@ const Register = () => {
               key={animal.id}
               type="button"
               className="register__animals-button"
-              onClick={() => setSpiritAnimal(animal.name)}
+              onClick={() => setSpiritAnimal(animal.id)}
             >
               <img
                 src={`src/assets/images/animals/${animal.imagePath}`}

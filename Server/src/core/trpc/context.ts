@@ -8,7 +8,7 @@ export const createContext = ({ req, res }: CreateExpressContextOptions) => {
     prisma,
     req,
     res,
-    userId: 0,
+    userId: -1,
   };
 };
 
