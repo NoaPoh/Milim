@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Directions } from '../../../constants/directions';
 
-export const useCrossword = (
-  word: string,
-  boardSize: number,
-  setBoardLetters: React.Dispatch<React.SetStateAction<string[][]>>
-) => {
-  const [displayDirection, setDisplayDirection] = useState<string>();
+export const useCrossword = (word: string, boardSize: number) => {
+  const [displayDirection, setDisplayDirection] = useState<Directions>();
   const [displayedWord, setDisplayedWord] = useState<string>(word);
+  const [boardLetters, setBoardLetters] = useState<string[][]>([]);
 
   const getRandomLetter = () => {
     const alphabet = 'abcdefghijklmnopqrstuvwxyz';
@@ -16,7 +13,10 @@ export const useCrossword = (
 
   // Randomly choose the direction the word will be displayed
   const chooseRandomDirection = () => {
-    const directionValues = Object.values(Directions);
+    const directionValues = Object.values(Directions).filter(
+      (value) => typeof value === 'number'
+    ) as Directions[];
+
     const randomIndex = Math.floor(Math.random() * directionValues.length);
     return directionValues[randomIndex] as Directions;
   };
@@ -46,35 +46,46 @@ export const useCrossword = (
     const maxStart = boardSize - displayedWord.length;
 
     // Place the word on the board based on the chosen direction
-    if (displayDirection === Directions.HORIZONTAL) {
-      const row = Math.floor(Math.random() * boardSize);
-      const startCol = Math.floor(Math.random() * (maxStart + 1));
-
-      for (let i = 0; i < displayedWord.length; i++) {
-        letters[row][startCol + i] = displayedWord[i];
+    switch (displayDirection) {
+      case Directions.HORIZONTAL: {
+        const row = Math.floor(Math.random() * boardSize);
+        const startCol = Math.floor(Math.random() * (maxStart + 1));
+        for (let i = 0; i < displayedWord.length; i++) {
+          letters[row][startCol + i] = displayedWord[i];
+        }
+        break;
       }
-    } else if (displayDirection === Directions.VERTICAL) {
-      const col = Math.floor(Math.random() * boardSize);
-      const startRow = Math.floor(Math.random() * (maxStart + 1));
 
-      for (let i = 0; i < displayedWord.length; i++) {
-        letters[startRow + i][col] = displayedWord[i];
+      case Directions.VERTICAL: {
+        const col = Math.floor(Math.random() * boardSize);
+        const startRow = Math.floor(Math.random() * (maxStart + 1));
+        for (let i = 0; i < displayedWord.length; i++) {
+          letters[startRow + i][col] = displayedWord[i];
+        }
+        break;
       }
-    } else if (displayDirection === Directions.DIAGONAL) {
-      const startRow = Math.floor(Math.random() * (maxStart + 1));
-      const startCol = Math.floor(Math.random() * (maxStart + 1));
 
-      for (let i = 0; i < displayedWord.length; i++) {
-        letters[startRow + i][startCol + i] = displayedWord[i];
+      case Directions.DIAGONAL: {
+        const startRow = Math.floor(Math.random() * (maxStart + 1));
+        const startCol = Math.floor(Math.random() * (maxStart + 1));
+        for (let i = 0; i < displayedWord.length; i++) {
+          letters[startRow + i][startCol + i] = displayedWord[i];
+        }
+        break;
       }
-    } else if (displayDirection === Directions.REVERSE_DIAGONAL) {
-      const startRow =
-        Math.floor(Math.random() * (maxStart + 1)) + displayedWord.length - 1;
-      const startCol = Math.floor(Math.random() * (maxStart + 1));
 
-      for (let i = 0; i < displayedWord.length; i++) {
-        letters[startRow - i][startCol + i] = displayedWord[i];
+      case Directions.REVERSE_DIAGONAL: {
+        const startRow =
+          Math.floor(Math.random() * (maxStart + 1)) + displayedWord.length - 1;
+        const startCol = Math.floor(Math.random() * (maxStart + 1));
+        for (let i = 0; i < displayedWord.length; i++) {
+          letters[startRow - i][startCol + i] = displayedWord[i];
+        }
+        break;
       }
+
+      default:
+        break;
     }
 
     setBoardLetters(letters);
@@ -83,5 +94,6 @@ export const useCrossword = (
   return {
     displayedWord,
     displayDirection,
+    boardLetters,
   };
 };

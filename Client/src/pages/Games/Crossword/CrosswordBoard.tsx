@@ -10,13 +10,12 @@ interface Props {
 //TODO: When clicking on an already selected cell again it will uncolour it
 //TODO: Remove styles to a css file, improve the styles
 const CrosswordBoard = ({ boardSize, word }: Props) => {
-  const [boardLetters, setBoardLetters] = useState<string[][]>([]);
   const [clickedCells, setClickedCells] = useState<
     { row: number; col: number }[]
   >([]);
   const [selectedLetters, setSelectedLetters] = useState<string[]>([]);
 
-  const {} = useCrossword(word, boardSize, setBoardLetters);
+  const { boardLetters } = useCrossword(word, boardSize);
 
   const isCellClicked = (row: number, col: number) => {
     return clickedCells.some((cell) => cell.row === row && cell.col === col);
@@ -46,7 +45,6 @@ const CrosswordBoard = ({ boardSize, word }: Props) => {
       if (selectedLetters.length >= word.length) return;
       setClickedCells((prev) => [...prev, { row, col }]);
       setSelectedLetters((prev) => [...prev, letter]);
-      console.log(letter);
     }
   };
 
