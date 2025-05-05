@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GoogleTranslateResponse } from '../../../types/googleDtos';
+import { GoogleTranslateResponse } from '../../types/googleDtos';
 
 const googleAPIKey = process.env.GOOGLE_API_KEY;
 

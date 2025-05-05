@@ -1,7 +1,7 @@
-import { protectedProcedure, router } from 'src/core/trpc/trpc';
+import { protectedProcedure, router } from '../../core/trpc/trpc';
 import { z } from 'zod';
-import { translateWord } from './googleTranslate/googleTranslate';
-import { detectObjectFromBase64 } from './googleVision/googleVision';
+import { translateWord } from './googleTranslate';
+import { detectObjectFromBase64 } from './googleVision';
 
 export const externalsRouter = router({
   translateWord: protectedProcedure

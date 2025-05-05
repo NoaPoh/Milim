@@ -3,7 +3,7 @@ import {
   GoogleObjectAnnotation,
   GoogleObjectDetectionResponse,
   NormalizedVertices,
-} from '../../../types/googleDtos';
+} from '../../types/googleDtos';
 
 const googleAPIKey = process.env.GOOGLE_API_KEY;
 
