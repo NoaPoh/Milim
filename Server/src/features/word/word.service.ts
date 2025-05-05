@@ -1,6 +1,4 @@
 import { PrismaClient, Word } from '@prisma/client';
-import { translateWord as googleTranslate } from '../../externalAPIs/googleTranslate/googleTranslate';
-import { detectObjectFromBase64 } from '../../externalAPIs/googleVision/googleVision';
 import { base64ToUint8Array } from '../../utils/images.util';
 
 export const fetchRandomUserWords = async (
@@ -17,14 +15,6 @@ export const fetchRandomUserWords = async (
     .slice(0, amount);
 
   return randomWords;
-};
-
-export const translateWord = async (word: string): Promise<string> => {
-  return await googleTranslate(word);
-};
-
-export const detectObject = async (image: string): Promise<string> => {
-  return await detectObjectFromBase64(image);
 };
 
 export const saveWordInCategory = async (

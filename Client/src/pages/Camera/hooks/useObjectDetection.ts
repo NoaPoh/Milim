@@ -15,7 +15,7 @@ function useObjectDetection(props: UseObjectDetectionProps) {
     data: detectedObject,
     isPending: detectObjectIsPending,
     mutateAsync: detectObject,
-  } = api.word.detectObject.useMutation({
+  } = api.externals.detectObject.useMutation({
     onSuccess: (_data, variables) => {
       props.freezeFrame(variables.image, stopDetectionLoop);
       sprinkleConfettiOnScreen();
