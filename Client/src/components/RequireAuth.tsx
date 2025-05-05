@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api } from '../utils/trpc';
+import { api } from '../utils/trpcClient';
 import React from 'react';
 
 export const NO_USER_ID = -1;

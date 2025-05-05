@@ -4,6 +4,7 @@ import useCameraFeed from './hooks/useCameraFeed';
 import useObjectDetection from './hooks/useObjectDetection';
 import CameraFeed from './components/Feed/CameraFeed';
 import PicturePreview from './components/Feed/PicturePreview';
+import { api } from '../../utils/trpcClient';
 
 export default function Camera() {
   const {
@@ -27,6 +28,13 @@ export default function Camera() {
     freezeFrame,
     videoRef,
   });
+
+  const { data: translatedWord } = api.externals.translateWord.useQuery(
+    { word: detectedObject },
+    {
+      enabled: !!detectedObject,
+    }
+  );
 
   const onTakePictureButton = () => {
     singleDetectObject();
@@ -52,6 +60,7 @@ export default function Camera() {
           image={stalePhoto}
           onRestart={() => restartFeed(startDetectionLoop)}
           detectedObject={detectedObject}
+          translatedWord={translatedWord}
           isDetecting={detectObjectIsPending}
         />
       )}

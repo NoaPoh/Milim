@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './CollectionDrawer.scss';
 import { useGetCategories } from '../../../Home/hooks/useGetCategories';
-import { api } from '../../../../utils/trpc';
-import Loader from '../../../../components/Loader/Loader';
+import { api } from '../../../../utils/trpcClient';
 
 interface CollectionDrawerProps {
   isOpen: boolean;
@@ -17,7 +16,7 @@ const CollectionDrawer = ({
   newWord,
   picture,
 }: CollectionDrawerProps) => {
-  const { data: categories } = useGetCategories();
+  const { data: categories } = useGetCategories(isOpen);
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     null
   );

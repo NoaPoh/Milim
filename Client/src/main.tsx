@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { api, trpcClient } from './utils/trpc';
+import { api, trpcClient } from './utils/trpcClient';
 import {
   QueryCache,
   QueryClient,

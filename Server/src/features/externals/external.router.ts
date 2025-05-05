@@ -5,9 +5,9 @@ import { detectObjectFromBase64 } from './googleVision';
 
 export const externalsRouter = router({
   translateWord: protectedProcedure
-    .input(z.object({ word: z.string() }))
+    .input(z.object({ word: z.string().optional() }))
     .query(async ({ ctx, input }) => {
-      return await translateWord(input.word);
+      if (input.word) return await translateWord(input.word);
     }),
   detectObject: protectedProcedure
     .input(z.object({ image: z.string() }))

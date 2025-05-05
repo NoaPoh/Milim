@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
-import Loader from '../../../../components/Loader/Loader';
 import SpeakerButton from '../../../../components/SpeakerButton';
 import CollectionDrawer from '../CollectionDrawer/CollectionDrawer';
 import { useState } from 'react';
@@ -10,6 +9,7 @@ type PicturePreviewProps = {
   onRestart: () => void;
   detectedObject: string | undefined;
   isDetecting: boolean;
+  translatedWord: string | undefined;
 };
 
 export default function PicturePreview({
@@ -17,6 +17,7 @@ export default function PicturePreview({
   onRestart,
   detectedObject,
   isDetecting,
+  translatedWord,
 }: PicturePreviewProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -33,7 +34,13 @@ export default function PicturePreview({
       {!isDetecting && detectedObject && (
         <div className="predictions-container">
           <p className="prediction-item">{detectedObject}</p>
-          <SpeakerButton text={detectedObject} />
+          <SpeakerButton text={detectedObject} language="en-US" />
+          {translatedWord && (
+            <>
+              <p className="prediction-item">{translatedWord}</p>
+              <SpeakerButton text={translatedWord} language="he-IL" />
+            </>
+          )}
           <button className="btn" onClick={openDrawer}>
             Add To Collection
           </button>

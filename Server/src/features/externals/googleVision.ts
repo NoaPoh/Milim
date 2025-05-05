@@ -4,6 +4,7 @@ import {
   GoogleObjectDetectionResponse,
   NormalizedVertices,
 } from '../../types/googleDtos';
+import { TRPCError } from '@trpc/server';
 
 const googleAPIKey = process.env.GOOGLE_API_KEY;
 
@@ -61,7 +62,10 @@ export async function detectObjectFromBase64(
       response.data.responses[0].localizedObjectAnnotations || [];
 
     if (objects.length === 0) {
-      throw new Error('No objects found in the image.');
+      throw new TRPCError({
+        message: 'No objects found in the image.',
+        code: 'NOT_FOUND',
+      });
     }
 
     const mostDominantObject = objects.reduce((prev, current) => {

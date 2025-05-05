@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { sprinkleConfettiOnScreen } from '../../../utils/confetti';
-import { api } from '../../../utils/trpc';
+import { api } from '../../../utils/trpcClient';
 import { convertVideoToBase64 } from '../../../utils/video';
 
 type UseObjectDetectionProps = {
@@ -11,6 +11,8 @@ type UseObjectDetectionProps = {
 function useObjectDetection(props: UseObjectDetectionProps) {
   const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  const apiUtils = api.useUtils();
+
   const {
     data: detectedObject,
     isPending: detectObjectIsPending,
@@ -19,7 +21,9 @@ function useObjectDetection(props: UseObjectDetectionProps) {
     onSuccess: (_data, variables) => {
       props.freezeFrame(variables.image, stopDetectionLoop);
       sprinkleConfettiOnScreen();
+      apiUtils.externals.translateWord.invalidate();
     },
+    retryDelay: 2000,
   });
 
   const detectObjectIsPendingRef = useRef(detectObjectIsPending);

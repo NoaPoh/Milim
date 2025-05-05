@@ -1,15 +1,15 @@
-import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 
 interface props {
   text: string;
+  language: 'en-US' | 'he-IL';
 }
 
-const SpeakerButton = ({ text }: props) => {
+const SpeakerButton = ({ text, language }: props) => {
   const speak = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
+    utterance.lang = language;
     utterance.rate = 1;
     window.speechSynthesis.speak(utterance);
   };
