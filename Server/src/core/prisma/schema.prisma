@@ -22,6 +22,7 @@ model User {
   currentStreak  Int
   longestStreak  Int?
   lastUsedDate   DateTime
+  coinBalance    Int       @default(0)
 
   // Relations
   animal         Animal?   @relation(fields: [animalId], references: [id])
