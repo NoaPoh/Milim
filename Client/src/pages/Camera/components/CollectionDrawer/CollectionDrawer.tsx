@@ -67,9 +67,7 @@ const CollectionDrawer = ({
               </li>
             ))}
         </ul>
-        {saveWordInCategoryIsPending ? (
-          <Loader />
-        ) : (
+        {!saveWordInCategoryIsPending && (
           <button
             className="btn add-button"
             onClick={handleAddClick}

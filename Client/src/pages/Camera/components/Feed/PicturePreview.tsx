@@ -30,7 +30,6 @@ export default function PicturePreview({
         <FontAwesomeIcon icon={faArrowsRotate} className="icon" />
       </button>
 
-      {isDetecting && <Loader />}
       {!isDetecting && detectedObject && (
         <div className="predictions-container">
           <p className="prediction-item">{detectedObject}</p>

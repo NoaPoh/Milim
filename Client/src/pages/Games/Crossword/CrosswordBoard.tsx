@@ -1,94 +1,134 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useCrossword } from './useCrossword';
 
 interface Props {
   boardSize: number;
   word: string;
 }
 
-//TODO: Place the word randomly in the board
-//TODO: Check if the word is correctly clicked
+//TODO: After clicking on word.length letters, it will toast a fail/success message
+//TODO: When clicking on an already selected cell again it will uncolour it
+//TODO: Remove styles to a css file, improve the styles
 const CrosswordBoard = ({ boardSize, word }: Props) => {
   const [clickedCells, setClickedCells] = useState<
     { row: number; col: number }[]
   >([]);
-  const [boardLetters, setBoardLetters] = useState<string[][]>([]);
+  const [selectedLetters, setSelectedLetters] = useState<string[]>([]);
 
-  const getRandomLetter = () => {
-    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-    return alphabet[Math.floor(Math.random() * alphabet.length)];
-  };
+  const { boardLetters } = useCrossword(word, boardSize);
 
-  useEffect(() => {
-    // Initialize the board with the word and random letters
-    const letters: string[][] = [];
-    let wordIndex = 0;
-
-    for (let row = 0; row < boardSize; row++) {
-      const currentRow: string[] = [];
-      for (let col = 0; col < boardSize; col++) {
-        if (wordIndex < word.length) {
-          currentRow.push(word[wordIndex]);
-          wordIndex++;
-        } else {
-          currentRow.push(getRandomLetter());
-        }
-      }
-      letters.push(currentRow);
-    }
-
-    setBoardLetters(letters);
-  }, [boardSize, word]);
-
-  const isClicked = (row: number, col: number) => {
+  const isCellClicked = (row: number, col: number) => {
     return clickedCells.some((cell) => cell.row === row && cell.col === col);
   };
 
-  const handleCellClick = (row: number, col: number) => {
-    setClickedCells((prev) => [...prev, { row, col }]);
+  const handleCellClick = (row: number, col: number, letter: string) => {
+    const alreadyClicked = clickedCells.some(
+      (cell) => cell.row === row && cell.col === col
+    );
+
+    if (alreadyClicked) {
+      setClickedCells((prev) =>
+        prev.filter((cell) => cell.row !== row || cell.col !== col)
+      );
+      setSelectedLetters((prev) => {
+        const index = prev.findIndex(
+          (l, i) => clickedCells[i]?.row === row && clickedCells[i]?.col === col
+        );
+        if (index !== -1) {
+          const updated = [...prev];
+          updated.splice(index, 1);
+          return updated;
+        }
+        return prev;
+      });
+    } else {
+      if (selectedLetters.length >= word.length) return;
+      setClickedCells((prev) => [...prev, { row, col }]);
+      setSelectedLetters((prev) => [...prev, letter]);
+    }
   };
 
   return (
-    <table
-      style={{
-        borderCollapse: 'collapse',
-        margin: '20px auto',
-      }}
-    >
-      <tbody>
-        {boardLetters.map((row, rowIndex) => (
-          <tr key={rowIndex}>
-            {row.map((letter, colIndex) => (
-              <td
-                key={colIndex}
-                style={{
-                  width: '50px',
-                  height: '50px',
-                  border: '3px solid black',
-                  textAlign: 'center',
-                  fontSize: '24px',
-                  padding: 0,
-                }}
-              >
-                <button
+    <div>
+      <table
+        style={{
+          borderCollapse: 'collapse',
+          margin: '20px auto',
+        }}
+      >
+        <tbody>
+          {boardLetters.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((letter, colIndex) => (
+                <td
+                  key={colIndex}
                   style={{
-                    width: '100%',
-                    height: '100%',
-                    border: 'none',
-                    cursor: 'pointer',
-                    backgroundColor: isClicked(rowIndex, colIndex)
-                      ? '#add8e6'
-                      : 'white',
+                    width: '50px',
+                    height: '50px',
+                    border: '3px solid black',
+                    textAlign: 'center',
+                    fontSize: '24px',
+                    padding: 0,
                   }}
-                  onClick={() => handleCellClick(rowIndex, colIndex)}
                 >
-                  {letter}
-                </button>
-              </td>
-            ))}
-          </tr>
+                  <button
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      border: 'none',
+                      cursor: 'pointer',
+                      backgroundColor: isCellClicked(rowIndex, colIndex)
+                        ? '#add8e6'
+                        : 'white',
+                    }}
+                    onClick={() => handleCellClick(rowIndex, colIndex, letter)}
+                  >
+                    {letter}
+                  </button>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '10px',
+          margin: '50px 30px 0px 30px',
+          direction: 'ltr',
+        }}
+      >
+        {Array.from({ length: word.length }).map((_, i) => (
+          <div
+            key={i}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <div
+              style={{
+                fontSize: '24px',
+                marginBottom: '8px',
+                minHeight: '35px',
+              }}
+            >
+              {selectedLetters[i] ?? ''}
+            </div>
+            <div
+              style={{
+                height: '2px',
+                backgroundColor: 'black',
+                width: '50px',
+              }}
+            />
+          </div>
         ))}
-      </tbody>
-    </table>
+      </div>
+    </div>
   );
 };
 

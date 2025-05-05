@@ -11,18 +11,14 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [learningLanguage, setLearningLanguage] = useState('');
   const [nativeLanguage, setNativeLanguage] = useState('');
-  const [spiritAnimal, setSpiritAnimal] = useState('');
+  const [spiritAnimal, setSpiritAnimal] = useState<number>(0);
   const navigate = useNavigate();
 
   const navToLogin = () => {
     navigate(RoutesValues.LOGIN);
   };
 
-  const {
-    data: freeAnimals,
-    isLoading,
-    error,
-  } = api.animal.getFreeAnimals.useQuery();
+  const { data: freeAnimals } = api.animal.getFreeAnimals.useQuery();
 
   const { mutateAsync: register, isPending: registerIsPending } =
     api.auth.register.useMutation({ onSuccess: navToLogin });
@@ -30,10 +26,15 @@ const Register = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!username || !email || !password || !spiritAnimal) {
+      return;
+    }
+
     register({
       username,
       email,
       password,
+      animalId: spiritAnimal,
     });
   };
 
@@ -94,7 +95,7 @@ const Register = () => {
               key={animal.id}
               type="button"
               className="register__animals-button"
-              onClick={() => setSpiritAnimal(animal.name)}
+              onClick={() => setSpiritAnimal(animal.id)}
             >
               <img
                 src={`src/assets/images/animals/${animal.imagePath}`}
@@ -110,7 +111,7 @@ const Register = () => {
           className="bg-blue-500 text-white p-3 rounded-full hover:from-blue-400 hover:to-purple-500 hover:shadow-lg transition-all font-semibold bg-gradient-to-r from-blue-200 to-purple-300"
           disabled={registerIsPending}
         >
-          {registerIsPending ? <Loader /> : "Let's do it!"}
+          {!registerIsPending ? "Let's do it!" : ''}
         </button>
       </form>
     </div>

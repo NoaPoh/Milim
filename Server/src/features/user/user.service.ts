@@ -3,7 +3,6 @@ import { PrismaClient, User } from '@prisma/client';
 export const winAGame = async (
   userId: number,
   coins: number,
-  streak: number,
   prisma: PrismaClient
 ): Promise<User> => {
   const user = await prisma.user.findUnique({ where: { id: userId } });
@@ -16,7 +15,6 @@ export const winAGame = async (
     where: { id: userId },
     data: {
       coinBalance: user.coinBalance + coins,
-      currentStreak: user.currentStreak + streak,
     },
   });
 

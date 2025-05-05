@@ -1,4 +1,4 @@
-import { Category, User, Word } from '@prisma/client';
+import { Animal, Category, User, Word } from '@prisma/client';
 
 export type DisplayCategory = Category & { picture: string };
 
@@ -10,6 +10,7 @@ export interface RegisterInput {
   username: User['username'];
   email: User['email'];
   password: string;
+  animalId: Animal['id'];
 }
 
 export interface LoginInput {
@@ -25,5 +26,4 @@ export interface LoginResponse {
 
 export interface WinAGameInput {
   coins: number;
-  addedStreak: number;
 }
