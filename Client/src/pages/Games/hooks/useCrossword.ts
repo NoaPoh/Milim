@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Directions } from '../../../constants/directions';
+import { generateRandomLetter } from '../Functions/functions';
 
 export const useCrossword = (word: string, boardSize: number) => {
   const [displayDirection, setDisplayDirection] = useState<Directions>();
   const [displayedWord, setDisplayedWord] = useState<string>(word);
   const [boardLetters, setBoardLetters] = useState<string[][]>([]);
-
-  const getRandomLetter = () => {
-    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-    return alphabet[Math.floor(Math.random() * alphabet.length)];
-  };
 
   // Randomly choose the direction the word will be displayed
   const chooseRandomDirection = () => {
@@ -38,7 +34,7 @@ export const useCrossword = (word: string, boardSize: number) => {
     for (let row = 0; row < boardSize; row++) {
       const currentRow: string[] = [];
       for (let col = 0; col < boardSize; col++) {
-        currentRow.push(getRandomLetter());
+        currentRow.push(generateRandomLetter());
       }
       letters.push(currentRow);
     }
