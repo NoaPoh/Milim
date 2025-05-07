@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSpelling } from '../hooks/useSpelling';
 import './Spelling.scss';
-import { generateButtonValues } from '../Functions/functions';
 
 interface SpellingBoardProps {
   word: string;
 }
 
 const SpellingBoard = ({ word }: SpellingBoardProps) => {
-  const { buttonsAmount, sheffledWord } = useSpelling(word);
+  const { buttonsAmount, buttonsValues } = useSpelling(word);
   const [selectedLetters, setSelectedLetters] = useState<string[]>([]);
+  const [disabledIndexes, setDisabledIndexes] = useState<Set<number>>(
+    new Set()
+  );
 
-  const buttonsValues = generateButtonValues(sheffledWord, buttonsAmount);
-
-  const handleClick = (letter: string) => {
-    if (selectedLetters.length < word.length) {
+  const handleClick = (letter: string, index: number) => {
+    if (selectedLetters.length < word.length && !disabledIndexes.has(index)) {
       setSelectedLetters((prev) => [...prev, letter]);
+      setDisabledIndexes((prev) => new Set(prev).add(index));
     }
   };
 
@@ -41,10 +42,11 @@ const SpellingBoard = ({ word }: SpellingBoardProps) => {
         {buttonsValues.map((letter, index) => (
           <button
             key={index}
+            disabled={disabledIndexes.has(index)}
             className={`spelling-button ${
               buttonsAmount === 8 ? 'large' : 'small'
-            }`}
-            onClick={() => handleClick(letter)}
+            } ${disabledIndexes.has(index) ? 'disabled' : ''}`}
+            onClick={() => handleClick(letter, index)}
           >
             {letter}
           </button>
