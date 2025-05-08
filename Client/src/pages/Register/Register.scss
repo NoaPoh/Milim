@@ -50,6 +50,7 @@
   &__animals {
     display: flex;
     justify-content: center;
+    flex-direction: row;
     gap: 10px;
 
     &-button {

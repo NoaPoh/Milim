@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import { publicProcedure, router } from '../../core/trpc/trpc';
 import { getFreeAnimals } from './animal.service';
 

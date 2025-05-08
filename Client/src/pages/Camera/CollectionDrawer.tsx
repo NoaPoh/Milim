@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './CollectionDrawer.scss';
 import { useGetCategories } from '../Home/hooks/useGetCategories';
-import { trpc } from '../../utils/trpc';
+import { trpc } from '../../utils/trpc/trpc';
 
 const CollectionDrawer = ({
   isOpen,

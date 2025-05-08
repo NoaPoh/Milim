@@ -4,30 +4,28 @@ import './Home.scss';
 import { useGetCategories } from './hooks/useGetCategories';
 import { CategoryCard } from './components/CategoryCard';
 import addIcon from '../../assets/images/categories/add.jpg';
+import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
+import Loader from '../../components/Loader/Loader';
+import { useUser } from '../../context/UserContext';
 
 const Home: React.FC = () => {
   // const userDetails = useUserDetails();
 
-  const { data: categories } = useGetCategories();
+  const { data: categories, isLoading } = useGetCategories();
 
-  const userDetails = {
-    username: 'John Doe',
-    spiritAnimal: giraffeIcon,
-  };
+  const { user } = useUser();
 
   return (
     <div className="flex flex-col flex-grow bg-[#FBF3DF] px-4 pt-10">
-      {userDetails && (
-        <div className="flex flex-col items-start">
-          <img
-            src={userDetails.spiritAnimal}
-            className="w-32 h-32 rounded-full"
-          />
+      {user && (
+        <div className="user-section">
+          <AnimalIcon iconWidth={120} path={user.spiritAnimal}></AnimalIcon>
           <p className="text-xl text-gray-700 mb-6">
-            Hello {userDetails.username}, <br /> Where are you now?
+            Hello {user.username}, <br /> Where are you now?
           </p>
         </div>
       )}
+      { isLoading && (<Loader/>)}
 
       {/* Category Grid */}
       {categories && (

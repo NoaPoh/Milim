@@ -1,5 +1,5 @@
 import { DisplayCategory } from 'milim-server/types';
-import { trpc } from '../../../utils/trpc';
+import { trpc } from '../../../utils/trpc/trpc';
 import defaultCategoriesIcons from '../../../constants/defaultCategoriesIcons';
 
 export const useGetCategories = () => {

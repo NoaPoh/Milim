@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate, faCamera } from '@fortawesome/free-solid-svg-icons';
 import './Camera.scss';
 import SpeakerButton from '../../components/SpeakerButton';
-import { trpc } from '../../utils/trpc';
 import { sprinkleConfettiOnScreen } from '../../utils/confetti';
 import CollectionDrawer from './CollectionDrawer';
 
