@@ -9,14 +9,14 @@ interface SpellingBoardProps {
 }
 
 const SpellingBoard = ({ word }: SpellingBoardProps) => {
-  const { buttonsAmount, buttonsValues } = useSpelling(word);
   const [selectedLetters, setSelectedLetters] = useState<string[]>([]);
   const [disabledIndexes, setDisabledIndexes] = useState<Set<number>>(
     new Set()
   );
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
+  const { buttonsAmount, buttonsValues } = useSpelling(word, selectedLetters);
 
-  const handleClick = (letter: string, index: number) => {
+  const handleLetterClick = (letter: string, index: number) => {
     if (selectedLetters.length < word.length && !disabledIndexes.has(index)) {
       setSelectedLetters((prev) => [...prev, letter]);
       setSelectedIndexes((prev) => [...prev, index]);
@@ -39,13 +39,6 @@ const SpellingBoard = ({ word }: SpellingBoardProps) => {
       });
     }
   };
-
-  useEffect(() => {
-    if (selectedLetters.length === word.length) {
-      const typedWord = selectedLetters.join('');
-      typedWord === word ? console.log('success') : console.log('fail');
-    }
-  }, [selectedLetters]);
 
   return (
     <div className="spelling-container">
@@ -77,7 +70,7 @@ const SpellingBoard = ({ word }: SpellingBoardProps) => {
             className={`spelling-button ${
               buttonsAmount === 8 ? 'large' : 'small'
             } ${disabledIndexes.has(index) ? 'disabled' : ''}`}
-            onClick={() => handleClick(letter, index)}
+            onClick={() => handleLetterClick(letter, index)}
           >
             {letter}
           </button>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { generateButtonValues } from '../Functions/functions';
 
-export const useSpelling = (word: string) => {
+export const useSpelling = (word: string, selectedLetters: string[]) => {
   const [buttonsAmount, setButtonsAmount] = useState<number>(0);
   const [sheffledWord, setSheffeledWord] = useState<string>('');
   const [buttonsValues, setButtonsValues] = useState<string[]>([]);
@@ -20,6 +20,13 @@ export const useSpelling = (word: string) => {
       setButtonsValues(generateButtonValues(sheffledWord, buttonsAmount));
     }
   }, [sheffledWord, buttonsAmount]);
+
+  useEffect(() => {
+    if (selectedLetters.length === word.length) {
+      const typedWord = selectedLetters.join('');
+      typedWord === word ? console.log('success') : console.log('fail');
+    }
+  }, [selectedLetters]);
 
   return { buttonsAmount, buttonsValues };
 };
