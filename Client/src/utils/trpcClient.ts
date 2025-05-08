@@ -2,9 +2,9 @@ import { createTRPCReact } from '@trpc/react-query';
 import type { AppRouter } from 'milim-server';
 import { httpBatchLink } from '@trpc/client';
 
-export const trpc = createTRPCReact<AppRouter>();
+export const api = createTRPCReact<AppRouter>();
 
-export const trpcClient = trpc.createClient({
+export const trpcClient = api.createClient({
   links: [
     httpBatchLink({
       url: import.meta.env.VITE_API_URL,

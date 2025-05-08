@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './CollectionDrawer.scss';
-import { useGetCategories } from '../Home/hooks/useGetCategories';
-import { trpc } from '../../utils/trpc';
+import { useGetCategories } from '../../../Home/hooks/useGetCategories';
+import { api } from '../../../../utils/trpcClient';
+
+interface CollectionDrawerProps {
+  isOpen: boolean;
+  onClose: () => void;
+  newWord: string;
+  picture: string;
+}
 
 const CollectionDrawer = ({
   isOpen,
   onClose,
   newWord,
   picture,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-  newWord: string;
-  picture: string;
-}) => {
-  const { data: categories } = useGetCategories();
+}: CollectionDrawerProps) => {
+  const { data: categories } = useGetCategories(isOpen);
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     null
   );
@@ -22,7 +24,7 @@ const CollectionDrawer = ({
   const {
     isPending: saveWordInCategoryIsPending,
     mutateAsync: saveWordInCategory,
-  } = trpc.word.saveWordInCategory.useMutation({ onSuccess: onClose });
+  } = api.word.saveWordInCategory.useMutation({ onSuccess: onClose });
 
   const handleCategoryClick = (categoryId: number) => {
     setSelectedCategoryId(categoryId);
