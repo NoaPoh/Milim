@@ -7,7 +7,6 @@ import { RoutesValues } from './routes/routes';
 import { RequireAuth } from './components/RequireAuth';
 import { useIsFetching, useIsMutating } from '@tanstack/react-query';
 import Loader from './components/Loader/Loader';
-import Spelling from './pages/Games/Spelling/Spelling';
 
 const App = () => {
   const location = useLocation();
@@ -20,12 +19,11 @@ const App = () => {
 
   return (
     <div className="app">
-      {/* <RequireAuth>
+      <RequireAuth>
         {howManyFetching + howManyMutating > 0 && <Loader />}
         <Router />
         {showNavbar && <Navbar />}
-      </RequireAuth> */}
-      <Spelling />
+      </RequireAuth>
     </div>
   );
 };
