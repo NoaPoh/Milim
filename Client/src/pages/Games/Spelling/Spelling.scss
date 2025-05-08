@@ -2,7 +2,6 @@
   display: grid;
   gap: 5px;
   justify-content: center;
-  margin-top: 20px;
 
   &.large {
     .spelling-button {
@@ -44,13 +43,14 @@ spelling-lines {
   display: flex;
   justify-content: center;
   gap: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .spelling-letter-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 50px;
 }
 
 .spelling-letter {
@@ -70,4 +70,11 @@ spelling-lines {
   width: 25px;
   height: 2px;
   background-color: black;
+}
+
+.icon-button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 40px;
 }

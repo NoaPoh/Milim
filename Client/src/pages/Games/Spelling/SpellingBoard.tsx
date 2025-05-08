@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
-import { useSpelling } from '../hooks/useSpelling';
+import React, { useEffect, useState } from 'react';
+import { useSpelling } from '../Hooks/useSpelling';
 import './Spelling.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons';
 
 interface SpellingBoardProps {
   word: string;
@@ -12,13 +14,38 @@ const SpellingBoard = ({ word }: SpellingBoardProps) => {
   const [disabledIndexes, setDisabledIndexes] = useState<Set<number>>(
     new Set()
   );
+  const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
 
   const handleClick = (letter: string, index: number) => {
     if (selectedLetters.length < word.length && !disabledIndexes.has(index)) {
       setSelectedLetters((prev) => [...prev, letter]);
+      setSelectedIndexes((prev) => [...prev, index]);
       setDisabledIndexes((prev) => new Set(prev).add(index));
     }
   };
+
+  const deleteLastLetter = () => {
+    if (selectedLetters.length > 0 && selectedIndexes.length > 0) {
+      const newSelectedLetters = selectedLetters.slice(0, -1);
+      const newSelectedIndexes = selectedIndexes.slice(0, -1);
+      const indexToEnable = selectedIndexes[selectedIndexes.length - 1];
+
+      setSelectedLetters(newSelectedLetters);
+      setSelectedIndexes(newSelectedIndexes);
+      setDisabledIndexes((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(indexToEnable);
+        return newSet;
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (selectedLetters.length === word.length) {
+      const typedWord = selectedLetters.join('');
+      typedWord === word ? console.log('success') : console.log('fail');
+    }
+  }, [selectedLetters]);
 
   return (
     <div className="spelling-container">
@@ -30,7 +57,11 @@ const SpellingBoard = ({ word }: SpellingBoardProps) => {
           </div>
         ))}
       </div>
-
+      <div className="icon-button-wrapper">
+        <button onClick={() => deleteLastLetter()}>
+          <FontAwesomeIcon icon={faDeleteLeft} />
+        </button>
+      </div>
       <div
         className={`spelling-board ${buttonsAmount === 8 ? 'large' : 'small'}`}
         style={{
