@@ -1,19 +1,11 @@
 import React from 'react';
 import GameCard from '../components/GameCard/GameCard';
 import { games } from '../../../constants/games';
+import './GamesHome.scss';
 
 const GamesHome: React.FC = () => {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: '2rem',
-        minHeight: '100vh',
-        overflowY: 'auto',
-      }}
-    >
+    <div className="games-home">
       {games.map((game) => (
         <GameCard
           key={game.name}

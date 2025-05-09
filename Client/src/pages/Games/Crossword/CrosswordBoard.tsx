@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useCrossword } from './useCrossword';
+import { useCrossword } from '../Hooks/useCrossword';
+import './CrosswordBoard.scss';
 
 interface Props {
   boardSize: number;
@@ -49,38 +50,17 @@ const CrosswordBoard = ({ boardSize, word }: Props) => {
   };
 
   return (
-    <div>
-      <table
-        style={{
-          borderCollapse: 'collapse',
-          margin: '20px auto',
-        }}
-      >
+    <div className="crossword-container">
+      <table>
         <tbody>
           {boardLetters.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {row.map((letter, colIndex) => (
-                <td
-                  key={colIndex}
-                  style={{
-                    width: '50px',
-                    height: '50px',
-                    border: '3px solid black',
-                    textAlign: 'center',
-                    fontSize: '24px',
-                    padding: 0,
-                  }}
-                >
+                <td key={colIndex}>
                   <button
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      border: 'none',
-                      cursor: 'pointer',
-                      backgroundColor: isCellClicked(rowIndex, colIndex)
-                        ? '#add8e6'
-                        : 'white',
-                    }}
+                    className={
+                      isCellClicked(rowIndex, colIndex) ? 'selected' : ''
+                    }
                     onClick={() => handleCellClick(rowIndex, colIndex, letter)}
                   >
                     {letter}
@@ -91,40 +71,12 @@ const CrosswordBoard = ({ boardSize, word }: Props) => {
           ))}
         </tbody>
       </table>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: '10px',
-          margin: '50px 30px 0px 30px',
-          direction: 'ltr',
-        }}
-      >
+
+      <div className="letter-display">
         {Array.from({ length: word.length }).map((_, i) => (
-          <div
-            key={i}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <div
-              style={{
-                fontSize: '24px',
-                marginBottom: '8px',
-                minHeight: '35px',
-              }}
-            >
-              {selectedLetters[i] ?? ''}
-            </div>
-            <div
-              style={{
-                height: '2px',
-                backgroundColor: 'black',
-                width: '50px',
-              }}
-            />
+          <div className="letter-slot" key={i}>
+            <div className="letter">{selectedLetters[i] ?? ''}</div>
+            <div className="underline" />
           </div>
         ))}
       </div>
