@@ -16,6 +16,9 @@ export const fetchUserCategories = async (
     },
     include: {
       words: {
+        where: {
+          userId
+        },
         take: 1, // Only fetch one word
         orderBy: {
           discoveredAt: 'asc',
