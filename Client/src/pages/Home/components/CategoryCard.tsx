@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { RoutesValues } from '../../../routes/routes';
 
 export type CategoryCardProps = {
+  id: number
   name: string;
   picture: string;
 };
@@ -10,8 +11,8 @@ export type CategoryCardProps = {
 export const CategoryCard = (props: CategoryCardProps) => {
   return (
     <Link
-      to={`${RoutesValues.CATEGORIES}/${props.name}`}
-      className="flex flex-col items-center justify-center p-2 bg-white rounded-2xl shadow-md hover:shadow-lg transition"
+      to={`${RoutesValues.CATEGORY}/${props.id}`}
+      className="flex flex-col items-center justify-center p-2 bg-white rounded-2xl shadow-md hover:shadow-lg transition h-40"
     >
       <img
         src={props.picture}

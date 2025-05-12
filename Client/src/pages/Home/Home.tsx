@@ -35,11 +35,12 @@ const Home: React.FC = () => {
           {categories.map((category) => (
             <CategoryCard
               key={category.id}
+              id={category.id}
               name={category.name}
               picture={category.picture}
             />
           ))}
-          <CategoryCard name="add" picture={addIcon} />
+          <CategoryCard id={0} name="add" picture={addIcon} />
         </div>
       )}
     </div>
