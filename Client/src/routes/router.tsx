@@ -10,6 +10,7 @@ import GamesHome from '../pages/Games/GamesHome/GamesHome';
 import Crossword from '../pages/Games/Crossword/Crossword';
 import FlashCards from '../pages/Games/FlashCards/FlashCards';
 import Spelling from '../pages/Games/Spelling/Spelling';
+import Category from '../pages/Category/Category';
 
 const Page = ({ children }: { children: React.ReactNode }) => {
   return <div className="page-w-navbar">{children}</div>;
@@ -66,6 +67,11 @@ const routes: RouteProps[] = [
     component: <Spelling />,
     navbar: true,
   },
+  {
+    path: `${RoutesValues.CATEGORY}/:id`, // Add dynamic segment for category ID
+    component: <Category />,
+    navbar: true,
+  }
 ];
 
 interface RouterProps {}
