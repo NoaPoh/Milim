@@ -1,3 +1,41 @@
-.category-icon {
-  width: 100px;
+.home {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: #FBF3DF;
+    padding: 2.5rem 1rem;
+  }
+
+  &__user-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    img {
+      width: 8rem;
+      height: 8rem;
+      border-radius: 50%;
+    }
+
+    p {
+      font-size: 1.25rem;
+      color: #4B5563; // Tailwind's gray-700
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 25rem;
+    align-items: center;
+    flex-grow: 1;
+
+    :last-child {
+      background-color: transparent
+    }
+  }
 }

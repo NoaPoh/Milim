@@ -3,11 +3,11 @@ import giraffeIcon from '../../assets/images/animals/giraffe.png';
 import './Home.scss';
 import { useGetCategories } from './hooks/useGetCategories';
 import { CategoryCard } from './components/CategoryCard';
-import addIcon from '../../assets/images/categories/add.jpg';
+import addIcon from '../../assets/images/categories/add.png';
+import { Link } from 'react-router-dom';
+import { RoutesValues } from '../../routes/routes';
 
 const Home: React.FC = () => {
-  // const userDetails = useUserDetails();
-
   const { data: categories } = useGetCategories();
 
   const userDetails = {
@@ -16,22 +16,21 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col flex-grow bg-[#FBF3DF] px-4 pt-10">
+    <div className="home__container">
       {userDetails && (
-        <div className="flex flex-col items-start">
+        <div className="home__user-details">
           <img
             src={userDetails.spiritAnimal}
-            className="w-32 h-32 rounded-full"
+            alt="Spirit Animal"
           />
-          <p className="text-xl text-gray-700 mb-6">
+          <p>
             Hello {userDetails.username}, <br /> Where are you now?
           </p>
         </div>
       )}
 
-      {/* Category Grid */}
       {categories && (
-        <div className="grid grid-cols-2 gap-6 w-full max-w-md items-center flex-grow">
+        <div className="home__category-grid">
           {categories.map((category) => (
             <CategoryCard
               key={category.id}

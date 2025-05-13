@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import '@tensorflow/tfjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import './Category.scss';
 import { useGetUserCategory } from './hooks/useGetUserCategory';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { RoutesValues } from '../../routes/routes';
 import addIcon from '../../assets/images/categories/add.png';
 
@@ -18,10 +18,6 @@ export default function Category({ name }: CategoryProps) {
 
   const { category, isLoading } = useGetUserCategory(+id || 0);
 
-  useEffect(() => {
-
-  }, []);
-
   const navToHome = () => {
     navigate(RoutesValues.HOME);
   };
@@ -31,7 +27,6 @@ export default function Category({ name }: CategoryProps) {
       <FontAwesomeIcon onClick={navToHome} icon={faChevronLeft} className="return__icon text-2xl text-gray-700" />{' '}
       <p className="category__title">{category.name}</p>
       <div className="category__words">
-
         {category.words && category.words.map((word) => (
           <div key={word.id} className="category__word">
             <Link to={`${RoutesValues.CATEGORY}/${category.id}/${word.id}`}>
