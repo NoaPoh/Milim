@@ -33,12 +33,21 @@ export default function Category({ name }: CategoryProps) {
               <img
                 src={word.picture}
                 alt={word.text}
-                className="w-40 h-40 object-cover mb-2"
+                className="object-cover"
               />
             </Link>
           </div>
-        ))
-        } </div>
+        ))}
+        <div key={0} className="category__word">
+          <Link to={RoutesValues.CAMERA}>
+            <img
+              src={addIcon}
+              alt="Add new word"
+              className="add-icon object-cover mb-2"
+            />
+          </Link>
+        </div>
+      </div>
     </div>
   ));
 }
