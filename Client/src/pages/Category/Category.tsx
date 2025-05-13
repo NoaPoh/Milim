@@ -6,7 +6,7 @@ import './Category.scss';
 import { useGetUserCategory } from './hooks/useGetUserCategory';
 import { useNavigate, useParams } from 'react-router-dom';
 import { RoutesValues } from '../../routes/routes';
-import { Link } from 'react-router-dom';
+import addIcon from '../../assets/images/categories/add.png';
 
 export type CategoryProps = {
   name: string;

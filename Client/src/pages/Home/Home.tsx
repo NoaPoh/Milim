@@ -40,7 +40,15 @@ const Home: React.FC = () => {
               picture={category.picture}
             />
           ))}
-          <CategoryCard id={0} name="add" picture={addIcon} />
+          <div key={0} className="category__word">
+            <Link to={RoutesValues.ADD_CATEGORY}>
+              <img
+                src={addIcon}
+                alt="Add new category"
+                className="add-icon object-cover"
+              />
+            </Link>
+          </div>
         </div>
       )}
     </div>

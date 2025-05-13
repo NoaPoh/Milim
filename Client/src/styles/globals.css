@@ -33,3 +33,8 @@
 .pop-off-top {
   animation: popOffTop 5s ease-in-out infinite;
 }
+
+.add-icon {
+  width: 5rem !important;
+  height: 5rem !important;
+}
