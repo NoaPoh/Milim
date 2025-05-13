@@ -21,8 +21,13 @@
     font-size: 1.2rem;
     transition: transform 0.3s ease-in-out;
 
-    &:hover {
-      transform: scale(1.05);
-    }
+    // &:hover {
+    //   transform: scale(1.05);
+    // }
+  }
+
+  .chosen {
+    border: 2px solid #5c3d00;
+    box-shadow: 0 0 12px rgba(28, 78, 128, 0.5);
   }
 }

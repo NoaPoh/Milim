@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './FlashCards.scss';
 
 const FlashCards = () => {
@@ -8,12 +8,21 @@ const FlashCards = () => {
     { id: 3, answer: 'Answer 3' },
     { id: 4, answer: 'Answer 4' },
   ];
+
+  const [chosenId, setChosenId] = useState<number>(0);
+
   return (
     <>
       <img src="rrtrtrtr" alt="chair" className="w-19 h-19 category-icon" />
       <div className="flashcards-container">
         {answers.map((item) => (
-          <div key={item.id} className="flashcards-container__card">
+          <div
+            key={item.id}
+            className={`flashcards-container__card ${
+              item.id === chosenId ? 'chosen' : ''
+            }`}
+            onClick={() => setChosenId(item.id)}
+          >
             {item.answer}
           </div>
         ))}
