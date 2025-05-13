@@ -33,8 +33,17 @@
 .pop-off-top {
   animation: popOffTop 5s ease-in-out infinite;
 }
+@keyframes pop {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
 
 .add-icon {
+  animation: pop 1.5s infinite ease-in-out;
   width: 5rem !important;
   height: 5rem !important;
 }
