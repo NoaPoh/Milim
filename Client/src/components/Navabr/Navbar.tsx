@@ -11,18 +11,24 @@ const Navbar = () => {
   return (
     //bottom navigation bar
     <nav className="navbar">
-      <Link to={RoutesValues.HOME} className="navbar__link">
+      <Link to={RoutesValues.HOME}
+            className={`navbar__link ${location.pathname === RoutesValues.HOME ? 'active' : ''}`}
+      >
         <HomeIcon />
       </Link>
-      <Link to={RoutesValues.GAMES} className="navbar__link">
+      <Link to={RoutesValues.GAMES}
+            className={`navbar__link ${location.pathname === RoutesValues.GAMES ? 'active' : ''}`}
+      >
         <SportsEsportsIcon />
       </Link>
-      <Link to={RoutesValues.CAMERA} className="navbar__link">
+      <Link to={RoutesValues.CAMERA}
+            className={`navbar__link ${location.pathname === RoutesValues.CAMERA ? 'active' : ''}`}
+      >
         <PhotoCameraIcon />
       </Link>
       <Link
         to={RoutesValues.PROFILE}
-        className="navbar__link navbar__link--spaced"
+        className={`navbar__link navbar__link--spaced ${location.pathname === RoutesValues.PROFILE ? 'active' : ''}`}
       >
         <PersonIcon />
       </Link>
