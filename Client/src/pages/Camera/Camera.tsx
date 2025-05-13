@@ -154,15 +154,17 @@ export default function Camera() {
   return (
     <div className="photo-capture-container">
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-
+    <div className='ribbon'>See It.<br/> Snap It. Learn It.</div>
       {!photo ? (
         <>
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            className="video-preview"
-          ></video>
+          <div className="video-wrapper">
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              className="video-preview"
+            ></video>
+          </div>
 
           <button
             className="button"
