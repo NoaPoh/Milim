@@ -1,4 +1,4 @@
-import { Animal, Category, User, Word } from '@prisma/client';
+import { Animal, Category, Prisma, User, Word } from '@prisma/client';
 
 export type DisplayCategory = Category & { picture: string };
 
@@ -50,3 +50,17 @@ export type GoogleLabelDetectionResponse = {
     labelAnnotations?: GoogleLabelAnnotation[];
   }>;
 };
+
+export type DisplayCategoryWithWords = Omit<DisplayCategory, 'words'> & {
+  words?: (Omit<Word, 'picture'> & { picture: string })[];
+};
+
+type PrismaCategoryWithWords = Prisma.CategoryGetPayload<{
+  include: {
+    words: {
+      orderBy: {
+        discoveredAt: 'asc';
+      };
+    };
+  };
+}>;

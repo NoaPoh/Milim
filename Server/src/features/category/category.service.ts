@@ -1,7 +1,7 @@
-import { Category, PrismaClient } from '@prisma/client';
-import { DisplayCategory } from '../../types/dtos';
+import { Category, Prisma, PrismaClient, Word } from '@prisma/client';
+import { PrismaCategoryWithWords, DisplayCategory, DisplayCategoryWithWords } from '../../types';
 import { SYSTEM_USER_ID } from '../../utils/constants';
-import _ from 'lodash';
+import _, { omit } from 'lodash';
 
 export const fetchUserCategories = async (
   userId: number,
@@ -31,9 +31,7 @@ export const fetchUserCategories = async (
     let picture = '';
 
     if (category.words.length !== 0) {
-      const buffer = Buffer.from(category.words[0].picture);
-      const base64Image = buffer.toString('base64');
-      picture = base64Image;
+      picture = formatImageWithBuffer(category?.words[0].picture);
     }
 
     const CategoryObjToUse = _.omit(category, 'words');
@@ -47,10 +45,49 @@ export const fetchUserCategories = async (
   return displayCategories;
 };
 
+export const fetchUserCategoryById = async (
+  userId: number,
+  prisma: PrismaClient,
+  categoryId: number,
+): Promise<DisplayCategoryWithWords> => {
+  const category: PrismaCategoryWithWords | null = await prisma.category.findUnique({
+    where: {
+      id: categoryId,
+    },
+    include: {
+      words: {
+        orderBy: {
+          discoveredAt: 'asc',
+        }
+      },
+    },
+  });
+  if (!category) {
+    throw new Error('Category not found');
+  }
+
+  const newCategory: DisplayCategoryWithWords = {
+    ...omit(category, ['words']),
+    picture: '',
+    words: [] };
+
+  if (category.words.length !== 0) {
+    newCategory.picture = formatImageWithBuffer(category?.words[0].picture);
+    newCategory.words = category.words.map((word: Word) => {
+      return {
+        ...word,
+        picture: formatImageWithBuffer(word.picture),
+      };
+    });
+  }
+
+  return newCategory;
+};
+
 export const insertCategory = async (
   userId: number,
   name: string,
-  prisma: PrismaClient
+  prisma: PrismaClient,
 ): Promise<Category> => {
   const newCategory = await prisma.category.create({
     data: {
@@ -61,3 +98,9 @@ export const insertCategory = async (
 
   return newCategory;
 };
+
+const formatImageWithBuffer = (picture: Uint8Array<ArrayBufferLike>): string => {
+  const buffer = Buffer.from(picture);
+  const base64Image = buffer.toString('base64');
+  return base64Image;
+}
