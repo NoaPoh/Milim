@@ -19,18 +19,20 @@ export const wordRouter = router({
   saveWordInCategory: protectedProcedure
     .input(
       z.object({
-        text: z.string(),
+        originalText: z.string(),
+        translatedText: z.string(),
         categoryId: z.number(),
         picture: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const { text, categoryId, picture } = input;
+      const { originalText, translatedText, categoryId, picture } = input;
       return await saveWordInCategory(
-        text,
+        originalText,
+        translatedText,
         picture,
-        ctx.userId,
         categoryId,
+        ctx.userId,
         ctx.prisma
       );
     }),

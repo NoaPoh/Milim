@@ -27,7 +27,9 @@ export const fetchRandomUserWords = async (
   const uniqueWords: Word[] =
     categoryId === undefined
       ? userWords.reduce((acc: Word[], word) => {
-          const existingWord = acc.find((w) => w.text === word.text);
+          const existingWord = acc.find(
+            (w) => w.originalText === word.originalText
+          );
           if (!existingWord) {
             acc.push(word);
           }
@@ -54,10 +56,11 @@ export const fetchRandomUserWords = async (
 };
 
 export const saveWordInCategory = async (
-  text: string,
+  originalText: string,
+  translatedText: string,
   picture: string,
-  userId: number,
   categoryId: number,
+  userId: number,
   prisma: PrismaClient
 ): Promise<Word> => {
   const base64 = dataURLToBase64(picture);
@@ -66,7 +69,7 @@ export const saveWordInCategory = async (
 
   const alreadyExists = await prisma.word.findFirst({
     where: {
-      text,
+      originalText,
       userId,
       categoryId,
     },
@@ -78,7 +81,8 @@ export const saveWordInCategory = async (
 
   const newWord = await prisma.word.create({
     data: {
-      text,
+      originalText,
+      translatedText,
       userId,
       categoryId,
       discoveredAt: new Date(),
