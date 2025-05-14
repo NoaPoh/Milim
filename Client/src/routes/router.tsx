@@ -10,6 +10,7 @@ import GamesHome from '../pages/Games/GamesHome/GamesHome';
 import Crossword from '../pages/Games/Crossword/Crossword';
 import FlashCards from '../pages/Games/FlashCards/FlashCards';
 import Spelling from '../pages/Games/Spelling/Spelling';
+import WelcomeToGame from '../pages/Games/WelcomeScreen/WelcomeToGame';
 
 const Page = ({ children }: { children: React.ReactNode }) => {
   return <div className="page-w-navbar">{children}</div>;
@@ -54,17 +55,22 @@ const routes: RouteProps[] = [
   {
     path: GamesRoutesValues.CROSSWORD,
     component: <Crossword />,
-    navbar: true,
+    navbar: false,
   },
   {
     path: GamesRoutesValues.FLASH_CARDS,
     component: <FlashCards />,
-    navbar: true,
+    navbar: false,
   },
   {
     path: GamesRoutesValues.SPELLING,
     component: <Spelling />,
-    navbar: true,
+    navbar: false,
+  },
+  {
+    path: RoutesValues.GAME_WELCOME_SCREEN,
+    component: <WelcomeToGame />,
+    navbar: false,
   },
 ];
 
