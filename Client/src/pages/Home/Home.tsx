@@ -6,28 +6,28 @@ import { CategoryCard } from './components/CategoryCard';
 import addIcon from '../../assets/images/categories/add.png';
 import { Link } from 'react-router-dom';
 import { RoutesValues } from '../../routes/routes';
+import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
+import Loader from '../../components/Loader/Loader';
+import { useUser } from '../../context/UserContext';
 
 const Home: React.FC = () => {
-  const { data: categories } = useGetCategories();
+  // const userDetails = useUserDetails();
 
-  const userDetails = {
-    username: 'John Doe',
-    spiritAnimal: giraffeIcon,
-  };
+  const { data: categories, isLoading } = useGetCategories();
+
+  const { user } = useUser();
 
   return (
     <div className="home__container">
-      {userDetails && (
+      {user && (
         <div className="home__user-details">
-          <img
-            src={userDetails.spiritAnimal}
-            alt="Spirit Animal"
-          />
-          <p>
-            Hello {userDetails.username}, <br /> Where are you now?
+          <AnimalIcon iconWidth={120} path={user.spiritAnimal}></AnimalIcon>
+          <p className="text-xl text-gray-700 mb-6">
+            Hello {user.username}, <br /> Where are you now?
           </p>
         </div>
       )}
+      { isLoading && (<Loader/>)}
 
       {categories && (
         <div className="home__category-grid">

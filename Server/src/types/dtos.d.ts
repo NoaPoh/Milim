@@ -28,6 +28,14 @@ export interface WinAGameInput {
   coins: number;
 }
 
+export interface WordWithStringPic {
+  userId: number;
+  text: string;
+  categoryId: number;
+  picture: string;
+  id: number;
+  discoveredAt: Date;
+}
 export interface GoogleTranslateResponse {
   data: {
     translations: Array<{
@@ -64,3 +72,12 @@ type PrismaCategoryWithWords = Prisma.CategoryGetPayload<{
     };
   };
 }>;
+
+export interface UserDTO {
+  username: string | null;
+  currentStreak: number | null;
+  longestStreak: number | null;
+  lastUsedDate: string | null;
+  spiritAnimal: string;
+  coins: number;
+}

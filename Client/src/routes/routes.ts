@@ -7,6 +7,8 @@ export enum RoutesValues {
   PROFILE = '/profile',
   CATEGORIES = '/categories',
   ADD_CATEGORY = '/categories/add',
+  ADD_OBJECT = '/categories/add/object',
+  GAME_WELCOME_SCREEN = '/games/welcome',
   CATEGORY = '/category',
 }
 
