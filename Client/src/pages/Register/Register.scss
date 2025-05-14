@@ -6,20 +6,21 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  color: $primary-dark;
   &__form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: $shadow;
+    // box-shadow: $shadow;
   }
 
   &__title {
     font-size: 1.5rem;
     font-weight: bold;
     text-align: center;
-    color: $text-dark;
+    color: $primary-dark;
   }
 
   &__input {
@@ -74,7 +75,7 @@
   }
 
   &__button {
-    background-color: $primary;
+    background-color: $primary-dark;
     color: white;
     padding: 12px;
     font-weight: bold;
@@ -94,8 +95,21 @@
   }
 }
 
+.submit-button {
+  background: $primary-dark;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: $primary-dark;
+  }
+}
+
 input,
 select {
-  color: #1a1a1a;
+  // color: #1a1a1a;
   background-color: $inputs;
 }
