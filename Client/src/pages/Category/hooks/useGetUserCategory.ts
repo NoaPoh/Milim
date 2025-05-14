@@ -1,9 +1,9 @@
 import { DisplayCategory } from 'milim-server/types';
-import { trpc } from '../../../utils/trpc';
+import { api } from '../../../utils/trpcClient.ts';
 import defaultCategoriesIcons from '../../../constants/defaultCategoriesIcons';
 
 export const useGetUserCategory = (categoryId: number) => {
-  const query = trpc.category.fetchUserCategoryById.useQuery({ id: categoryId });
+  const query = api.category.fetchUserCategoryById.useQuery({ id: categoryId });
   const response = query.data;
   const category: DisplayCategory | undefined =
      response ? {
