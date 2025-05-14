@@ -8,6 +8,15 @@ export type JWTPayload = {
 };
 
 export const isAuthed = base.middleware<Context>(({ ctx, next }) => {
+  if (process.env.DISABLE_SECURITY === 'true') {
+    return next({
+      ctx: {
+        ...ctx,
+        userId: -1,
+      },
+    });
+  }
+
   const token = ctx.req.cookies['access-token'];
 
   if (!token) {
