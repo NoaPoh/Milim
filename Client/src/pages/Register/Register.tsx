@@ -1,7 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import './Register.scss';
 import { api } from '../../utils/trpcClient';
-import Loader from '../../components/Loader/Loader';
 import { useNavigate } from 'react-router';
 import { RoutesValues } from '../../routes/routes';
 

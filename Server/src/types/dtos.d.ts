@@ -27,3 +27,35 @@ export interface LoginResponse {
 export interface WinAGameInput {
   coins: number;
 }
+
+export interface GoogleTranslateResponse {
+  data: {
+    translations: Array<{
+      translatedText: string;
+      detectedSourceLanguage: string;
+      model: string;
+    }>;
+  };
+}
+
+export type GoogleLabelAnnotation = {
+  mid: string; // e.g. "/m/0bt9lr"
+  description: string; // e.g. "banana"
+  score: number; // confidence, 0–1
+  topicality?: number; // often same as score
+};
+
+export type GoogleLabelDetectionResponse = {
+  responses: Array<{
+    labelAnnotations?: GoogleLabelAnnotation[];
+  }>;
+};
+
+export interface UserDTO {
+  username: string | null;
+  currentStreak: number | null;
+  longestStreak: number | null;
+  lastUsedDate: string | null;
+  spiritAnimal: string;
+  coins: number;
+}
