@@ -28,6 +28,14 @@ export interface WinAGameInput {
   coins: number;
 }
 
+export interface WordWithStringPic {
+  userId: number;
+  text: string;
+  categoryId: number;
+  picture: string;
+  id: number;
+  discoveredAt: Date;
+}
 export interface GoogleTranslateResponse {
   data: {
     translations: Array<{
