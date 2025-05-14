@@ -13,6 +13,7 @@ const Login: React.FC = () => {
     navigate(RoutesValues.REGISTER);
   };
   const navToHome = () => {
+    console.log('Login successful');
     navigate(RoutesValues.HOME);
   };
 

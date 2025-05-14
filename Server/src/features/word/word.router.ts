@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { protectedProcedure, router } from '../../core/trpc/trpc';
 import type { Word } from '@prisma/client';
 import { saveWordInCategory, fetchRandomUserWords } from './word.service';
-import { WordWithStringPic } from 'src/types';
+import { WordWithStringPic } from '../../types';
 
 export const wordRouter = router({
   fetchRandomUserWords: protectedProcedure

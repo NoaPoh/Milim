@@ -2,7 +2,7 @@ import { Category, PrismaClient } from '@prisma/client';
 import { DisplayCategory } from '../../types/dtos';
 import { SYSTEM_USER_ID } from '../../utils/constants';
 import _ from 'lodash';
-import { uint8ArrayToClientReadyImage } from 'src/utils/images.util';
+import { uint8ArrayToClientReadyImage } from '../../utils/images.util';
 
 export const fetchUserCategories = async (
   userId: number,

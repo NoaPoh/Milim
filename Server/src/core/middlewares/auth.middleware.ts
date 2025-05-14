@@ -2,6 +2,7 @@ import { TRPCError } from '@trpc/server';
 import jwt from 'jsonwebtoken';
 import { Context } from '../trpc/context';
 import { base } from '../trpc/base';
+import { DEFAULT_USER_ID } from '../../utils/constants';
 
 export type JWTPayload = {
   userId: string;
@@ -12,7 +13,7 @@ export const isAuthed = base.middleware<Context>(({ ctx, next }) => {
     return next({
       ctx: {
         ...ctx,
-        userId: -1,
+        userId: DEFAULT_USER_ID,
       },
     });
   }

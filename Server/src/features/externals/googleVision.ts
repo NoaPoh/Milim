@@ -5,7 +5,7 @@ import {
   NormalizedVertices,
 } from '../../types/googleDtos';
 import { TRPCError } from '@trpc/server';
-import { dataURLToBase64 } from 'src/utils/images.util';
+import { dataURLToBase64 } from '../../utils/images.util';
 
 const googleAPIKey = process.env.GOOGLE_API_KEY;
 

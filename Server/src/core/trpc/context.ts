@@ -1,6 +1,7 @@
 import { Prisma, PrismaClient } from '@prisma/client';
 import { DefaultArgs } from '@prisma/client/runtime/library';
 import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
+import { DEFAULT_USER_ID } from '../../utils/constants';
 
 const prisma = new PrismaClient();
 
@@ -12,7 +13,7 @@ export const createContext = ({
     prisma,
     req,
     res,
-    userId: -1,
+    userId: DEFAULT_USER_ID,
   };
 };
 

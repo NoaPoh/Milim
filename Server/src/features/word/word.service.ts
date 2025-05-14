@@ -6,7 +6,7 @@ import {
 } from '../../utils/images.util';
 import { Prisma } from '@prisma/client';
 import _ from 'lodash';
-import { WordWithStringPic } from 'src/types';
+import { WordWithStringPic } from '../../types';
 
 export const fetchRandomUserWords = async (
   userId: number,
