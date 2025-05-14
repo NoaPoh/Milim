@@ -1,5 +1,9 @@
 import { PrismaClient, Word } from '@prisma/client';
-import { base64ToUint8Array } from '../../utils/images.util';
+import {
+  base64ToUint8Array,
+  dataURLToBase64,
+  uint8ArrayToClientReadyImage,
+} from '../../utils/images.util';
 import { Prisma } from '@prisma/client';
 import _ from 'lodash';
 import { WordWithStringPic } from 'src/types';
@@ -32,9 +36,7 @@ export const fetchRandomUserWords = async (
       : userWords;
 
   const rightPicWords: WordWithStringPic[] = uniqueWords.map((word) => {
-    const buffer = Buffer.from(word.picture);
-    const base64Image = buffer.toString('base64');
-    const picture = `data:image/png;base64,${base64Image}`;
+    const picture = uint8ArrayToClientReadyImage(word.picture);
 
     const objToUse = _.omit(word, 'picture');
 
@@ -58,9 +60,9 @@ export const saveWordInCategory = async (
   categoryId: number,
   prisma: PrismaClient
 ): Promise<Word> => {
-  const base64 = picture.replace(/^data:image\/\w+;base64,/, '');
+  const base64 = dataURLToBase64(picture);
 
-  const buffer = base64ToUint8Array(base64);
+  const pictureBuffer = base64ToUint8Array(base64);
 
   const alreadyExists = await prisma.word.findFirst({
     where: {
@@ -80,7 +82,7 @@ export const saveWordInCategory = async (
       userId,
       categoryId,
       discoveredAt: new Date(),
-      picture: buffer, // Provide a default empty Uint8Array for the picture field
+      picture: pictureBuffer,
     },
   });
 

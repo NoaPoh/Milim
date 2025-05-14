@@ -5,6 +5,7 @@ import {
   NormalizedVertices,
 } from '../../types/googleDtos';
 import { TRPCError } from '@trpc/server';
+import { dataURLToBase64 } from 'src/utils/images.util';
 
 const googleAPIKey = process.env.GOOGLE_API_KEY;
 
@@ -28,7 +29,7 @@ export async function detectObjectFromBase64(
   try {
     const url = `https://vision.googleapis.com/v1/images:annotate`;
 
-    const strippedBase64 = base64Image.replace(/^data:image\/\w+;base64,/, '');
+    const strippedBase64 = dataURLToBase64(base64Image);
 
     const requestBody = {
       requests: [
@@ -68,20 +69,20 @@ export async function detectObjectFromBase64(
       });
     }
 
-    const mostDominantObject = objects.reduce((prev, current) => {
+    const biggestObject = objects.reduce((prev, current) => {
       const prevArea = getBoxArea(prev.boundingPoly.normalizedVertices);
       const currentArea = getBoxArea(current.boundingPoly.normalizedVertices);
 
       return prevArea > currentArea ? prev : current;
     });
 
-    const bestObject = objects.reduce((prev, current) =>
+    const surestObject = objects.reduce((prev, current) =>
       prev.score > current.score ? prev : current
     );
 
-    return mostDominantObject.name;
+    return biggestObject.name;
   } catch (error) {
-    console.error('Error in detectObjectFromBase64:', error);
-    throw new Error('Failed to detect object from base64 image.');
+    console.error('Error in detectObject:', error);
+    throw new Error('Failed to detect object.');
   }
 }
