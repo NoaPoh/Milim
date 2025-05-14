@@ -1,7 +1,65 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import './FlashCards.scss';
+import { api } from '../../../utils/trpcClient';
 
 const FlashCards = () => {
-  return <div>FlashCards</div>;
+  const { data: words } = api.word.fetchRandomUserWords.useQuery({
+    amount: 4,
+  });
+  console.log(words);
+  const [correctId, setCorrectId] = useState<number>(0);
+  const [chosenId, setChosenId] = useState<number | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+  useEffect(() => {
+    if (words && words.length > 0) {
+      const randomIndex = Math.floor(Math.random() * words.length);
+      setCorrectId(words[randomIndex].id);
+    }
+  }, [words]);
+
+  const handleSubmit = () => {
+    setSubmitted(true);
+  };
+
+  const getCardClass = (id: number) => {
+    if (!submitted) {
+      return id === chosenId ? 'chosen' : '';
+    }
+    if (id === correctId) return 'correct';
+    if (id === chosenId && id !== correctId) return 'wrong';
+    return '';
+  };
+
+  return (
+    <>
+      <div className="flashcards-page">
+        <img
+          src={words?.[1].picture}
+          alt="chair"
+          className="flashcards-page__image"
+        />
+        <div className="flashcards-container">
+          {words?.map((item) => (
+            <div
+              key={item.id}
+              className={`flashcards-container__card ${getCardClass(item.id)}`}
+              onClick={() => !submitted && setChosenId(item.id)}
+            >
+              {item.text}
+            </div>
+          ))}
+        </div>
+
+        <button
+          className="submit-button"
+          onClick={handleSubmit}
+          disabled={chosenId === null}
+        >
+          Submit
+        </button>
+      </div>
+    </>
+  );
 };
 
 export default FlashCards;
