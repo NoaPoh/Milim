@@ -4,6 +4,7 @@ import Navbar from './components/Navabr/Navbar';
 import './App.scss';
 import Router from './routes/router';
 import { RoutesValues } from './routes/routes';
+import { RequireAuth } from './components/RequireAuth';
 import { useIsFetching, useIsMutating } from '@tanstack/react-query';
 import Loader from './components/Loader/Loader';
 
@@ -18,9 +19,11 @@ const App = () => {
 
   return (
     <div className="app">
-      {howManyFetching + howManyMutating > 0 && <Loader />}
-      <Router />
-      {showNavbar && <Navbar />}
+      <RequireAuth>
+        {howManyFetching + howManyMutating > 0 && <Loader />}
+        <Router />
+        {showNavbar && <Navbar />}
+      </RequireAuth>
     </div>
   );
 };

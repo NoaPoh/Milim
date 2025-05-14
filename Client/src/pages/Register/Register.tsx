@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Register.scss';
-import { trpc } from '../../utils/trpc/trpc';
+import { api } from '../../utils/trpcClient';
 import { useNavigate } from 'react-router';
 import { RoutesValues } from '../../routes/routes';
 
@@ -17,10 +17,10 @@ const Register = () => {
     navigate(RoutesValues.LOGIN);
   };
 
-  const { data: freeAnimals } = trpc.animal.getFreeAnimals.useQuery();
+  const { data: freeAnimals } = api.animal.getFreeAnimals.useQuery();
 
   const { mutateAsync: register, isPending: registerIsPending } =
-    trpc.auth.register.useMutation({ onSuccess: navToLogin });
+    api.auth.register.useMutation({ onSuccess: navToLogin });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
