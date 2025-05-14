@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, useLocation } from 'react-router-dom';
 import { api, trpcClient } from './utils/trpcClient';
 import {
   QueryCache,
@@ -10,19 +10,35 @@ import {
 import App from './App';
 import './styles/globals.css';
 import './index.css';
+import { UserProvider } from './context/UserContext';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error) => console.error(error),
   }),
-});
+}); // Initialize the trpc client with the query client
+
+// Wrap only if necessary (decide before rendering)
+const AppWithAuth = () => {
+  const location = useLocation();
+  const isAuthPage = /^\/(login|register)$/.test(location.pathname);
+
+  // Do not wrap the App component in UserProvider if we are on the login/register pages
+  return isAuthPage ? (
+    <App />
+  ) : (
+    <UserProvider>
+      <App />
+    </UserProvider>
+  );
+};
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
       <api.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
-          <App />
+          <AppWithAuth />
         </QueryClientProvider>
       </api.Provider>
     </BrowserRouter>
