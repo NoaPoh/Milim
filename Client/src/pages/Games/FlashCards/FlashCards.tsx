@@ -41,7 +41,7 @@ const FlashCards = () => {
         <img
           src={words?.[1].picture}
           alt="chair"
-          className="w-19 h-19 category-icon"
+          className="flashcards-page__image"
         />
         <div className="flashcards-container">
           {words?.map((item) => (
