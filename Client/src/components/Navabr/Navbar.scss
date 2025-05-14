@@ -25,5 +25,13 @@
       font-size: 34px;
       color: #6d6d6d;
     }
+
+    &.active {
+      svg {
+        path {
+          fill: #000;
+        }
+      }
+    }
   }
 }
