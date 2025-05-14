@@ -1,14 +1,9 @@
-// context/UserContext.tsx
-
-import {
-  createContext,
-  useContext,
-  ReactNode,
-} from 'react';
-import { trpc } from '../utils/trpc/trpc';
+import { createContext, useContext, ReactNode } from 'react';
+import { api } from '../utils/trpcClient';
+import { UserDTO } from 'milim-server/types';
 
 type UserContextValue = {
-  user: ReturnType<typeof trpc.user.getUser.useQuery>['data'];
+  user: Partial<UserDTO> | undefined;
   isLoading: boolean;
   error: unknown;
 };
@@ -24,9 +19,11 @@ export const useUser = () => {
 };
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const { data, isLoading, error } = trpc.user.getUser.useQuery();
+  const { data, isLoading, error } = api.user.getUser.useQuery();
 
-  return (<UserContext.Provider value={{ user: data, isLoading, error }}>
-  {children}
-  </UserContext.Provider>);
+  return (
+    <UserContext.Provider value={{ user: data, isLoading, error }}>
+      {children}
+    </UserContext.Provider>
+  );
 };

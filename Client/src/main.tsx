@@ -16,7 +16,7 @@ const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error) => console.error(error),
   }),
-}); // Initialize the trpc client with the query client
+});
 
 // Wrap only if necessary (decide before rendering)
 const AppWithAuth = () => {
@@ -36,7 +36,7 @@ const AppWithAuth = () => {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <api.Provider client={trpcClient} queryClient={queryClient}>
+      <api.Provider client={trpcClient(queryClient)} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
           <AppWithAuth />
         </QueryClientProvider>
