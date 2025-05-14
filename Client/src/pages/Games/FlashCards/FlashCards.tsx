@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './FlashCards.scss';
+import { api } from '../../../utils/trpcClient';
 
 const FlashCards = () => {
-  const answers = [
-    { id: 1, answer: 'Answer 1' },
-    { id: 2, answer: 'Answer 2' },
-    { id: 3, answer: 'Answer 3' },
-    { id: 4, answer: 'Answer 4' },
-  ];
-
-  const correctId = 3; // set the correct answer here
+  const { data: words } = api.word.fetchRandomUserWords.useQuery({
+    amount: 4,
+  });
+  console.log(words);
+  const [correctId, setCorrectId] = useState<number>(0);
   const [chosenId, setChosenId] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  useEffect(() => {
+    if (words && words.length > 0) {
+      const randomIndex = Math.floor(Math.random() * words.length);
+      setCorrectId(words[randomIndex].id);
+    }
+  }, [words]);
 
   const handleSubmit = () => {
     setSubmitted(true);
@@ -30,18 +34,18 @@ const FlashCards = () => {
     <>
       <div className="flashcards-page">
         <img
-          src="https://picsum.photos/200/300"
+          src={words?.[1].picture}
           alt="chair"
-          className="w-19 h-19 category-icon"
+          className="flashcards-page__image"
         />
         <div className="flashcards-container">
-          {answers.map((item) => (
+          {words?.map((item) => (
             <div
               key={item.id}
               className={`flashcards-container__card ${getCardClass(item.id)}`}
               onClick={() => !submitted && setChosenId(item.id)}
             >
-              {item.answer}
+              {item.text}
             </div>
           ))}
         </div>

@@ -5,6 +5,15 @@
   justify-content: space-around;
   height: 100%;
 
+  &__image {
+    width: 100%;
+    height: 100%;
+    // max-width: 245px;
+    max-height: 25vh;
+    margin-top: 2rem;
+    object-fit: scale-down;
+  }
+
   .flashcards-container {
     display: grid;
     grid-template-columns: repeat(2, 0fr);
