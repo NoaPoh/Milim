@@ -1,4 +1,4 @@
-import { Category, User, Word } from '@prisma/client';
+import { Animal, Category, User, Word } from '@prisma/client';
 
 export type DisplayCategory = Category & { picture: string };
 
@@ -10,6 +10,7 @@ export interface RegisterInput {
   username: User['username'];
   email: User['email'];
   password: string;
+  animalId: Animal['id'];
 }
 
 export interface LoginInput {
@@ -21,6 +22,10 @@ export interface LoginResponse {
   userId: User['id'];
   // accessToken: string;
   // refreshToken: string;
+}
+
+export interface WinAGameInput {
+  coins: number;
 }
 
 export interface GoogleTranslateResponse {
@@ -45,3 +50,12 @@ export type GoogleLabelDetectionResponse = {
     labelAnnotations?: GoogleLabelAnnotation[];
   }>;
 };
+
+export interface UserDTO {
+  username: string | null;
+  currentStreak: number | null;
+  longestStreak: number | null;
+  lastUsedDate: string | null;
+  spiritAnimal: string;
+  coins: number;
+}

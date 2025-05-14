@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { RoutesValues } from '../../routes/routes';
-import { trpc } from '../../utils/trpc';
-import Loader from '../../components/Loader/Loader';
+import { api } from '../../utils/trpcClient';
 import { useNavigate } from 'react-router-dom';
 import hippoPicture from '../../assets/images/animals/hippo.png';
 
@@ -18,7 +17,7 @@ const Login: React.FC = () => {
   };
 
   const { isPending: loginIsPending, mutateAsync: login } =
-    trpc.auth.login.useMutation({ onSuccess: navToHome });
+    api.auth.login.useMutation({ onSuccess: navToHome });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,7 +70,7 @@ const Login: React.FC = () => {
               className="w-72 text-xl bg-[#808080] text-white py-2 rounded-full font-bold hover:bg-blue-600 transition"
               disabled={loginIsPending}
             >
-              {!loginIsPending ? 'GO' : <Loader />}
+              GO
             </button>
           </form>
 

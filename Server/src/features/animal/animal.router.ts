@@ -1,9 +1,4 @@
-import { z } from 'zod';
-import {
-  protectedProcedure,
-  publicProcedure,
-  router,
-} from '../../core/trpc/trpc';
+import { publicProcedure, router } from '../../core/trpc/trpc';
 import { getFreeAnimals } from './animal.service';
 
 export const animalRouter = router({

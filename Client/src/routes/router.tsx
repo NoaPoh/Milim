@@ -1,11 +1,16 @@
 import React from 'react';
 import { FunctionComponent } from 'react';
-import { RoutesValues } from './routes';
+import { GamesRoutesValues, RoutesValues } from './routes';
 import Home from '../pages/Home/Home';
 import { Route, Routes } from 'react-router-dom';
 import Camera from '../pages/Camera/Camera';
 import Register from '../pages/Register/Register';
 import Login from '../pages/Login/Login';
+import GamesHome from '../pages/Games/GamesHome/GamesHome';
+import Crossword from '../pages/Games/Crossword/Crossword';
+import FlashCards from '../pages/Games/FlashCards/FlashCards';
+import Spelling from '../pages/Games/Spelling/Spelling';
+import Profile from '../pages/Profile/Profile';
 
 const Page = ({ children }: { children: React.ReactNode }) => {
   return <div className="page-w-navbar">{children}</div>;
@@ -41,6 +46,31 @@ const routes: RouteProps[] = [
     path: RoutesValues.LOGIN,
     component: <Login />,
     navbar: false,
+  },
+  {
+    path: RoutesValues.GAMES,
+    component: <GamesHome />,
+    navbar: true,
+  },
+  {
+    path: GamesRoutesValues.CROSSWORD,
+    component: <Crossword />,
+    navbar: true,
+  },
+  {
+    path: GamesRoutesValues.FLASH_CARDS,
+    component: <FlashCards />,
+    navbar: true,
+  },
+  {
+    path: GamesRoutesValues.SPELLING,
+    component: <Spelling />,
+    navbar: true,
+  },
+  {
+    path: RoutesValues.PROFILE,
+    component: <Profile />,
+    navbar: true,
   },
 ];
 

@@ -17,19 +17,11 @@ const generateAccessToken = (userId: User['id']) => {
   });
 };
 
-// Generate Refresh Token
-const generateRefreshToken = (userId: User['id']) => {
-  return jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET || '', {
-    expiresIn:
-      (process.env.JWT_REFRESH_EXPIRATION as SignOptions['expiresIn']) || '7d',
-  });
-};
-
 export const register = async (
   prisma: PrismaClient,
   input: RegisterInput
 ): Promise<User> => {
-  const { email, username, password } = input;
+  const { email, username, password, animalId } = input;
 
   // Check if user already exists
   const existing = await prisma.user.findUnique({
@@ -42,7 +34,6 @@ export const register = async (
     });
   }
 
-  // Hash password
   const salt = await genSalt(10);
   const hashedPassword = await hash(password, salt);
 
@@ -53,6 +44,7 @@ export const register = async (
       passwordHash: hashedPassword,
       currentStreak: 0,
       lastUsedDate: new Date(),
+      animalId,
     },
   });
 
@@ -79,7 +71,7 @@ export const login = async (
   const isPasswordValid = await compare(password, user.passwordHash);
   if (!isPasswordValid) {
     throw new TRPCError({
-      code: 'UNAUTHORIZED',
+      code: 'FORBIDDEN',
       message: 'invalid password.',
     });
   }

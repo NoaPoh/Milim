@@ -1,0 +1,65 @@
+.flashcards-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+
+  .flashcards-container {
+    display: grid;
+    grid-template-columns: repeat(2, 0fr);
+    gap: 20px;
+    align-items: center;
+    margin-top: 2rem;
+    justify-items: center;
+    justify-content: center;
+
+    &__card {
+      width: 40vw;
+      height: 30vw;
+      max-width: 200px;
+      max-height: 200px;
+      background-color: #afddef61;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease-in-out;
+
+      // &:hover {
+      //   transform: scale(1.05);
+      // }
+    }
+
+    .chosen {
+      border: 2px solid #5c3d00;
+      box-shadow: 0 0 12px rgba(28, 78, 128, 0.5);
+    }
+
+    .correct {
+      background-color: #50b654;
+      color: white;
+      box-shadow: 0 0 12px rgba(76, 175, 80, 0.6);
+    }
+
+    .wrong {
+      background-color: #c51104;
+      color: white;
+      box-shadow: 0 0 12px rgba(244, 67, 54, 0.6);
+    }
+  }
+
+  .submit-button {
+    background-color: #5c2800;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+}

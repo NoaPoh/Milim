@@ -3,7 +3,7 @@ import type { AppRouter } from 'milim-server';
 import { httpBatchLink, TRPCClientError, TRPCLink } from '@trpc/client';
 import { observable } from '@trpc/server/observable';
 
-export const trpc = createTRPCReact<AppRouter>();
+export const api = createTRPCReact<AppRouter>();
 
 // like a middleware, but for the client
 // this will redirect the user to the login page if they are not authenticated
@@ -30,7 +30,7 @@ export const handleUnauthorizedLink: TRPCLink<AppRouter> = () => {
   };
 };
 
-export const trpcClient = trpc.createClient({
+export const trpcClient = api.createClient({
   links: [
     handleUnauthorizedLink,
     httpBatchLink({

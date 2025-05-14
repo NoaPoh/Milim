@@ -1,12 +1,11 @@
 import { PrismaClient, Word } from '@prisma/client';
-import { translateWord as googleTranslate } from '../../externalAPIs/googleTranslate/googleTranslate';
 import { base64ToUint8Array } from '../../utils/images.util';
 
 export const fetchRandomUserWords = async (
   userId: number,
   prisma: PrismaClient,
   amount: number = 10
-) => {
+): Promise<Word[]> => {
   const userWords = await prisma.word.findMany({
     where: { userId: userId },
   });
@@ -16,10 +15,6 @@ export const fetchRandomUserWords = async (
     .slice(0, amount);
 
   return randomWords;
-};
-
-export const translateWord = async (word: string): Promise<string> => {
-  return await googleTranslate(word);
 };
 
 export const saveWordInCategory = async (
@@ -42,5 +37,6 @@ export const saveWordInCategory = async (
       picture: buffer, // Provide a default empty Uint8Array for the picture field
     },
   });
+
   return newWord;
 };
