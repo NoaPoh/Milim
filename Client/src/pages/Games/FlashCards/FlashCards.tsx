@@ -7,7 +7,7 @@ const FlashCards = () => {
     amount: 4,
   });
   console.log(words);
-  const [correctId, setCorrectId] = useState<number>(0);
+  const [correctId, setCorrectId] = useState<number>(-1);
   const [chosenId, setChosenId] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
   useEffect(() => {
@@ -33,11 +33,7 @@ const FlashCards = () => {
   return (
     <>
       <div className="flashcards-page">
-        <img
-          src={words?.[1].picture}
-          alt="chair"
-          className="flashcards-page__image"
-        />
+        <img src={words?.[0]?.picture} className="flashcards-page__image" />
         <div className="flashcards-container">
           {words?.map((item) => (
             <div
@@ -45,7 +41,7 @@ const FlashCards = () => {
               className={`flashcards-container__card ${getCardClass(item.id)}`}
               onClick={() => !submitted && setChosenId(item.id)}
             >
-              {item.text}
+              {item.originalText}
             </div>
           ))}
         </div>
