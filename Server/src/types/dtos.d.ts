@@ -28,14 +28,9 @@ export interface WinAGameInput {
   coins: number;
 }
 
-export interface WordWithStringPic {
-  userId: number;
-  text: string;
-  categoryId: number;
+export type WordWithStringPic = Omit<Word, 'picture'> & {
   picture: string;
-  id: number;
-  discoveredAt: Date;
-}
+};
 export interface GoogleTranslateResponse {
   data: {
     translations: Array<{
