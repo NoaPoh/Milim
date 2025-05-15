@@ -1,5 +1,5 @@
 // Login.scss
-@import '../../styles/variables.scss';
+@use '../../styles/variables' as *;
 
 $background-color: #fbf3df;
 // $primary-color: #4e2a01;
