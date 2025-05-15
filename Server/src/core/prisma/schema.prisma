@@ -45,7 +45,8 @@ model Category {
 
 model Word {
   id           Int       @id @default(autoincrement())
-  text         String
+  originalText           String
+  translatedText         String
   discoveredAt DateTime  @default(now())
   picture      Bytes     @db.ByteA
 
