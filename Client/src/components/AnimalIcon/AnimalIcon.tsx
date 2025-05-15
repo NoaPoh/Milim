@@ -12,14 +12,15 @@ interface Accessory {
   name: string;
 }
 
-const AnimalIcon: React.FC = ({path, iconWidth}: Props) => {
-
+const AnimalIcon = ({ path, iconWidth }: Props) => {
   return (
     <img
       src={`src/assets/images/animals/${path}`}
-      className={`animal rounded-full`} style={{ width: `${iconWidth}px` }}
-     alt="missing your photo!"/>
-  )
-}
+      className={`animal rounded-full`}
+      style={{ width: `${iconWidth}px` }}
+      alt="missing your photo!"
+    />
+  );
+};
 
 export default AnimalIcon;

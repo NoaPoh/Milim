@@ -11,11 +11,7 @@ export const useGetCategories = (enabled: boolean) => {
     query.data?.map((category) => {
       return {
         ...category,
-        picture:
-          // TODO: if pictures format will be PNG, replace the string here
-          category.picture
-            ? `data:image/png;base64,${category.picture}`
-            : defaultCategoriesIcons[category.id],
+        picture: category.picture || defaultCategoriesIcons[category.id],
       };
     });
 
