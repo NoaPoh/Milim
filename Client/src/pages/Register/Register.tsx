@@ -107,7 +107,7 @@ const Register = () => {
 
         <button
           type="submit"
-          className="bg-blue-500 text-white p-3 rounded-full hover:from-blue-400 hover:to-purple-500 hover:shadow-lg transition-all font-semibold bg-gradient-to-r from-blue-200 to-purple-300"
+          className="submit-button"
           disabled={registerIsPending}
         >
           {!registerIsPending ? "Let's do it!" : ''}
