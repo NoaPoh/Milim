@@ -32,8 +32,8 @@ const Login: React.FC = () => {
     <div className="login-page">
       {/* Header hippos */}
       <div className="login-page__header">
-        <img src={crocodilePicture} alt="Crocodile" className="hippo-left" />
-        <img src={monkeyPicture} alt="Monkey" className="hippo-right" />
+        <img src={crocodilePicture} alt="Crocodile" className="left-animal" />
+        <img src={monkeyPicture} alt="Monkey" className="animated-animal pop-off-top" />
       </div>
 
       {/* Center form */}
