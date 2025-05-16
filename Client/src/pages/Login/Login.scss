@@ -1,5 +1,5 @@
 // Login.scss
-@import '../../styles/variables.scss';
+@use '../../styles/variables' as *;
 
 $background-color: #fbf3df;
 // $primary-color: #4e2a01;
@@ -18,7 +18,7 @@ $background-color: #fbf3df;
     align-items: start;
     margin-top: 0;
 
-    .hippo-left {
+    .left-animal {
       width: 9rem;
       transform: rotate(90deg);
       margin-left: 0;
@@ -26,15 +26,10 @@ $background-color: #fbf3df;
       position: absolute;
     }
 
-    .hippo-right {
+    .animated-animal {
       width: 9rem;
       transform: scaleY(-1);
       margin-right: 1.5rem;
-      //   animation: popOffTop 0.6s ease-in-out;
-      //   animation: 1s ease-in;
-      //   animation-delay: 0.5s;
-      animation: slideInTop 1s ease-out forwards;
-      animation-delay: 0.3s;
       position: absolute;
       z-index: 0;
       left: 46vw;
@@ -134,24 +129,11 @@ $background-color: #fbf3df;
       width: 11rem;
     }
     &__tiger-img {
-      transform: scaleX();
       width: 6rem;
       transform: rotate(270deg);
       position: absolute;
       right: 0;
       top: 25vh;
     }
-  }
-}
-
-// Optional animation (match your className if needed)
-@keyframes popOffTop {
-  0% {
-    transform: translateY(-10%) scaleY(-1);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0) scaleY(-1);
-    opacity: 1;
   }
 }
