@@ -50,10 +50,11 @@ export default function Camera() {
     <div className="photo-capture-container">
       <Toaster position="top-center" />
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-
+      <div className='ribbon'>See It.<br/> Snap It. Learn It.</div>
       {!stalePhoto ? (
         <CameraFeed
           ref={videoRef}
+          className="video-wrapper"
           onTakePicture={onTakePictureButton}
           cantUseCamera={cantUseCamera}
         />
