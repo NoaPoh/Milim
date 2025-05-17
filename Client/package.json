@@ -9,23 +9,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@lottiefiles/react-lottie-player": "^3.6.0",
-    "@mui/icons-material": "^7.0.2",
     "@tanstack/react-query": "^5.74.11",
-    "@tensorflow-models/coco-ssd": "^2.2.3",
-    "@tensorflow/tfjs": "^4.22.0",
     "@trpc/client": "^11.1.0",
     "@trpc/react-query": "^11.1.1",
     "canvas-confetti": "^1.9.3",
     "lottie-react": "^2.4.1",
-    "milim-server": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
     "sass": "^1.85.1",
-    "zod": "^3.24.2"
+    "react-hot-toast": "^2.5.2"
   },
   "devDependencies": {
     "@types/react": "^18.3.20",

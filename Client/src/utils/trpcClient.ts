@@ -4,6 +4,7 @@ import { httpBatchLink } from '@trpc/client';
 import { resetUserCacheAfterChange } from './trpc/invalidationLink';
 import { QueryClient } from '@tanstack/react-query';
 import { handleUnauthorizedLink } from './trpc/handleUnauthorizedLink';
+import superjson from 'superjson';
 
 export const api = createTRPCReact<AppRouter>();
 
@@ -12,6 +13,7 @@ export const trpcClient = (queryClient: QueryClient) =>
     links: [
       handleUnauthorizedLink,
       httpBatchLink({
+        transformer: superjson,
         url: import.meta.env.VITE_API_URL,
         fetch(url, options) {
           return fetch(url, {
