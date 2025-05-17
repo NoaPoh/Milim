@@ -75,7 +75,7 @@ export const fetchUserCategoryById = async (
     words: [] };
 
   if (category.words.length !== 0) {
-    newCategory.picture = formatImageWithBuffer(category?.words[0].picture);
+    newCategory.picture = uint8ArrayToClientReadyImage(category?.words[0].picture);
     newCategory.words = category.words.map((word: Word) => {
       return {
         ...word,

@@ -26,7 +26,5 @@ export const useGetUserCategory = (categoryId: number) => {
 // TODO: if pictures format will be PNG, replace the string here
 
 function formatImage(picture: string, categoryId?: string): string {
-  return picture
-    ? `data:image/jpeg;base64,${picture}`
-    : defaultCategoriesIcons[categoryId];
+  return picture ?? defaultCategoriesIcons[categoryId];
 }
