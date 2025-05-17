@@ -1,4 +1,4 @@
-import { Animal, Category, User, Word } from '@prisma/client';
+import { Animal, Category, Prisma, User, Word } from '@prisma/client';
 
 export type DisplayCategory = Category & { picture: string };
 
@@ -31,28 +31,16 @@ export interface WinAGameInput {
 export type WordWithStringPic = Omit<Word, 'picture'> & {
   picture: string;
 };
-export interface GoogleTranslateResponse {
-  data: {
-    translations: Array<{
-      translatedText: string;
-      detectedSourceLanguage: string;
-      model: string;
-    }>;
+
+export type DisplayCategoryWithWords = Omit<DisplayCategory, 'words'> & {
+  words: WordWithStringPic[];
+};
+
+export type PrismaCategoryWithWords = Prisma.CategoryGetPayload<{
+  include: {
+    words: true;
   };
-}
-
-export type GoogleLabelAnnotation = {
-  mid: string; // e.g. "/m/0bt9lr"
-  description: string; // e.g. "banana"
-  score: number; // confidence, 0–1
-  topicality?: number; // often same as score
-};
-
-export type GoogleLabelDetectionResponse = {
-  responses: Array<{
-    labelAnnotations?: GoogleLabelAnnotation[];
-  }>;
-};
+}>;
 
 export interface UserDTO {
   username: string | null;

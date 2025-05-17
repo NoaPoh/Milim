@@ -1,5 +1,5 @@
-import { Category, PrismaClient } from '@prisma/client';
-import { DisplayCategory } from '../../types/dtos';
+import { Category, PrismaClient, Word } from '@prisma/client';
+import { DisplayCategory, DisplayCategoryWithWords } from '../../types';
 import { SYSTEM_USER_ID } from '../../utils/constants';
 import _ from 'lodash';
 import { uint8ArrayToClientReadyImage } from '../../utils/images.util';
@@ -46,6 +46,47 @@ export const fetchUserCategories = async (
   });
 
   return displayCategories;
+};
+
+export const fetchUserCategoryById = async (
+  userId: number,
+  prisma: PrismaClient,
+  categoryId: number
+): Promise<DisplayCategoryWithWords> => {
+  const category = await prisma.category.findUnique({
+    where: {
+      id: categoryId,
+    },
+    include: {
+      words: {
+        orderBy: {
+          discoveredAt: 'asc',
+        },
+      },
+    },
+  });
+
+  if (!category) {
+    throw new Error('Category not found');
+  }
+
+  const newCategory: DisplayCategoryWithWords = {
+    ...category,
+    picture: '',
+    words: [],
+  };
+
+  if (category.words.length !== 0) {
+    newCategory.picture = uint8ArrayToClientReadyImage(
+      category?.words[0].picture
+    );
+    newCategory.words = category.words.map((word: Word) => ({
+      ...word,
+      picture: uint8ArrayToClientReadyImage(word.picture),
+    }));
+  }
+
+  return newCategory;
 };
 
 export const insertCategory = async (
