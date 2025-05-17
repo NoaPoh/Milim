@@ -6,14 +6,16 @@ import { api } from '../../../../utils/trpcClient';
 interface CollectionDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  newWord: string;
+  originalText: string;
+  translatedText: string;
   picture: string;
 }
 
 const CollectionDrawer = ({
   isOpen,
   onClose,
-  newWord,
+  originalText,
+  translatedText,
   picture,
 }: CollectionDrawerProps) => {
   const { data: categories } = useGetCategories(isOpen);
@@ -34,7 +36,8 @@ const CollectionDrawer = ({
     if (selectedCategoryId === null) return;
 
     await saveWordInCategory({
-      text: newWord,
+      originalText,
+      translatedText,
       categoryId: selectedCategoryId,
       picture,
     });

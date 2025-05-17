@@ -2,6 +2,7 @@ import { Category, Prisma, PrismaClient, Word } from '@prisma/client';
 import { PrismaCategoryWithWords, DisplayCategory, DisplayCategoryWithWords } from '../../types';
 import { SYSTEM_USER_ID } from '../../utils/constants';
 import _, { omit } from 'lodash';
+import { uint8ArrayToClientReadyImage } from '../../utils/images.util';
 
 export const fetchUserCategories = async (
   userId: number,
@@ -17,7 +18,7 @@ export const fetchUserCategories = async (
     include: {
       words: {
         where: {
-          userId
+          userId,
         },
         take: 1, // Only fetch one word
         orderBy: {
@@ -31,11 +32,10 @@ export const fetchUserCategories = async (
   });
 
   const displayCategories: DisplayCategory[] = categories.map((category) => {
-    let picture = '';
-
-    if (category.words.length !== 0) {
-      picture = formatImageWithBuffer(category?.words[0].picture);
-    }
+    const picture =
+      category.words.length !== 0
+        ? uint8ArrayToClientReadyImage(category.words[0].picture)
+        : '';
 
     const CategoryObjToUse = _.omit(category, 'words');
 
@@ -79,7 +79,7 @@ export const fetchUserCategoryById = async (
     newCategory.words = category.words.map((word: Word) => {
       return {
         ...word,
-        picture: formatImageWithBuffer(word.picture),
+        picture: uint8ArrayToClientReadyImage(word.picture),
       };
     });
   }
@@ -101,9 +101,3 @@ export const insertCategory = async (
 
   return newCategory;
 };
-
-const formatImageWithBuffer = (picture: Uint8Array<ArrayBufferLike>): string => {
-  const buffer = Buffer.from(picture);
-  const base64Image = buffer.toString('base64');
-  return base64Image;
-}

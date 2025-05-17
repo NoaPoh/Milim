@@ -1,0 +1,139 @@
+// Login.scss
+@use '../../styles/variables' as *;
+
+$background-color: #fbf3df;
+// $primary-color: #4e2a01;
+// $button-hover: #3b82f6; // Tailwind's blue-600
+
+.login-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $background-color;
+  color: $primary-dark;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-top: 0;
+
+    .left-animal {
+      width: 9rem;
+      transform: rotate(90deg);
+      margin-left: 0;
+      margin-top: 3.5rem;
+      position: absolute;
+    }
+
+    .animated-animal {
+      width: 9rem;
+      transform: scaleY(-1);
+      margin-right: 1.5rem;
+      position: absolute;
+      z-index: 0;
+      left: 46vw;
+    }
+  }
+
+  &__center {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    .login-box {
+      width: 100%;
+      max-width: 28rem;
+      padding: 0 2rem;
+      display: flex;
+      flex-direction: column;
+
+      h2 {
+        font-size: 4.5rem;
+        font-weight: bold;
+        color: $primary-dark;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        margin-top: 10rem;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+
+        input {
+          width: 18rem;
+          padding: 0.5rem 1rem;
+          margin-top: 0.25rem;
+          border: 1px solid #ccc;
+          border-radius: 9999px;
+          outline: none;
+
+          //   &:focus {
+          //     border-color: $button-hover;
+          //     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+          //   }
+        }
+
+        button {
+          width: 18rem;
+          font-size: 1.25rem;
+          background-color: $primary-dark;
+          color: white;
+          padding: 0.5rem;
+          border-radius: 9999px;
+          font-weight: bold;
+          transition: background-color 0.3s ease;
+
+          //   &:hover {
+          //     background-color: $button-hover;
+          //   }
+
+          &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+        }
+      }
+
+      p {
+        text-align: center;
+        color: #4b5563;
+        margin-top: 1rem;
+
+        a {
+          color: #000;
+          font-weight: bold;
+          font-size: 0.875rem;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: center;
+
+    &__hippo-img {
+      width: 11rem;
+    }
+    &__tiger-img {
+      width: 6rem;
+      transform: rotate(270deg);
+      position: absolute;
+      right: 0;
+      top: 25vh;
+    }
+  }
+}

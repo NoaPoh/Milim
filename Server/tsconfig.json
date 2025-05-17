@@ -6,12 +6,12 @@
     "outDir": "./dist",
     "esModuleInterop": true,
     "strict": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "milim-server/types": ["src/types/index.ts"],
+      "milim-server": ["src/index.ts"]
+    }
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "**/*.spec.ts"],
-  "paths": {
-    "milim-server/types": ["src/types/index.ts"],
-    "milim-server": ["src/index.ts"]
-  }
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }

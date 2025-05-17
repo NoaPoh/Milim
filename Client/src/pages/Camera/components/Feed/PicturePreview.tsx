@@ -50,7 +50,8 @@ export default function PicturePreview({
       <CollectionDrawer
         isOpen={drawerOpen}
         onClose={closeDrawer}
-        newWord={detectedObject || ''}
+        originalText={detectedObject || ''}
+        translatedText={translatedWord || ''}
         picture={image}
       />
     </>
