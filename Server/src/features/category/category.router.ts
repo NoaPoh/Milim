@@ -1,8 +1,11 @@
 import { z } from 'zod';
 import { protectedProcedure, router } from '../../core/trpc/trpc';
-import type { Category } from '@prisma/client';
-import { fetchUserCategories, fetchUserCategoryById, insertCategory } from './category.service';
-import { DisplayCategory } from '../../types';
+import {
+  fetchUserCategories,
+  fetchUserCategoryById,
+  insertCategory,
+} from './category.service';
+import { DisplayCategory, DisplayCategoryWithWords } from '../../types';
 
 export const categoryRouter = router({
   fetchUserCategories: protectedProcedure.query(
@@ -12,11 +15,9 @@ export const categoryRouter = router({
   ),
   fetchUserCategoryById: protectedProcedure
     .input(z.object({ id: z.number() }))
-    .query(
-    async ({ ctx, input }): Promise<DisplayCategory> => {
+    .query(async ({ ctx, input }): Promise<DisplayCategoryWithWords> => {
       return await fetchUserCategoryById(ctx.userId, ctx.prisma, input.id);
-    }
-  ),
+    }),
   insertCategory: protectedProcedure
     .input(z.object({ name: z.string() }))
     .mutation(async ({ ctx, input }) => {

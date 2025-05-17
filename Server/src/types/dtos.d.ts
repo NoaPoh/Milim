@@ -33,16 +33,12 @@ export type WordWithStringPic = Omit<Word, 'picture'> & {
 };
 
 export type DisplayCategoryWithWords = Omit<DisplayCategory, 'words'> & {
-  words?: (Omit<Word, 'picture'> & { picture: string })[];
+  words: WordWithStringPic[];
 };
 
-type PrismaCategoryWithWords = Prisma.CategoryGetPayload<{
+export type PrismaCategoryWithWords = Prisma.CategoryGetPayload<{
   include: {
-    words: {
-      orderBy: {
-        discoveredAt: 'asc';
-      };
-    };
+    words: true;
   };
 }>;
 
