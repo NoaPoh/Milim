@@ -15,7 +15,7 @@ const SpeakerButton = ({ text, language }: props) => {
   };
 
   return (
-    <button onClick={() => speak(text)}>
+    <button className="speaker-button" onClick={() => speak(text)}>
       <FontAwesomeIcon icon={faVolumeUp} />
     </button>
   );

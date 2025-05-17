@@ -30,6 +30,7 @@ model User {
   
   categories     Category[] @relation("CreatedCategories")
   words          Word[]
+  purchases      Purchase[]
 }
 
 model Category {
@@ -65,4 +66,34 @@ model Animal {
   price     Int
 
   users     User[]
+}
+
+model Award {
+  id          Int       @id @default(autoincrement())
+  name        String
+  category    AwardType
+  price       Int
+  iconUrl     String?
+  ownedBy     Purchase[]
+}
+
+model Purchase {
+  id        Int   @id @default(autoincrement())
+  userId    Int
+  awardId   Int
+  createdAt DateTime @default(now())
+
+  // Relations
+  user      User     @relation(fields: [userId], references: [id])
+  award     Award    @relation(fields: [awardId], references: [id])
+
+  // composite key
+  @@unique([userId, awardId])
+}
+
+enum AwardType {
+  BACKGROUND_COLOR
+  PROFILE_ICON
+  ICON_BACKGROUND
+  ICON_FRAME
 }

@@ -16,7 +16,6 @@ const Home: React.FC = () => {
   const { data: categories, isLoading } = useGetCategories();
 
   const { user } = useUser();
-
   return (
     <div className="home__container">
       {user && (
@@ -27,7 +26,7 @@ const Home: React.FC = () => {
           </p>
         </div>
       )}
-      { isLoading && (<Loader/>)}
+      {isLoading && <Loader />}
 
       {categories && (
         <div className="home__category-grid">

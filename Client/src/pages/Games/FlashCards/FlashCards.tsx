@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './FlashCards.scss';
 import { api } from '../../../utils/trpcClient';
 
@@ -7,13 +7,15 @@ const FlashCards = () => {
     amount: 4,
   });
   console.log(words);
-  const [correctId, setCorrectId] = useState<number>(0);
+  const [correctId, setCorrectId] = useState<number>(-1);
   const [chosenId, setChosenId] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
   useEffect(() => {
     if (words && words.length > 0) {
       const randomIndex = Math.floor(Math.random() * words.length);
-      setCorrectId(words[randomIndex].id);
+      const correctWord = words[randomIndex];
+      setCorrectId(correctWord.id);
+      // setCorrectId(words[randomIndex].id);
     }
   }, [words]);
 
@@ -30,14 +32,12 @@ const FlashCards = () => {
     return '';
   };
 
+  const correctSrc = words?.find((word) => word.id === correctId)?.picture;
+
   return (
     <>
       <div className="flashcards-page">
-        <img
-          src={words?.[1].picture}
-          alt="chair"
-          className="flashcards-page__image"
-        />
+        <img src={correctSrc} className="flashcards-page__image" />
         <div className="flashcards-container">
           {words?.map((item) => (
             <div
@@ -45,7 +45,7 @@ const FlashCards = () => {
               className={`flashcards-container__card ${getCardClass(item.id)}`}
               onClick={() => !submitted && setChosenId(item.id)}
             >
-              {item.text}
+              {item.originalText}
             </div>
           ))}
         </div>
