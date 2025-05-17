@@ -3,6 +3,7 @@ import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import SpeakerButton from '../../../../components/SpeakerButton';
 import CollectionDrawer from '../CollectionDrawer/CollectionDrawer';
 import { useState } from 'react';
+import './PicturePreview.scss';
 
 type PicturePreviewProps = {
   image: string;
@@ -27,20 +28,22 @@ export default function PicturePreview({
   return (
     <>
       <img src={image} alt="Captured" className="captured-photo" />
-      <button className="button" onClick={onRestart}>
+      <button className="retake button" onClick={onRestart}>
         <FontAwesomeIcon icon={faArrowsRotate} className="icon" />
       </button>
 
       {!isDetecting && detectedObject && (
         <div className="predictions-container">
-          <p className="prediction-item">{detectedObject}</p>
-          <SpeakerButton text={detectedObject} language="en-US" />
-          {translatedWord && (
-            <>
-              <p className="prediction-item">{translatedWord}</p>
-              <SpeakerButton text={translatedWord} language="he-IL" />
-            </>
-          )}
+          <div className="translation">
+            <p className="prediction-item">{detectedObject}</p>
+            <SpeakerButton text={detectedObject} language="en-US" />
+            {translatedWord && (
+              <>
+                <p className="prediction-item">{translatedWord}</p>
+                <SpeakerButton text={translatedWord} language="he-IL" />
+              </>
+            )}
+          </div>
           <button className="btn" onClick={openDrawer}>
             Add To Collection
           </button>

@@ -1,9 +1,11 @@
+@use '../../styles/variables' as *;
+
 .photo-capture-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 90vh;
   width: 80%;
   margin: auto;
 
@@ -23,61 +25,12 @@
     position: relative;
     height: 16rem;
     background-color: black;
-    margin-top: 1rem;
+    margin-bottom: 14rem;
   }
 
   .captured-photo {
     height: 16rem;
     margin-top: 1rem;
-  }
-
-  .btn {
-    background-color: #7f7f7f;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 9999px;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-
-    &.start-camera {
-      background-color: #007bff;
-    }
-
-    &.capture {
-      background-color: #28a745;
-    }
-
-    &.predict {
-      background-color: #ffc107;
-    }
-
-    &.retake {
-      background-color: #dc3545;
-    }
-
-    &:hover {
-      opacity: 0.8;
-    }
-  }
-
-  .loading-text {
-    font-size: 1rem;
-    margin-top: 0.5rem;
-  }
-
-  .predictions-container {
-    display: flex;
-    margin-top: 1rem;
-    flex-direction: column;
-    align-items: center;
-
-    .prediction-item {
-      font-size: 2.5rem;
-      font-weight: bold;
-    }
   }
 
   .button {
@@ -89,7 +42,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 1rem;
     // margin-bottom: 2rem;
     transition: background-color 0.3s ease;
 
@@ -101,19 +53,6 @@
     &:disabled {
       background-color: #cccccc6b;
     }
-  }
-
-  .text-button {
-    height: 4rem;
-    border-radius: 30%;
-    border: none;
-    background-color: #949494;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    transition: background-color 0.3s ease;
   }
 
   .loading-spinner {
@@ -131,6 +70,26 @@
     }
     100% {
       transform: rotate(360deg);
+    }
+  }
+
+  .retake {
+    margin-top: 2rem;
+  }
+
+  .btn {
+    background-color: $primary-dark;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+      opacity: 0.8;
     }
   }
 }
