@@ -5,6 +5,7 @@ import useObjectDetection from './hooks/useObjectDetection';
 import CameraFeed from './components/Feed/CameraFeed';
 import PicturePreview from './components/Feed/PicturePreview';
 import { api } from '../../utils/trpcClient';
+import { Toaster } from 'react-hot-toast';
 
 export default function Camera() {
   const {
@@ -47,6 +48,7 @@ export default function Camera() {
 
   return (
     <div className="photo-capture-container">
+      <Toaster position="top-center" />
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       {!stalePhoto ? (

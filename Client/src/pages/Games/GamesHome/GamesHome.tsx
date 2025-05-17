@@ -5,25 +5,9 @@ import './GamesHome.scss';
 import toast, { Toaster } from 'react-hot-toast';
 
 const GamesHome: React.FC = () => {
-  const notify = () =>
-    toast.error(`__ added to your collection __`, {
-      duration: 2000,
-      style: {
-        padding: '16px',
-        color: '#4a2101',
-      },
-      iconTheme: {
-        primary: '#e26d79',
-        secondary: '#FFFAEE',
-      },
-    });
-  notify();
-
-  console.log(games);
-
   return (
     <div className="games-home">
-      <Toaster position="top-center" reverseOrder={false} />
+      {/* <Toaster position="top-center" reverseOrder={false} /> */}
 
       {games.map((game) => (
         <GameCard
