@@ -1,7 +1,7 @@
 import { QueryClient } from '@tanstack/react-query';
 import { TRPCLink } from '@trpc/client';
 import { observable } from '@trpc/server/observable';
-import { AppRouter } from '../../../../Server/src/routers';
+import { AppRouter } from 'milim-server';
 
 // this is a trpc middleware, which intercepts transaction
 // to invalidate user cache after any change in entity

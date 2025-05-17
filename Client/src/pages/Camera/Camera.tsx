@@ -57,6 +57,7 @@ export default function Camera() {
         />
       ) : (
         <PicturePreview
+          className="video-wrapper"
           image={stalePhoto}
           onRestart={() => restartFeed(startDetectionLoop)}
           detectedObject={detectedObject}

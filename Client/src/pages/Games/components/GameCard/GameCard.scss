@@ -1,3 +1,5 @@
+@use '../../../../styles/variables' as *;
+
 .game-card-container {
   display: flex;
   justify-content: center;
@@ -7,7 +9,7 @@
 .game-card-button {
   height: 120px;
   width: 230px;
-  background-color: #e7e7e7;
+  background-color: $secondary-background;
   border-radius: 20px;
   position: relative;
   border: none;

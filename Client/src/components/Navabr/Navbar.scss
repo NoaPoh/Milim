@@ -1,5 +1,4 @@
-/* Navbar.scss */
-
+@use '../../styles/variables' as *;
 .navbar {
   position: fixed;
   bottom: 0;
@@ -23,13 +22,13 @@
 
     svg {
       font-size: 34px;
-      color: #6d6d6d;
+      color: $primary-dark;
     }
 
     &.active {
       svg {
         path {
-          fill: #000;
+          fill: #753b0b;
         }
       }
     }

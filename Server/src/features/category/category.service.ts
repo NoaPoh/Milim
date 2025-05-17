@@ -2,6 +2,7 @@ import { Category, PrismaClient } from '@prisma/client';
 import { DisplayCategory } from '../../types/dtos';
 import { SYSTEM_USER_ID } from '../../utils/constants';
 import _ from 'lodash';
+import { uint8ArrayToClientReadyImage } from '../../utils/images.util';
 
 export const fetchUserCategories = async (
   userId: number,
@@ -17,7 +18,7 @@ export const fetchUserCategories = async (
     include: {
       words: {
         where: {
-          userId
+          userId,
         },
         take: 1, // Only fetch one word
         orderBy: {
@@ -31,13 +32,10 @@ export const fetchUserCategories = async (
   });
 
   const displayCategories: DisplayCategory[] = categories.map((category) => {
-    let picture = '';
-
-    if (category.words.length !== 0) {
-      const buffer = Buffer.from(category.words[0].picture);
-      const base64Image = buffer.toString('base64');
-      picture = base64Image;
-    }
+    const picture =
+      category.words.length !== 0
+        ? uint8ArrayToClientReadyImage(category.words[0].picture)
+        : '';
 
     const CategoryObjToUse = _.omit(category, 'words');
 
