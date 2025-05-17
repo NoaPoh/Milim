@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './FlashCards.scss';
 import { api } from '../../../utils/trpcClient';
 
@@ -13,7 +13,9 @@ const FlashCards = () => {
   useEffect(() => {
     if (words && words.length > 0) {
       const randomIndex = Math.floor(Math.random() * words.length);
-      setCorrectId(words[randomIndex].id);
+      const correctWord = words[randomIndex];
+      setCorrectId(correctWord.id);
+      // setCorrectId(words[randomIndex].id);
     }
   }, [words]);
 
@@ -30,10 +32,12 @@ const FlashCards = () => {
     return '';
   };
 
+  const correctSrc = words?.find((word) => word.id === correctId)?.picture;
+
   return (
     <>
       <div className="flashcards-page">
-        <img src={words?.[0]?.picture} className="flashcards-page__image" />
+        <img src={correctSrc} className="flashcards-page__image" />
         <div className="flashcards-container">
           {words?.map((item) => (
             <div
