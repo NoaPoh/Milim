@@ -24,6 +24,9 @@ const Profile: React.FC = () => {
 
   return (
     <div className="profile-container">
+      <button className="logout-button" onClick={handleLogout}>
+        <FontAwesomeIcon icon={faSignOut} />
+      </button>
       <AnimalIcon iconWidth={230} path={user.spiritAnimal} />
       <div className="coins-section">
         <img
@@ -34,9 +37,6 @@ const Profile: React.FC = () => {
         {user.coins}
         </span>
       </div>
-      <button className="logout-button" onClick={handleLogout}>
-        <FontAwesomeIcon icon={faSignOut} />
-      </button>
     </div>
   );
 };
