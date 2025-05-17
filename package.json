@@ -15,6 +15,9 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.0.2",
     "@mui/material": "^7.0.2",
-    "@prisma/client": "^6.6.0"
+    "@prisma/client": "^6.6.0",
+    "install": "^0.13.0",
+    "npm": "^11.3.0",
+    "react-hot-toast": "^2.5.2"
   }
 }

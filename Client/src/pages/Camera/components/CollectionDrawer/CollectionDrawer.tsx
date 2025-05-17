@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './CollectionDrawer.scss';
 import { useGetCategories } from '../../../Home/hooks/useGetCategories';
 import { api } from '../../../../utils/trpcClient';
+import { showErrorToast, showSuccessToast } from '../../../../utils/toast';
 
 interface CollectionDrawerProps {
   isOpen: boolean;
@@ -22,11 +23,25 @@ const CollectionDrawer = ({
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     null
   );
+  const selectedCategory = categories?.find(
+    (category) => category.id === selectedCategoryId
+  );
+  const handleSuccess = () => {
+    showSuccessToast(`added to ${selectedCategory?.name} collection!`);
+    onClose();
+  };
+  const handleError = () => {
+    showErrorToast(`Failed to add to ${selectedCategory?.id} collection!`);
+    onClose();
+  };
 
   const {
     isPending: saveWordInCategoryIsPending,
     mutateAsync: saveWordInCategory,
-  } = api.word.saveWordInCategory.useMutation({ onSuccess: onClose });
+  } = api.word.saveWordInCategory.useMutation({
+    onSuccess: handleSuccess,
+    onError: handleError,
+  });
 
   const handleCategoryClick = (categoryId: number) => {
     setSelectedCategoryId(categoryId);

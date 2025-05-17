@@ -14,7 +14,6 @@ const Home: React.FC = () => {
   const { data: categories, isLoading } = useGetCategories();
 
   const { user } = useUser();
-
   return (
     <div className="flex flex-col flex-grow bg-[#FBF3DF] px-4 pt-10">
       {user && (
@@ -25,7 +24,7 @@ const Home: React.FC = () => {
           </p>
         </div>
       )}
-      { isLoading && (<Loader/>)}
+      {isLoading && <Loader />}
 
       {/* Category Grid */}
       {categories && (
