@@ -1,0 +1,30 @@
+.predictions-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+
+  .translation {
+    margin-left: 15%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .prediction-item {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  .speaker-button {
+    border-radius: 999px;
+    width: 4rem;
+  }
+
+  .btn {
+    margin-top: 2rem;
+  }
+
+  .retake {
+    margin-top: 1rem;
+  }
+}
