@@ -31,28 +31,6 @@ export interface WinAGameInput {
 export type WordWithStringPic = Omit<Word, 'picture'> & {
   picture: string;
 };
-export interface GoogleTranslateResponse {
-  data: {
-    translations: Array<{
-      translatedText: string;
-      detectedSourceLanguage: string;
-      model: string;
-    }>;
-  };
-}
-
-export type GoogleLabelAnnotation = {
-  mid: string; // e.g. "/m/0bt9lr"
-  description: string; // e.g. "banana"
-  score: number; // confidence, 0–1
-  topicality?: number; // often same as score
-};
-
-export type GoogleLabelDetectionResponse = {
-  responses: Array<{
-    labelAnnotations?: GoogleLabelAnnotation[];
-  }>;
-};
 
 export type DisplayCategoryWithWords = Omit<DisplayCategory, 'words'> & {
   words?: (Omit<Word, 'picture'> & { picture: string })[];
