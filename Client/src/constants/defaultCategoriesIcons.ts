@@ -5,6 +5,7 @@ import kitchenIcon from '../assets/images/categories/kitchen.png';
 import bedroomIcon from '../assets/images/categories/bedroom.png';
 import supermarketIcon from '../assets/images/categories/supermarket.png';
 import livingRoomIcon from '../assets/images/categories/living_room.png';
+import { Category } from '@prisma/client';
 
 export type DefaultCategoriesMap = {
   [id: number]: string;
@@ -19,5 +20,12 @@ const defaultCategoriesIcons: DefaultCategoriesMap = {
   6: supermarketIcon,
   7: livingRoomIcon,
 };
+
+export function resolveImagePath(
+  picture: string,
+  categoryId: Category['id']
+): string {
+  return picture ?? defaultCategoriesIcons[categoryId];
+}
 
 export default defaultCategoriesIcons;

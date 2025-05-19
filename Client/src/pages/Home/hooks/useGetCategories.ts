@@ -1,6 +1,6 @@
 import { DisplayCategory } from 'milim-server/types';
 import { api } from '../../../utils/trpcClient';
-import defaultCategoriesIcons from '../../../constants/defaultCategoriesIcons';
+import { resolveImagePath } from '../../../constants/defaultCategoriesIcons';
 
 export const useGetCategories = (enabled: boolean) => {
   const query = api.category.fetchUserCategories.useQuery(undefined, {
@@ -8,12 +8,10 @@ export const useGetCategories = (enabled: boolean) => {
   });
 
   const categoriesWithDefaultPictures: DisplayCategory[] | undefined =
-    query.data?.map((category) => {
-      return {
-        ...category,
-        picture: category.picture || defaultCategoriesIcons[category.id],
-      };
-    });
+    query.data?.map((category) => ({
+      ...category,
+      picture: resolveImagePath(category.picture, category.id),
+    }));
 
   return {
     ...query,
