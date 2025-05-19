@@ -6,6 +6,7 @@ import { useGetUserCategory } from './hooks/useGetUserCategory';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { RoutesValues } from '../../routes/routes';
 import addIcon from '../../assets/images/categories/add.png';
+import WordCard from './components/WordCard';
 
 export type CategoryProps = {
   name: string;
@@ -28,20 +29,19 @@ export default function Category({ name }: CategoryProps) {
           onClick={navToHome}
           icon={faChevronLeft}
           className="return__icon text-2xl text-gray-700"
-        />{' '}
+        />
         <p className="category__title">{category.name}</p>
         <div className="category__words">
           {category.words &&
             category.words.map((word) => (
-              <div key={word.id} className="category__word">
-                <Link to={`${RoutesValues.CATEGORY}/${category.id}/${word.id}`}>
-                  <img
-                    src={word.picture}
-                    alt={word.originalText}
-                    className="object-cover"
-                  />
-                </Link>
-              </div>
+              <WordCard
+                categoryId={word.categoryId}
+                originalText={word.originalText}
+                picture={word.picture}
+                translatedText={word.translatedText}
+                wordId={word.id}
+                key={word.id}
+              />
             ))}
           <div key={0} className="category__word">
             <Link to={RoutesValues.CAMERA}>
