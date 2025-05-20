@@ -1,18 +1,28 @@
 @use '../../styles/variables' as *;
 
 .category {
+  & .category__topbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    position: relative;
+
+    &-icon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 2rem;
+      cursor: pointer;
+    }
+  }
+
   &__title {
     font-size: 3rem;
     font-weight: bold;
-    text-align: center;
-    margin-bottom: 2rem;
     color: $text-dark;
     text-overflow: ellipsis;
-  }
-
-  .return__icon {
-    margin: 2rem;
-    cursor: pointer;
   }
 
   &__words {
@@ -20,5 +30,16 @@
     grid-template-columns: repeat(2, 1fr); // Two columns
     gap: 1rem; // Space between grid items
     margin: auto;
+  }
+
+  .category__add-word {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &-icon {
+      color: $text-dark;
+    }
   }
 }

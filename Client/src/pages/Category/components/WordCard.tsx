@@ -1,3 +1,4 @@
+import { ClickAwayListener } from '@mui/material';
 import './WordCard.scss';
 import { useState } from 'react';
 
@@ -24,17 +25,20 @@ export default function WordCard(props: WordCardProps) {
       </div>
       {openModal && (
         <div className="WordCard__modal">
-          <div
-            className="WordCard__container"
-            onClick={() => setOpenModal(true)}
-          >
-            <img
-              src={props.picture}
-              alt={props.originalText}
-              className="object-cover"
-            />
-            <p>{props.translatedText}</p>
-          </div>
+          <ClickAwayListener onClickAway={() => setOpenModal(false)}>
+            <div
+              className="WordCard__container"
+              onClick={() => setOpenModal(true)}
+            >
+              <img
+                src={props.picture}
+                alt={props.originalText}
+                className="object-cover"
+              />
+              <p>{props.translatedText}</p>
+              <button className="WordCard__finish-button">I know this!</button>
+            </div>
+          </ClickAwayListener>
         </div>
       )}
     </>

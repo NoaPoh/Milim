@@ -32,7 +32,9 @@ export type WordWithStringPic = Omit<Word, 'picture'> & {
   picture: string;
 };
 
-export type DisplayCategoryWithWords = Omit<DisplayCategory, 'words'> & {
+export type CategoryPageData = {
+  id: Category['id'];
+  name: Category['name'];
   words: WordWithStringPic[];
 };
 

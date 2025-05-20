@@ -5,7 +5,7 @@ import {
   fetchUserCategoryById,
   insertCategory,
 } from './category.service';
-import { DisplayCategory, DisplayCategoryWithWords } from '../../types';
+import { DisplayCategory, CategoryPageData } from '../../types';
 
 export const categoryRouter = router({
   fetchUserCategories: protectedProcedure.query(
@@ -15,7 +15,7 @@ export const categoryRouter = router({
   ),
   fetchUserCategoryById: protectedProcedure
     .input(z.object({ id: z.number() }))
-    .query(async ({ ctx, input }): Promise<DisplayCategoryWithWords> => {
+    .query(async ({ ctx, input }): Promise<CategoryPageData> => {
       return await fetchUserCategoryById(ctx.userId, ctx.prisma, input.id);
     }),
   insertCategory: protectedProcedure
