@@ -36,7 +36,12 @@ export default function WordCard(props: WordCardProps) {
                 className="object-cover"
               />
               <p>{props.translatedText}</p>
-              <button className="WordCard__finish-button">I know this!</button>
+              <button
+                className="WordCard__finish-button"
+                onClick={() => setOpenModal(false)}
+              >
+                I know this!
+              </button>
             </div>
           </ClickAwayListener>
         </div>
