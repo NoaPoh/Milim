@@ -5,7 +5,7 @@ import { useGetUserCategory } from './hooks/useGetUserCategory';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { RoutesValues } from '../../routes/routes';
 import addIcon from '../../assets/images/categories/add.png';
-import WordCard from './components/WordCard';
+import WordCard from './components/WordCard/WordCard';
 
 export type CategoryProps = {
   name: string;
@@ -15,7 +15,7 @@ export default function Category() {
   const { id } = useParams(); // Extract the dynamic category ID
   const navigate = useNavigate();
 
-  const { category, isLoading } = useGetUserCategory(Number(id) || 0);
+  const { category } = useGetUserCategory(Number(id) || 0);
 
   const navToHome = () => {
     navigate(RoutesValues.HOME);
