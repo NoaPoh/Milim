@@ -12,6 +12,7 @@ import FlashCards from '../pages/Games/FlashCards/FlashCards';
 import Spelling from '../pages/Games/Spelling/Spelling';
 import WelcomeToGame from '../pages/Games/WelcomeScreen/WelcomeToGame';
 import Profile from '../pages/Profile/Profile';
+import Category from '../pages/Category/Category';
 
 const Page = ({ children }: { children: React.ReactNode }) => {
   return <div className="page-w-navbar">{children}</div>;
@@ -78,6 +79,11 @@ const routes: RouteProps[] = [
     component: <Profile />,
     navbar: true,
   },
+  {
+    path: `${RoutesValues.CATEGORY}/:id`, // Add dynamic segment for category ID
+    component: <Category />,
+    navbar: true,
+  }
 ];
 
 interface RouterProps {}

@@ -9,6 +9,7 @@ export enum RoutesValues {
   ADD_CATEGORY = '/categories/add',
   ADD_OBJECT = '/categories/add/object',
   GAME_WELCOME_SCREEN = '/games/welcome',
+  CATEGORY = '/category',
 }
 
 export enum ObjectsCategoriesRoutesValues {
