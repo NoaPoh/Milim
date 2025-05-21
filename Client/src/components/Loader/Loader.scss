@@ -2,53 +2,51 @@
   position: fixed;
   top: 0;
   left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100dvh;
   width: 100dvw;
-
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
+  z-index: 9999;
+  overflow: hidden;
   pointer-events: all;
   cursor: progress;
+  font-family: 'Fredoka', sans-serif;
 }
 
-.loader {
-  height: 60px;
-  aspect-ratio: 2;
-  border-bottom: 3px solid #0000;
-  background: linear-gradient(90deg, #524656 50%, #0000 0) -25% 100%/50% 3px repeat-x
-    border-box;
-  position: relative;
-  animation: l3-0 0.75s linear infinite;
-}
+/* Loader.scss */
 
-// the ball
-.loader:before {
-  content: '';
+.floating-letter {
   position: absolute;
-  inset: auto 42.5% 0;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #cf4647;
-  animation: l3-1 0.75s cubic-bezier(0, 900, 1, 900) infinite;
+  color: rgba(255, 255, 255, 0.85); /* not pure white */
+  font-weight: 200; /* lighter stroke */
+  letter-spacing: 3px; /* looser tracking */
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+  white-space: pre;
+  animation: fadeLetter 4s ease-in-out infinite; /* slower */
 }
 
-@keyframes l3-0 {
-  to {
-    background-position: -125% 100%;
+@keyframes fadeLetter {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
   }
-}
-@keyframes l3-1 {
-  0%,
-  2% {
-    bottom: 0%;
+  35% {
+    opacity: 0.45;
+    transform: scale(0.99);
+  } /* gentle rise */
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  } /* barely zoom */
+  65% {
+    opacity: 0.45;
+    transform: scale(0.99);
   }
-  98%,
-  to {
-    bottom: 0.1%;
+  100% {
+    opacity: 0;
+    transform: scale(0.96);
   }
 }
