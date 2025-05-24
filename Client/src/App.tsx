@@ -11,9 +11,15 @@ const App = () => {
   const showNavbar =
     location.pathname !== RoutesValues.REGISTER &&
     location.pathname !== RoutesValues.LOGIN;
+  const noLoaderEvents = ['detectObject'];
 
   const howManyFetching = useIsFetching();
-  const howManyMutating = useIsMutating();
+  const howManyMutating = useIsMutating({
+    predicate: (mutation) => {
+      const key = mutation.options?.mutationKey[0][1];
+      return !noLoaderEvents.includes(key);
+    },
+  });
 
   return (
     <div className="app">
