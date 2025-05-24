@@ -4,6 +4,7 @@ import './App.scss';
 import Router from './routes/router';
 import { RoutesValues } from './routes/routes';
 import { useIsFetching, useIsMutating } from '@tanstack/react-query';
+import { SuccessPopupProvider } from './pages/Games/components/SucessPopup/SuccessPopupContext';
 import Loader from './components/Loader/Loader';
 
 const App = () => {
@@ -17,9 +18,11 @@ const App = () => {
 
   return (
     <div className="app">
-      {howManyFetching + howManyMutating > 0 && <Loader />}
-      <Router />
-      {showNavbar && <Navbar />}
+      <SuccessPopupProvider>
+        {howManyFetching + howManyMutating > 0 && <Loader />}
+        <Router />
+        {showNavbar && <Navbar />}
+      </SuccessPopupProvider>
     </div>
   );
 };
