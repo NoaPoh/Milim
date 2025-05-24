@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Loader.scss';
 
-const randomChar = () => {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  return chars[Math.floor(Math.random() * chars.length)];
-};
-
 const generateLetters = (count: number) => {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
