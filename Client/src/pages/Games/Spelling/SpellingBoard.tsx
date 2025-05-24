@@ -3,7 +3,6 @@ import { useSpelling } from '../Hooks/useSpelling';
 import './Spelling.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons';
-import SuccessPopup from '../components/SucessPopup/SuccessPopup';
 
 interface SpellingBoardProps {
   word: string;
@@ -77,7 +76,6 @@ const SpellingBoard = ({ word }: SpellingBoardProps) => {
           </button>
         ))}
       </div>
-      <SuccessPopup></SuccessPopup>
     </div>
   );
 };
