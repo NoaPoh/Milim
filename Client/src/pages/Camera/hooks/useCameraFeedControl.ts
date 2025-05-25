@@ -10,9 +10,7 @@ function useCameraFeedControl() {
   const [cantUseCamera, setCantUseCamera] = useState<boolean>(false);
 
   const captureFrameAsBase64 = (): string | null => {
-    const video = videoRef.current;
-
-    return convertVideoToBase64(video);
+    return convertVideoToBase64(videoRef.current);
   };
 
   const startFeed = async (onStart?: () => void) => {
@@ -22,7 +20,7 @@ function useCameraFeedControl() {
         videoRef.current.srcObject = stream;
       }
       streamRef.current = stream;
-      onStart && onStart();
+      onStart?.();
     } catch (error: any) {
       setCantUseCamera(true);
       setErrorMessage(
@@ -34,8 +32,7 @@ function useCameraFeedControl() {
   };
 
   const stopFeed = (onStop?: () => void) => {
-    // stopDetectionLoop();
-    onStop && onStop();
+    onStop?.();
     streamRef.current?.getTracks().forEach((track) => track.stop());
     streamRef.current = null;
   };

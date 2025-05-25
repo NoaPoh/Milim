@@ -28,8 +28,8 @@ export default function CameraPage() {
     isPending: detectObjectIsPending,
     mutateAsync: detectObject,
   } = api.externals.detectObject.useMutation({
-    onSuccess: (_data, variables) => {
-      freezeFrame(variables);
+    onSuccess: (_data, originalImage) => {
+      freezeFrame(originalImage);
       sprinkleConfettiOnScreen();
       apiUtils.externals.translateWord.invalidate();
     },
@@ -50,8 +50,8 @@ export default function CameraPage() {
   };
 
   useEffect(() => {
-    startFeed(() => {});
-    return () => stopFeed(() => {});
+    startFeed();
+    return () => stopFeed();
   }, []);
 
   useVideoStability(videoRef, takePicture);
