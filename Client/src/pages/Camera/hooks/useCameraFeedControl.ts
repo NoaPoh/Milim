@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { convertVideoToBase64 } from '../../../utils/video';
 
-function useCameraFeed() {
+function useCameraFeedControl() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
@@ -66,4 +66,4 @@ function useCameraFeed() {
   };
 }
 
-export default useCameraFeed;
+export default useCameraFeedControl;
