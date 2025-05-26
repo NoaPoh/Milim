@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSuccessPopup } from './components/SucessPopup/SuccessPopupContext';
+import { useEndGamePopup } from './components/EndGamePopup/EndGamePopupContext';
 import { api } from '../../utils/trpcClient'; // Adjust path as needed
 
 type GameProps = {
@@ -14,7 +14,7 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
   const [round, setRound] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
 
-  const { showPopup } = useSuccessPopup();
+  const { showPopup } = useEndGamePopup();
   const winAGame = api.user.winAGame.useMutation();
 
   const handleComplete = (correct: boolean) => {

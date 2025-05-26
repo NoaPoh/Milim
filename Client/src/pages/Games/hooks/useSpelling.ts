@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { generateButtonValues } from '../Functions/functions';
-import { useSuccessPopup } from '../components/SucessPopup/SuccessPopupContext';
+import { useEndGamePopup } from '../components/EndGamePopup/EndGamePopupContext';
 
 export const useSpelling = (word: string, selectedLetters: string[]) => {
   const [buttonsAmount, setButtonsAmount] = useState<number>(0);
   const [sheffledWord, setSheffeledWord] = useState<string>('');
   const [buttonsValues, setButtonsValues] = useState<string[]>([]);
-  const { showPopup } = useSuccessPopup();
+  const { showPopup } = useEndGamePopup();
 
   // Set amount and shuffled word on mount
   useEffect(() => {
