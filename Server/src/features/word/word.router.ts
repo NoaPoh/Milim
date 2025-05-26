@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { protectedProcedure, router } from '../../core/trpc/trpc';
-import type { Word } from '@prisma/client';
+// import type { Word } from '@prisma/client';
 import { saveWordInCategory, fetchRandomUserWords } from './word.service';
 import { WordWithStringPic } from '../../types';
 
@@ -36,4 +36,13 @@ export const wordRouter = router({
         ctx.prisma
       );
     }),
+
+  getWordSum: protectedProcedure.query(async ({ ctx }) => {
+    const wordSum = await ctx.prisma.word.count({
+      where: {
+        userId: ctx.userId,
+      },
+    });
+    return wordSum;
+  }),
 });
