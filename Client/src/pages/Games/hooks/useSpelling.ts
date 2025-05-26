@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { generateButtonValues } from '../Functions/functions';
-import { useSuccessPopup } from '../components/SucessPopup/SuccessPopupContext';
 
-export const useSpelling = (word: string, selectedLetters: string[]) => {
+export const useSpelling = (
+  word: string,
+  selectedLetters: string[],
+  setSuccess?: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   const [buttonsAmount, setButtonsAmount] = useState<number>(0);
   const [sheffledWord, setSheffeledWord] = useState<string>('');
   const [buttonsValues, setButtonsValues] = useState<string[]>([]);
-  const { showPopup } = useSuccessPopup();
 
   // Set amount and shuffled word on mount
   useEffect(() => {
@@ -24,18 +26,9 @@ export const useSpelling = (word: string, selectedLetters: string[]) => {
   }, [sheffledWord, buttonsAmount]);
 
   useEffect(() => {
-    if (selectedLetters.length === word.length) {
-      const typedWord = selectedLetters.join('');
-      if (typedWord === word) {
-        showPopup({
-          earnedCoins: 50, //TODO: should be calculated
-          onPlayAgain: () => {
-            //TODO: Refresh the screen
-          },
-        });
-      } else {
-        console.log('fail');
-      }
+    const typedWord = selectedLetters.join('');
+    if (typedWord === word && setSuccess) {
+      setSuccess(true);
     }
   }, [selectedLetters]);
 
