@@ -40,7 +40,7 @@ const Profile: React.FC = () => {
         </button>
 
         <AwardShopModal
-          isOpen={isShopOpen}
+          open={isShopOpen}
           onClose={() => setShopOpen(false)}
         />
       </div>

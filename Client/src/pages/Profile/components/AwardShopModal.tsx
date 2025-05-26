@@ -1,56 +1,66 @@
-import { Fragment } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
+import React, { useState, useEffect } from 'react';
+import { useAwards } from '../hooks/useAwards';
+import { Dialog, SwipeableDrawer } from '@mui/material';
+import { AwardType, Award } from '@prisma/client';
+import AwardCard from './award/Award.tsx';
+import { api } from '../../../utils/trpcClient';
 
-type AwardShopModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
+const awardTypeLabels: Record<AwardType, string> = {
+  BACKGROUND_COLOR: 'Habitat',
+  PROFILE_ICON: 'Spirit Animal',
+  ICON_BACKGROUND: 'Animal Background',
+  ICON_FRAME: 'Frames',
 };
 
-export default function AwardShopModal({ isOpen, onClose }: AwardShopModalProps) {
+export default function AwardModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { data: awards = [], isLoading } = useAwards(); // ✅ RIGHT PLACE
+  const [selectedType, setSelectedType] = useState<AwardType>('BACKGROUND_COLOR');
+  const { data: user } = api.auth.getMe.useQuery();
+  const coinBalance = user?.coinBalance ?? 0;
+
+  const filtered = awards.filter((a) => a.category === selectedType);
+
   return (
-    <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={onClose}>
-        {/* BACKDROP */}
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100"
-          leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black bg-opacity-50" />
-        </Transition.Child>
+    <SwipeableDrawer
+      anchor="bottom"
+      open={open}
+      onClose={onClose}
+      onOpen={() => {}}
+      PaperProps={{
+        sx: {
+          borderTopLeftRadius: 16,
+          borderTopRightRadius: 16,
+          height: '70vh',
+        },
+      }}
+    >
 
-        {/* MODAL WRAPPER */}
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95"
+    <div className="p-6">
+        <h2 className="text-2xl font-bold mb-4">Shop</h2>
+
+        <div className="flex gap-3 mb-6">
+          {Object.entries(awardTypeLabels).map(([key, label]) => (
+            <button
+              key={key}
+              onClick={() => setSelectedType(key as AwardType)}
+              className={
+                selectedType === key
+                  ? 'px-1.5 py-1 text-sm rounded-md font-medium border bg-gray-300 text-black'
+                  : 'px-1.5 py-1 text-sm rounded-md font-medium border bg-white text-gray-600 hover:bg-gray-100'
+              }
             >
-              <Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all">
-                <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                  Award Shop
-                </Dialog.Title>
-
-                {/* Modal content */}
-                <div className="mt-4">
-                  <p>Put your award shop UI here</p>
-                </div>
-
-                <div className="mt-6">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
-                    onClick={onClose}
-                  >
-                    Close
-                  </button>
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
-          </div>
+              {label}
+            </button>
+          ))}
         </div>
-      </Dialog>
-    </Transition>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {filtered.length ? filtered.map((award) => (
+            <AwardCard key={award.id} award={award} canAfford={coinBalance >= award.price} />
+          )): <div className="text-center text-gray-600">Nothing to see here ☺️
+          </div>}
+        </div>
+      </div>
+    </SwipeableDrawer>
   );
 }
