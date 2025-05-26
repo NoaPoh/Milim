@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import './FlashCards.scss';
 import { api } from '../../../utils/trpcClient';
 
-const FlashCards = () => {
+type FlashCardsProps = {
+  onComplete: (correct: boolean) => void;
+};
+
+const FlashCards = ({ onComplete }: FlashCardsProps) => {
   const { data: words } = api.word.fetchRandomUserWords.useQuery({
     amount: 4,
   });
@@ -21,6 +25,9 @@ const FlashCards = () => {
 
   const handleSubmit = () => {
     setSubmitted(true);
+    if (chosenId !== null) {
+      onComplete(chosenId === correctId);
+    }
   };
 
   const getCardClass = (id: number) => {
