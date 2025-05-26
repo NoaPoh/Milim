@@ -4,24 +4,35 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); // dark semi-transparent background
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9998; // behind the popup
+  z-index: 9998;
 
-  .success-popup {
+  .endgame-popup {
     position: fixed;
     background-color: rgb(251, 250, 247);
     display: flex;
-    justify-content: center;
     flex-direction: column;
+    justify-content: center;
     border-radius: 20px;
     width: 90%;
     height: 230px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    &.comfort {
+      .popup-button {
+        background-color: rgb(214, 122, 113);
+        border-color: rgb(214, 122, 113);
+      }
+
+      .button-row {
+        border-top: 1px solid rgb(214, 122, 113);
+      }
+    }
   }
 
   .coin-animation {
@@ -29,6 +40,11 @@
     height: 160px;
     display: flex;
     justify-content: center;
+  }
+
+  .success-content,
+  .comfort-content {
+    text-align: center;
   }
 
   .success-message {
@@ -49,7 +65,7 @@
     flex-direction: column;
     direction: ltr;
     text-align: center;
-    margin-bottom: 15px;
+    margin: 1rem 2rem;
     transform: translateY(-20px);
   }
 
@@ -60,10 +76,15 @@
     transform: translateY(-20px);
   }
 
+  .comfort-icon {
+    width: 6rem;
+    margin: 2rem auto;
+  }
+
   .popup-button {
     width: 50%;
-    background-color: rgb(250, 202, 100);
     border: none;
+    background-color: rgb(250, 202, 100);
 
     &.left {
       border-radius: 0;
