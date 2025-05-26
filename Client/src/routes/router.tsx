@@ -13,6 +13,7 @@ import Spelling from '../pages/Games/Spelling/Spelling';
 import WelcomeToGame from '../pages/Games/WelcomeScreen/WelcomeToGame';
 import Profile from '../pages/Profile/Profile';
 import Category from '../pages/Category/Category';
+import GenericGame from '../pages/Games/GenericGame';
 
 const Page = ({ children }: { children: React.ReactNode }) => {
   return <div className="page-w-navbar">{children}</div>;
@@ -61,7 +62,7 @@ const routes: RouteProps[] = [
   },
   {
     path: GamesRoutesValues.FLASH_CARDS,
-    component: <FlashCards />,
+    component: <GenericGame GameComponent={FlashCards} />,
     navbar: false,
   },
   {
