@@ -49,7 +49,6 @@ const SuccessPopup = ({ earnedCoins, onPlayAgain, onBack, onClose }: Props) => {
             className="popup-button right"
             onClick={() => {
               onBack?.();
-              onClose?.();
             }}
           >
             Back to games
