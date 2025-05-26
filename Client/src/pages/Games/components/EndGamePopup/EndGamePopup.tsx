@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Lottie from 'lottie-react';
 import coinAnimation from '../../../../assets/images/animations/Animation - 1746434987195.json';
 import ohno from '../../../../assets/images/ohno.png';
@@ -19,10 +19,10 @@ const EndGamePopup = ({
   onClose,
 }: Props) => {
   const popupRef = useRef<HTMLDivElement>(null);
-  const isSad = earnedCoins === 0;
+  const isComfort = earnedCoins === 0;
 
   useEffect(() => {
-    if (popupRef.current && !isSad) {
+    if (popupRef.current && !isComfort) {
       sprinkleConfettiOnScreen(popupRef.current, {
         zIndex: '5',
         borderRadius: '20px',
@@ -32,10 +32,13 @@ const EndGamePopup = ({
 
   return (
     <div className="popup-overlay">
-      <div className={`endgame-popup ${isSad ? 'sad' : ''}`} ref={popupRef}>
-        {isSad ? (
-          <div className="sad-content">
-            <img src={ohno} alt="Sad face" className="sad-icon" />
+      <div
+        className={`endgame-popup ${isComfort ? 'comfort' : ''}`}
+        ref={popupRef}
+      >
+        {isComfort ? (
+          <div className="comfort-content">
+            <img src={ohno} alt="comfort face" className="comfort-icon" />
             <p className="coins-earned">
               You didn't earn any coins this time. You can always play again!
             </p>

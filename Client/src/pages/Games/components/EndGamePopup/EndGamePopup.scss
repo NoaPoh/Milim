@@ -23,7 +23,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    &.sad {
+    &.comfort {
       .popup-button {
         background-color: rgb(214, 122, 113);
         border-color: rgb(214, 122, 113);
@@ -43,7 +43,7 @@
   }
 
   .success-content,
-  .sad-content {
+  .comfort-content {
     text-align: center;
   }
 
@@ -76,7 +76,7 @@
     transform: translateY(-20px);
   }
 
-  .sad-icon {
+  .comfort-icon {
     width: 6rem;
     margin: 2rem auto;
   }
