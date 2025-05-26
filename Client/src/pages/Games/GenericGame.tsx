@@ -28,7 +28,9 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
       showPopup({
         earnedCoins: correct ? (correctCount + 1) * 10 : correctCount * 10,
         onPlayAgain: () => {
-          //TODO: Refresh the screen
+          setRound(0);
+          setCorrectCount(0);
+          setFinished(false);
         },
       });
     }
