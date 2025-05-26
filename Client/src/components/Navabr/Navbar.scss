@@ -22,14 +22,12 @@
 
     svg {
       font-size: 34px;
-      color: $primary-dark;
+      color: $primary-light;
     }
 
     &.active {
       svg {
-        path {
-          opacity: 0.6;
-        }
+        color: $primary-dark;
       }
     }
   }
