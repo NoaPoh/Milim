@@ -5,7 +5,6 @@ import CameraFeed from './components/Feed/CameraFeed';
 import PicturePreview from './components/Feed/PicturePreview';
 import { api } from '../../utils/trpcClient';
 import { Toaster } from 'react-hot-toast';
-import { sprinkleConfettiOnScreen } from '../../utils/confetti';
 import { useVideoStability } from './hooks/useVideoStability';
 
 export default function CameraPage() {
@@ -30,7 +29,6 @@ export default function CameraPage() {
   } = api.externals.detectObject.useMutation({
     onSuccess: (_data, originalImage) => {
       freezeFrame(originalImage);
-      sprinkleConfettiOnScreen();
       apiUtils.externals.translateWord.invalidate();
     },
     retryDelay: 2000,
