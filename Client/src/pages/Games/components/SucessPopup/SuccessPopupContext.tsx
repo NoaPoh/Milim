@@ -49,6 +49,7 @@ export const SuccessPopupProvider = ({ children }: { children: ReactNode }) => {
           onPlayAgain={popupConfig.onPlayAgain}
           onBack={() => {
             navigate(RoutesValues.GAMES);
+            handleClose();
           }}
           onClose={handleClose}
         />

@@ -12,7 +12,6 @@ type GenericGameProps = {
 const GenericGame = ({ GameComponent }: GenericGameProps) => {
   const [round, setRound] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
-  const [finished, setFinished] = useState(false);
 
   const { showPopup } = useSuccessPopup();
 
@@ -24,13 +23,11 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
     if (round < 4) {
       setRound((r) => r + 1);
     } else {
-      setFinished(true);
       showPopup({
         earnedCoins: correct ? (correctCount + 1) * 10 : correctCount * 10,
         onPlayAgain: () => {
           setRound(0);
           setCorrectCount(0);
-          setFinished(false);
         },
       });
     }
