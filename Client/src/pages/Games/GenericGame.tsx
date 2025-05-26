@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSuccessPopup } from './components/SucessPopup/SuccessPopupContext';
+import { api } from '../../utils/trpcClient'; // Adjust path as needed
 
 type GameProps = {
   onComplete: (correct: boolean) => void;
@@ -14,6 +15,7 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
   const [correctCount, setCorrectCount] = useState(0);
 
   const { showPopup } = useSuccessPopup();
+  const winAGame = api.user.winAGame.useMutation();
 
   const handleComplete = (correct: boolean) => {
     console.log(`Round ${round + 1} completed. Correct: ${correct}`);
@@ -23,8 +25,12 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
     if (round < 4) {
       setRound((r) => r + 1);
     } else {
+      const earnedCoins = correct ? (correctCount + 1) * 10 : correctCount * 10;
+      winAGame.mutate({
+        coins: earnedCoins,
+      });
       showPopup({
-        earnedCoins: correct ? (correctCount + 1) * 10 : correctCount * 10,
+        earnedCoins: earnedCoins,
         onPlayAgain: () => {
           setRound(0);
           setCorrectCount(0);
