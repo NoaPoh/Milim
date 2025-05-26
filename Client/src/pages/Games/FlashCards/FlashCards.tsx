@@ -25,8 +25,13 @@ const FlashCards = ({ onComplete }: FlashCardsProps) => {
 
   const handleSubmit = () => {
     setSubmitted(true);
+  };
+
+  const handleNext = () => {
     if (chosenId !== null) {
       onComplete(chosenId === correctId);
+      setSubmitted(false);
+      setChosenId(null);
     }
   };
 
@@ -57,13 +62,19 @@ const FlashCards = ({ onComplete }: FlashCardsProps) => {
           ))}
         </div>
 
-        <button
-          className="submit-button"
-          onClick={handleSubmit}
-          disabled={chosenId === null}
-        >
-          Submit
-        </button>
+        {!submitted ? (
+          <button
+            className="submit-button"
+            onClick={handleSubmit}
+            disabled={chosenId === null}
+          >
+            Submit
+          </button>
+        ) : (
+          <button className="next-button" onClick={handleNext}>
+            Next
+          </button>
+        )}
       </div>
     </>
   );

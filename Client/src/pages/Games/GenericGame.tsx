@@ -26,7 +26,7 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
     } else {
       setFinished(true);
       showPopup({
-        earnedCoins: correctCount * 10,
+        earnedCoins: correct ? (correctCount + 1) * 10 : correctCount * 10,
         onPlayAgain: () => {
           //TODO: Refresh the screen
         },
@@ -36,11 +36,7 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
 
   return (
     <>
-      {/* {!finished ? ( */}
       <GameComponent key={round} onComplete={handleComplete} />
-      {/* ) : (
-        <div>Game finished! Correct answers: {correctCount} / 5</div>
-      )} */}
     </>
   );
 };
