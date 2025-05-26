@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSuccessPopup } from './components/SucessPopup/SuccessPopupContext';
 
 type GameProps = {
   onComplete: (correct: boolean) => void;
@@ -13,6 +14,8 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
   const [correctCount, setCorrectCount] = useState(0);
   const [finished, setFinished] = useState(false);
 
+  const { showPopup } = useSuccessPopup();
+
   const handleComplete = (correct: boolean) => {
     console.log(`Round ${round + 1} completed. Correct: ${correct}`);
 
@@ -22,16 +25,22 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
       setRound((r) => r + 1);
     } else {
       setFinished(true);
+      showPopup({
+        earnedCoins: correctCount * 10,
+        onPlayAgain: () => {
+          //TODO: Refresh the screen
+        },
+      });
     }
   };
 
   return (
     <>
-      {!finished ? (
-        <GameComponent key={round} onComplete={handleComplete} />
-      ) : (
+      {/* {!finished ? ( */}
+      <GameComponent key={round} onComplete={handleComplete} />
+      {/* ) : (
         <div>Game finished! Correct answers: {correctCount} / 5</div>
-      )}
+      )} */}
     </>
   );
 };
