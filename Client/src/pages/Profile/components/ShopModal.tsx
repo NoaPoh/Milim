@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useAwards } from '../hooks/useAwards';
-import { Dialog, SwipeableDrawer } from '@mui/material';
-import { AwardType, Award } from '@prisma/client';
-import AwardCard from './award/Award.tsx';
+import { SwipeableDrawer } from '@mui/material';
+import { AwardType } from '@prisma/client';
+import AwardCard from './AwardCard/AwardCard.tsx';
 import { api } from '../../../utils/trpcClient';
+import './ShopModal.scss';
 
 const awardTypeLabels: Record<AwardType, string> = {
   BACKGROUND_COLOR: 'Habitat',
@@ -12,8 +13,8 @@ const awardTypeLabels: Record<AwardType, string> = {
   ICON_FRAME: 'Frames',
 };
 
-export default function AwardModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { data: awards = [], isLoading } = useAwards(); // ✅ RIGHT PLACE
+export default function ShopModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { data: awards = [] } = useAwards();
   const [selectedType, setSelectedType] = useState<AwardType>('BACKGROUND_COLOR');
   const { data: user } = api.auth.getMe.useQuery();
   const coinBalance = user?.coinBalance ?? 0;
@@ -34,31 +35,33 @@ export default function AwardModal({ open, onClose }: { open: boolean; onClose: 
         },
       }}
     >
+      <div className="shop-modal">
+        <h2 className="title">Shop</h2>
 
-    <div className="p-6">
-        <h2 className="text-2xl font-bold mb-4">Shop</h2>
-
-        <div className="flex gap-3 mb-6">
+        <div className="tabs">
           {Object.entries(awardTypeLabels).map(([key, label]) => (
             <button
               key={key}
               onClick={() => setSelectedType(key as AwardType)}
-              className={
-                selectedType === key
-                  ? 'px-1.5 py-1 text-sm rounded-md font-medium border bg-gray-300 text-black'
-                  : 'px-1.5 py-1 text-sm rounded-md font-medium border bg-white text-gray-600 hover:bg-gray-100'
-              }
+              className={selectedType === key ? 'active' : ''}
             >
               {label}
             </button>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {filtered.length ? filtered.map((award) => (
-            <AwardCard key={award.id} award={award} canAfford={coinBalance >= award.price} />
-          )): <div className="text-center text-gray-600">Nothing to see here ☺️
-          </div>}
+        <div className="awards-grid">
+          {filtered.length ? (
+            filtered.map((award) => (
+              <AwardCard
+                key={award.id}
+                award={award}
+                canAfford={coinBalance >= award.price}
+              />
+            ))
+          ) : (
+            <div className="empty-state">Nothing to see here ☺️</div>
+          )}
         </div>
       </div>
     </SwipeableDrawer>

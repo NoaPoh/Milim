@@ -10,7 +10,7 @@ import { RoutesValues } from '../../routes/routes.ts';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDeleteLeft, faShop, faSignOut } from '@fortawesome/free-solid-svg-icons';
-import AwardShopModal from './components/AwardShopModal.tsx';
+import AwardShopModal from './components/ShopModal.tsx';
 
 const Profile: React.FC = () => {
   const { user, isLoading }: {user: UserDTO, isLoading: boolean} = useUser();
