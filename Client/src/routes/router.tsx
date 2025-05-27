@@ -3,7 +3,7 @@ import { FunctionComponent } from 'react';
 import { GamesRoutesValues, RoutesValues } from './routes';
 import Home from '../pages/Home/Home';
 import { Route, Routes } from 'react-router-dom';
-import Camera from '../pages/Camera/Camera';
+import CameraPage from '../pages/Camera/Camera';
 import Register from '../pages/Register/Register';
 import Login from '../pages/Login/Login';
 import GamesHome from '../pages/Games/GamesHome/GamesHome';
@@ -43,7 +43,7 @@ const routes: RouteProps[] = [
   },
   {
     path: RoutesValues.CAMERA,
-    component: <Camera />,
+    component: <CameraPage />,
     navbar: true,
   },
   {

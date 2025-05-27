@@ -20,6 +20,10 @@ const getBoxArea = (vertices: NormalizedVertices[]) => {
 export async function detectObjectFromBase64(
   base64Image: string
 ): Promise<string> {
+  if (process.env.DONT_USE_GOOGLE_API === 'true') {
+    return 'test-object'; // For testing purposes, return a dummy object
+  }
+
   if (!googleAPIKey) {
     throw new Error(
       'Google API key is not defined in the environment variables.'
