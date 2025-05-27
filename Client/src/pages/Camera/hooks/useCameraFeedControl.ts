@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { convertVideoToBase64 } from '../../../utils/video';
 
-function useCameraFeed() {
+function useCameraFeedControl() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
@@ -10,9 +10,7 @@ function useCameraFeed() {
   const [cantUseCamera, setCantUseCamera] = useState<boolean>(false);
 
   const captureFrameAsBase64 = (): string | null => {
-    const video = videoRef.current;
-
-    return convertVideoToBase64(video);
+    return convertVideoToBase64(videoRef.current);
   };
 
   const startFeed = async (onStart?: () => void) => {
@@ -22,7 +20,7 @@ function useCameraFeed() {
         videoRef.current.srcObject = stream;
       }
       streamRef.current = stream;
-      onStart && onStart();
+      onStart?.();
     } catch (error: any) {
       setCantUseCamera(true);
       setErrorMessage(
@@ -34,8 +32,7 @@ function useCameraFeed() {
   };
 
   const stopFeed = (onStop?: () => void) => {
-    // stopDetectionLoop();
-    onStop && onStop();
+    onStop?.();
     streamRef.current?.getTracks().forEach((track) => track.stop());
     streamRef.current = null;
   };
@@ -66,4 +63,4 @@ function useCameraFeed() {
   };
 }
 
-export default useCameraFeed;
+export default useCameraFeedControl;

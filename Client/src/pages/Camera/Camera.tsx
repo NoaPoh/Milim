@@ -1,13 +1,15 @@
 import { useEffect } from 'react';
 import './Camera.scss';
-import useCameraFeed from './hooks/useCameraFeed';
-import useObjectDetection from './hooks/useObjectDetection';
+import useCameraFeedControl from './hooks/useCameraFeedControl';
 import CameraFeed from './components/Feed/CameraFeed';
 import PicturePreview from './components/Feed/PicturePreview';
 import { api } from '../../utils/trpcClient';
 import { Toaster } from 'react-hot-toast';
+import { useVideoStability } from './hooks/useVideoStability';
 
-export default function Camera() {
+export default function CameraPage() {
+  const apiUtils = api.useUtils();
+
   const {
     videoRef,
     startFeed,
@@ -17,17 +19,19 @@ export default function Camera() {
     stalePhoto,
     errorMessage,
     cantUseCamera,
-  } = useCameraFeed();
+    captureFrameAsBase64,
+  } = useCameraFeedControl();
 
   const {
-    singleDetectObject,
-    detectedObject,
-    detectObjectIsPending,
-    startDetectionLoop,
-    stopDetectionLoop,
-  } = useObjectDetection({
-    freezeFrame,
-    videoRef,
+    data: detectedObject,
+    isPending: detectObjectIsPending,
+    mutateAsync: detectObject,
+  } = api.externals.detectObject.useMutation({
+    onSuccess: (_data, originalImage) => {
+      freezeFrame(originalImage);
+      apiUtils.externals.translateWord.invalidate();
+    },
+    retryDelay: 2000,
   });
 
   const { data: translatedWord } = api.externals.translateWord.useQuery(
@@ -37,14 +41,18 @@ export default function Camera() {
     }
   );
 
-  const onTakePictureButton = () => {
-    singleDetectObject();
+  const takePicture = () => {
+    const frameBase64 = captureFrameAsBase64();
+    freezeFrame(frameBase64);
+    if (frameBase64) detectObject(frameBase64);
   };
 
   useEffect(() => {
-    startFeed(startDetectionLoop);
-    return () => stopFeed(stopDetectionLoop);
+    startFeed();
+    return () => stopFeed();
   }, []);
+
+  useVideoStability(videoRef, takePicture);
 
   return (
     <div className="photo-capture-container">
@@ -54,14 +62,13 @@ export default function Camera() {
       {!stalePhoto ? (
         <CameraFeed
           ref={videoRef}
-          onTakePicture={onTakePictureButton}
+          onTakePicture={takePicture}
           cantUseCamera={cantUseCamera}
         />
       ) : (
         <PicturePreview
-          className="video-wrapper"
           image={stalePhoto}
-          onRestart={() => restartFeed(startDetectionLoop)}
+          onRestart={() => restartFeed()}
           detectedObject={detectedObject}
           translatedWord={translatedWord}
           isDetecting={detectObjectIsPending}

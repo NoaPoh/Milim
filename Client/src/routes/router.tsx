@@ -3,7 +3,7 @@ import { FunctionComponent } from 'react';
 import { GamesRoutesValues, RoutesValues } from './routes';
 import Home from '../pages/Home/Home';
 import { Route, Routes } from 'react-router-dom';
-import Camera from '../pages/Camera/Camera';
+import CameraPage from '../pages/Camera/Camera';
 import Register from '../pages/Register/Register';
 import Login from '../pages/Login/Login';
 import GamesHome from '../pages/Games/GamesHome/GamesHome';
@@ -13,9 +13,16 @@ import Spelling from '../pages/Games/Spelling/Spelling';
 import WelcomeToGame from '../pages/Games/WelcomeScreen/WelcomeToGame';
 import Profile from '../pages/Profile/Profile';
 import Category from '../pages/Category/Category';
+import GenericGame from '../pages/Games/GenericGame';
+import Navbar from '../components/Navabr/Navbar';
 
 const Page = ({ children }: { children: React.ReactNode }) => {
-  return <div className="page-w-navbar">{children}</div>;
+  return (
+    <div className="page-w-navbar">
+      <Navbar />
+      {children}
+    </div>
+  );
 };
 
 const NoNavbarPage = ({ children }: { children: React.ReactNode }) => {
@@ -36,7 +43,7 @@ const routes: RouteProps[] = [
   },
   {
     path: RoutesValues.CAMERA,
-    component: <Camera />,
+    component: <CameraPage />,
     navbar: true,
   },
   {
@@ -56,17 +63,17 @@ const routes: RouteProps[] = [
   },
   {
     path: GamesRoutesValues.CROSSWORD,
-    component: <Crossword />,
+    component: <GenericGame GameComponent={Crossword} />,
     navbar: false,
   },
   {
     path: GamesRoutesValues.FLASH_CARDS,
-    component: <FlashCards />,
+    component: <GenericGame GameComponent={FlashCards} />,
     navbar: false,
   },
   {
     path: GamesRoutesValues.SPELLING,
-    component: <Spelling />,
+    component: <GenericGame GameComponent={Spelling} />,
     navbar: false,
   },
   {
@@ -83,7 +90,7 @@ const routes: RouteProps[] = [
     path: `${RoutesValues.CATEGORY}/:id`, // Add dynamic segment for category ID
     component: <Category />,
     navbar: true,
-  }
+  },
 ];
 
 interface RouterProps {}
