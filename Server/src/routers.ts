@@ -6,6 +6,7 @@ import { categoryRouter } from './features/category/category.router';
 import { animalRouter } from './features/animal/animal.router';
 import { userRouter } from './features/user/user.router';
 import { externalsRouter } from './features/externals/external.router';
+import { awardRouter } from './features/award/award.router';
 
 export const appRouter = router({
   word: wordRouter,
@@ -15,6 +16,7 @@ export const appRouter = router({
   animal: animalRouter,
   user: userRouter,
   externals: externalsRouter,
+  award: awardRouter,
 });
 
 export type AppRouter = typeof appRouter;
