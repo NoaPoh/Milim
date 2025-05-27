@@ -73,8 +73,8 @@ firebase.json
 *.keystore
 *.p8
 *.p12
-*.key
-*.pem
+# *.key
+# *.pem
 *.jks
 
 # Temporary files
