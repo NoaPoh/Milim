@@ -14,9 +14,15 @@ import WelcomeToGame from '../pages/Games/WelcomeScreen/WelcomeToGame';
 import Profile from '../pages/Profile/Profile';
 import Category from '../pages/Category/Category';
 import GenericGame from '../pages/Games/GenericGame';
+import Navbar from '../components/Navabr/Navbar';
 
 const Page = ({ children }: { children: React.ReactNode }) => {
-  return <div className="page-w-navbar">{children}</div>;
+  return (
+    <div className="page-w-navbar">
+      <Navbar />
+      {children}
+    </div>
+  );
 };
 
 const NoNavbarPage = ({ children }: { children: React.ReactNode }) => {
