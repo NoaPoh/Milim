@@ -63,7 +63,7 @@ const routes: RouteProps[] = [
   },
   {
     path: GamesRoutesValues.CROSSWORD,
-    component: <Crossword />,
+    component: <GenericGame GameComponent={Crossword} />,
     navbar: false,
   },
   {
@@ -73,7 +73,7 @@ const routes: RouteProps[] = [
   },
   {
     path: GamesRoutesValues.SPELLING,
-    component: <Spelling />,
+    component: <GenericGame GameComponent={Spelling} />,
     navbar: false,
   },
   {

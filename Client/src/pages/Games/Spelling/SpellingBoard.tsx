@@ -1,20 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSpelling } from '../Hooks/useSpelling';
-import './Spelling.scss';
+import './SpellingBoard.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons';
 
 interface SpellingBoardProps {
   word: string;
+  setSuccess?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SpellingBoard = ({ word }: SpellingBoardProps) => {
+const SpellingBoard = ({ word, setSuccess }: SpellingBoardProps) => {
   const [selectedLetters, setSelectedLetters] = useState<string[]>([]);
   const [disabledIndexes, setDisabledIndexes] = useState<Set<number>>(
     new Set()
   );
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
-  const { buttonsAmount, buttonsValues } = useSpelling(word, selectedLetters);
+  const { buttonsAmount, buttonsValues } = useSpelling(
+    word,
+    selectedLetters,
+    setSuccess
+  );
 
   const handleLetterClick = (letter: string, index: number) => {
     if (selectedLetters.length < word.length && !disabledIndexes.has(index)) {
