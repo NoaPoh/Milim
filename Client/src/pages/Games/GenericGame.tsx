@@ -4,7 +4,6 @@ import { api } from '../../utils/trpcClient';
 import { useGames } from './hooks/useGames';
 import { useEndGamePopup } from './components/EndGamePopup/EndGamePopupContext';
 
-
 type GameProps = {
   onComplete: (correct: boolean) => void;
   words: string | string[];
@@ -23,7 +22,6 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
   const winAGame = api.user.winAGame.useMutation();
 
   const { words } = useGames({ game: GameComponent.name });
-  console.log('words', words);
 
   const handleCompleteRound = (correct: boolean) => {
     if (correct) setCorrectCount((c) => c + 1);
