@@ -5,7 +5,7 @@ import { useGames } from './hooks/useGames';
 
 type GameProps = {
   onComplete: (correct: boolean) => void;
-  word: string;
+  words: string | string[];
   image: string;
 };
 
@@ -53,7 +53,7 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
       <GameComponent
         key={round}
         onComplete={handleCompleteRound}
-        word={currentWord.originalText.toLowerCase()}
+        words={currentWord.originalText.toLowerCase()}
         image={currentWord.picture}
       />
     </>
