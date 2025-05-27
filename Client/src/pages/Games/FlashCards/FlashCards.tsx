@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import './FlashCards.scss';
 import { api } from '../../../utils/trpcClient';
 
-const FlashCards = () => {
+type FlashCardsProps = {
+  onComplete: (correct: boolean) => void;
+};
+
+const FlashCards = ({ onComplete }: FlashCardsProps) => {
   const { data: words } = api.word.fetchRandomUserWords.useQuery({
     amount: 4,
   });
@@ -21,6 +25,14 @@ const FlashCards = () => {
 
   const handleSubmit = () => {
     setSubmitted(true);
+  };
+
+  const handleNext = () => {
+    if (chosenId !== null) {
+      onComplete(chosenId === correctId);
+      setSubmitted(false);
+      setChosenId(null);
+    }
   };
 
   const getCardClass = (id: number) => {
@@ -50,13 +62,19 @@ const FlashCards = () => {
           ))}
         </div>
 
-        <button
-          className="submit-button"
-          onClick={handleSubmit}
-          disabled={chosenId === null}
-        >
-          Submit
-        </button>
+        {!submitted ? (
+          <button
+            className="submit-button"
+            onClick={handleSubmit}
+            disabled={chosenId === null}
+          >
+            Submit
+          </button>
+        ) : (
+          <button className="next-button" onClick={handleNext}>
+            Next
+          </button>
+        )}
       </div>
     </>
   );

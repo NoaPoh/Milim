@@ -11,6 +11,7 @@ import App from './App';
 import './styles/globals.css';
 import './index.css';
 import { UserProvider } from './context/UserContext';
+import { EndGamePopupProvider } from './pages/Games/components/EndGamePopup/EndGamePopupContext';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -38,7 +39,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <api.Provider client={trpcClient(queryClient)} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
-          <AppWithAuth />
+          <EndGamePopupProvider>
+            <AppWithAuth />
+          </EndGamePopupProvider>
         </QueryClientProvider>
       </api.Provider>
     </BrowserRouter>

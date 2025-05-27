@@ -2,26 +2,35 @@
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   .translation {
-    margin-left: 15%;
+    width: 80%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 2fr 1fr;
     gap: 1rem;
   }
 
   .prediction-item {
     font-size: 2rem;
     font-weight: bold;
+    color: #1a1a1a;
+
+    &:nth-child(3) {
+      direction: rtl;
+    }
   }
 
   .speaker-button {
+    height: 3rem;
     border-radius: 999px;
     width: 4rem;
   }
 
   .btn {
     margin-top: 2rem;
+    width: 100%;
   }
 
   .retake {
