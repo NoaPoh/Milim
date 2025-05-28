@@ -1,0 +1,54 @@
+vpn pass: VWf8gd#Df5J2TYS
+----------------------------
+user: cs126
+pass: Bamba@Cs55
+external IP: 193.106.55.99
+internal IP: 10.10.248.99
+----------------------------
+
+ssh cs126@milim.cs.colman.ac.il
+
+--- on first setup: --------
+git clone https://github.com/NoaPoh/Milim.git
+cd milim
+mkdir cert
+
+sudo yum install -y nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx
+
+npm install -g pm2
+----------------------------
+
+--- from local machine: ----
+scp D:/Program/COLLEGE/Milim/Server/.env cs126@milim.cs.colman.ac.il:~/milim/Server/
+scp D:/Program/COLLEGE/Milim/Server/.env.development cs126@milim.cs.colman.ac.il:~/milim/Server/
+scp D:/Program/COLLEGE/Milim/Server/.env.production cs126@milim.cs.colman.ac.il:~/milim/Server/
+scp D:/Program/COLLEGE/Milim/Client/.env.development cs126@milim.cs.colman.ac.il:~/milim/Client/
+scp D:/Program/COLLEGE/Milim/Client/.env.production cs126@milim.cs.colman.ac.il:~/milim/Client/
+scp D:/Program/COLLEGE/Milim/cert/* cs126@milim.cs.colman.ac.il:~/milim/cert/
+----------------------------
+npm i
+cd Server
+npm run prod
+
+cd ../Client
+npm run build
+npm run serve
+
+mkdir -p /var/www/milim-client
+cp -r dist/* /var/www/milim-client/
+cp nginx.conf /etc/nginx/sites-available/milim
+sudo ln -s /etc/nginx/sites-available/milim /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+sudo ufw allow 'Nginx Full'
+
+
+
+
+
+
+
+
+

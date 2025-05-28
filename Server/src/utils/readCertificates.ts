@@ -6,11 +6,11 @@ const readCertificates = () => {
 
   try {
     privateKey = fs.readFileSync(
-      path.join(__dirname, '../cert/client-key.pem'),
+      path.join(__dirname, '../../../cert/key.key'),
       'utf8'
     );
     certificate = fs.readFileSync(
-      path.join(__dirname, '../cert/client-cert.pem'),
+      path.join(__dirname, '../../../cert/crt.crt'),
       'utf8'
     );
   } catch (error) {
