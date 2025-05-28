@@ -80,8 +80,8 @@ export const login = async (
 
   res.cookie('access-token', accessToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    secure: true,
+    sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'none',
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   });
 
@@ -89,6 +89,6 @@ export const login = async (
 };
 
 export const logout = async (res: Response): Promise<MessageResponse> => {
-  res.clearCookie('access-token', { httpOnly: true, sameSite: 'strict' });
+  res.clearCookie('access-token');
   return { message: 'Logged out successfully' };
 };

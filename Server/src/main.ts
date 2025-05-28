@@ -7,6 +7,8 @@ import { appRouter } from './routers';
 import { createContext } from './core/trpc/context';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import https from 'https';
+import { readCertificates } from 'milim-security';
 
 const app = express();
 
@@ -29,6 +31,20 @@ app.use(
   })
 );
 
-app.listen(4000, () => {
-  console.log('Milim backend is running on http://localhost:4000/trpc');
+// app.listen(4000, () => {
+//   console.log('Milim backend is running on http://localhost:4000/trpc');
+// });
+
+const { privateKey, certificate } = readCertificates();
+
+const server = https.createServer(
+  {
+    key: privateKey,
+    cert: certificate,
+  },
+  app
+);
+
+server.listen(4000, () => {
+  console.log('Milim backend is running on https://localhost:4000/trpc');
 });

@@ -19,6 +19,7 @@ export const isAuthed = base.middleware<Context>(({ ctx, next }) => {
   }
 
   const token = ctx.req.cookies['access-token'];
+  // console.log('ctx.req.cookies:', ctx.req.cookies);
 
   if (!token) {
     throw new TRPCError({ code: 'UNAUTHORIZED' });

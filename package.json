@@ -7,7 +7,8 @@
   },
   "workspaces": [
     "Client",
-    "Server"
+    "Server",
+    "Security"
   ],
   "license": "ISC",
   "dependencies": {
