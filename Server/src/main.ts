@@ -42,7 +42,6 @@ app.use(
 if (process.env.NODE_ENV === 'development') {
   app.listen(4000, () => {
     console.log('Milim backend is running on http://localhost:4000/trpc');
-    console.log('env', process.env.CLIENT_URL);
   });
 }
 
@@ -59,6 +58,5 @@ if (process.env.NODE_ENV === 'production') {
 
   server.listen(4000, () => {
     console.log('Milim backend is running on https://localhost:4000/trpc');
-    console.log('env', process.env);
   });
 }

@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "serve": "mv nginx.conf /usr/local/nginx/conf/"
+    "dev": "cross-env NODE_ENV=development vite",
+    "build": "cross-env NODE_ENV=production vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
