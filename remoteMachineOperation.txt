@@ -35,6 +35,8 @@ scp D:/Program/COLLEGE/Milim/Client/.env.development cs126@10.10.248.99:~/Milim/
 scp D:/Program/COLLEGE/Milim/Client/.env.production cs126@10.10.248.99:~/Milim/Client/
 scp D:/Program/COLLEGE/Milim/cert/* cs126@10.10.248.99:~/Milim/cert/
 ----------------------------
+
+
 npm i
 cd Server
 npm run prod
