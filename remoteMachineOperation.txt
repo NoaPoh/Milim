@@ -35,11 +35,10 @@ npm run prod
 
 cd ../Client
 npm run build
-npm run serve
 
-mkdir -p /var/www/milim-client
-cp -r dist/* /var/www/milim-client/
-cp nginx.conf /etc/nginx/sites-available/milim
+sudo mkdir -p /var/www/milim-client
+sudo cp -r dist/* /var/www/milim-client/
+sudo cp nginx.conf /etc/nginx/sites-available/milim
 sudo ln -s /etc/nginx/sites-available/milim /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
