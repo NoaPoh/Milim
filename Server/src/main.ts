@@ -11,6 +11,8 @@ import path from 'path';
 
 const env = process.env.NODE_ENV || 'development';
 
+console.log(`Running in ${env} mode`);
+
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 dotenv.config({
