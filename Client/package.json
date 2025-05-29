@@ -7,8 +7,7 @@
     "dev": "cross-env NODE_ENV=development vite",
     "build": "cross-env NODE_ENV=production vite build",
     "preview": "vite preview",
-    "local-serve": "npm run build && serve -s dist -l 443 --ssl-cert ../cert/crt.crt --ssl-key ../cert/key.key",
-    "prod": "npm run build && cp -r dist/* /var/www/milim-client/ && systemctl reload nginx"
+    "local-serve": "npm run build && serve -s dist -l 443 --ssl-cert ../cert/crt.crt --ssl-key ../cert/key.key"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
