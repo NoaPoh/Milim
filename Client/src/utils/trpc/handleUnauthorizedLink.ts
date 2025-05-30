@@ -14,6 +14,7 @@ export const handleUnauthorizedLink: TRPCLink<AppRouter> = () => {
         },
         error(err) {
           if (err instanceof TRPCClientError && err.data?.httpStatus === 401) {
+            console.error('Unauthorized access, redirecting to login');
             window.location.href = '/login';
           }
           observer.error(err);

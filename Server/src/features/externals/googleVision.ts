@@ -7,8 +7,6 @@ import {
 import { TRPCError } from '@trpc/server';
 import { dataURLToBase64 } from '../../utils/images.util';
 
-const googleAPIKey = process.env.GOOGLE_API_KEY;
-
 const getBoxArea = (vertices: NormalizedVertices[]) => {
   if (vertices.length < 4) return 0;
 
@@ -23,6 +21,8 @@ export async function detectObjectFromBase64(
   if (process.env.DONT_USE_GOOGLE_API === 'true') {
     return 'test-object'; // For testing purposes, return a dummy object
   }
+
+  const googleAPIKey = process.env.GOOGLE_API_KEY;
 
   if (!googleAPIKey) {
     throw new Error(
