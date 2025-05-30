@@ -25,3 +25,16 @@ export const showErrorToast = (message: string) =>
       secondary: '#FFFAEE',
     },
   });
+
+export const showInfoToast = (message: string) =>
+  toast(message, {
+    duration: 2000,
+    style: {
+      padding: '16px',
+      color: '#4a2101',
+    },
+    iconTheme: {
+      primary: '#e26d79',
+      secondary: '#FFFAEE',
+    },
+  });
