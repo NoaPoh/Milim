@@ -6,16 +6,12 @@ interface props {
   game: (typeof games)[number]['name'];
 }
 
-export const useGames = ({ game }: props) => {
-  const [amount, setAmount] = useState<number>(5);
+export const useGames = ({ game }: { game: string }) => {
+  const amount = game === 'FlashCards' ? 5 : 10;
+  const { data: words = [], isLoading } =
+    api.word.fetchRandomUserWords.useQuery({
+      amount,
+    });
 
-  useEffect(() => {
-    game === 'flashcards' && setAmount(20);
-  }, [game]);
-
-  const { data: words } = api.word.fetchRandomUserWords.useQuery({
-    amount,
-  });
-
-  return { words };
+  return { words, isLoading };
 };

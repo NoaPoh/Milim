@@ -1,27 +1,31 @@
 import { useEffect, useState } from 'react';
 import './FlashCards.scss';
-import { api } from '../../../utils/trpcClient';
 
-type FlashCardsProps = {
-  onComplete: (correct: boolean) => void;
+type Word = {
+  id: number;
+  originalText: string;
+  picture: string;
 };
 
-const FlashCards = ({ onComplete }: FlashCardsProps) => {
-  const { data: words } = api.word.fetchRandomUserWords.useQuery({
-    amount: 4,
-  });
-  console.log(words);
-  const [correctId, setCorrectId] = useState<number>(-1);
+type FlashCardsProps = {
+  roundWords: Word[];
+  correctId: number;
+  onNextRound: (correct: boolean) => void;
+};
+
+const FlashCards = ({
+  roundWords,
+  correctId,
+  onNextRound,
+}: FlashCardsProps) => {
   const [chosenId, setChosenId] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
+
   useEffect(() => {
-    if (words && words.length > 0) {
-      const randomIndex = Math.floor(Math.random() * words.length);
-      const correctWord = words[randomIndex];
-      setCorrectId(correctWord.id);
-      // setCorrectId(words[randomIndex].id);
-    }
-  }, [words]);
+    // Reset state when new roundWords arrive (i.e., new round starts)
+    setChosenId(null);
+    setSubmitted(false);
+  }, [roundWords]);
 
   const handleSubmit = () => {
     setSubmitted(true);
@@ -29,54 +33,53 @@ const FlashCards = ({ onComplete }: FlashCardsProps) => {
 
   const handleNext = () => {
     if (chosenId !== null) {
-      onComplete(chosenId === correctId);
-      setSubmitted(false);
-      setChosenId(null);
+      const isCorrect = chosenId === correctId;
+      onNextRound(isCorrect);
     }
   };
 
   const getCardClass = (id: number) => {
-    if (!submitted) {
-      return id === chosenId ? 'chosen' : '';
-    }
+    if (!submitted) return id === chosenId ? 'chosen' : '';
     if (id === correctId) return 'correct';
     if (id === chosenId && id !== correctId) return 'wrong';
     return '';
   };
 
-  const correctSrc = words?.find((word) => word.id === correctId)?.picture;
+  const correctSrc = roundWords.find((word) => word.id === correctId)?.picture;
 
   return (
-    <>
-      <div className="flashcards-page">
-        <img src={correctSrc} className="flashcards-page__image" />
-        <div className="flashcards-container">
-          {words?.map((item) => (
-            <div
-              key={item.id}
-              className={`flashcards-container__card ${getCardClass(item.id)}`}
-              onClick={() => !submitted && setChosenId(item.id)}
-            >
-              {item.originalText}
-            </div>
-          ))}
-        </div>
-
-        {!submitted ? (
-          <button
-            className="submit-button"
-            onClick={handleSubmit}
-            disabled={chosenId === null}
+    <div className="flashcards-page">
+      <img
+        src={correctSrc}
+        className="flashcards-page__image"
+        alt="Guess the word"
+      />
+      <div className="flashcards-container">
+        {roundWords.map((item) => (
+          <div
+            key={item.id}
+            className={`flashcards-container__card ${getCardClass(item.id)}`}
+            onClick={() => !submitted && setChosenId(item.id)}
           >
-            Submit
-          </button>
-        ) : (
-          <button className="next-button" onClick={handleNext}>
-            Next
-          </button>
-        )}
+            {item.originalText}
+          </div>
+        ))}
       </div>
-    </>
+
+      {!submitted ? (
+        <button
+          className="submit-button"
+          onClick={handleSubmit}
+          disabled={chosenId === null}
+        >
+          Submit
+        </button>
+      ) : (
+        <button className="next-button" onClick={handleNext}>
+          Next
+        </button>
+      )}
+    </div>
   );
 };
 
