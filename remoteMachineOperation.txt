@@ -34,6 +34,8 @@ scp D:/Program/COLLEGE/Milim/Server/.env.production cs126@10.10.248.99:~/Milim/S
 scp D:/Program/COLLEGE/Milim/Client/.env.development cs126@10.10.248.99:~/Milim/Client/
 scp D:/Program/COLLEGE/Milim/Client/.env.production cs126@10.10.248.99:~/Milim/Client/
 scp D:/Program/COLLEGE/Milim/cert/* cs126@10.10.248.99:~/Milim/cert/
+
+scp C:/Users/yehonatan/Downloads/csvs/* postrges@10.10.248.99:~/csvs/
 ----------------------------
 
 
@@ -46,6 +48,46 @@ npm run build
 sudo cp -r dist/* /var/www/milim-client/
 sudo nginx -t
 sudo systemctl reload nginx
+
+
+su - postgres
+pass: mypass
+
+sudo -u postgres psql
+DATABASE_URL=postgresql://milim_user:mypass@10.10.248.99:5432/milim
+
+COPY "User"("id", "username", "email", "passwordHash", "createdAt", "currentStreak", "longestStreak", "lastUsedDate", "animalId", "coinBalance")
+FROM '~/csvs/User.csv'
+WITH (FORMAT csv, HEADER true);
+
+
+\copy "User"("id", "username", "email", "passwordHash", "createdAt", "currentStreak", "longestStreak", "lastUsedDate", "animalId", "coinBalance")
+FROM '~/csvs/User.csv'
+WITH (FORMAT csv, HEADER true);
+
+\copy "Animal"("id","name","imagePath","price")
+FROM '~/csvs/Animal.csv'
+WITH (FORMAT csv, HEADER true);
+
+
+\copy "Category"("id","name","createdById")
+FROM '~/csvs/Category.csv'
+WITH (FORMAT csv, HEADER true);
+
+
+\copy "Award"("id","name","category","price","iconUrl")
+FROM '~/csvs/Award.csv'
+WITH (FORMAT csv, HEADER true);
+
+
+\copy "Purchase"("id","userId","awardId","createdAt")
+FROM '~/csvs/Purchase.csv'
+WITH (FORMAT csv, HEADER true);
+
+
+\copy "Word"("id","originalText","discoveredAt","picture","userId","categoryId","translatedText")
+FROM '~/csvs/Word.csv'
+WITH (FORMAT csv, HEADER true);
 
 
 
