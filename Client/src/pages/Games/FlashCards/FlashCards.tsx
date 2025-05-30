@@ -22,7 +22,6 @@ const FlashCards = ({
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    // Reset state when new roundWords arrive (i.e., new round starts)
     setChosenId(null);
     setSubmitted(false);
   }, [roundWords]);

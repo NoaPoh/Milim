@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-// import { useSuccessPopup } from './components/SucessPopup/SuccessPopupContext';
+import { useState } from 'react';
 import { useEndGamePopup } from './components/EndGamePopup/EndGamePopupContext';
 import { api } from '../../utils/trpcClient';
 import { useGames } from './hooks/useGames';
@@ -49,7 +48,6 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
 
   if (isLoading || words.length < 5) return <div>Loading...</div>;
 
-  // Handle flashcards specially
   if (GameComponent.name === 'FlashCards') {
     const correct = words[round];
     const others = words.filter((w) => w.id !== correct.id);
@@ -68,7 +66,6 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
     );
   }
 
-  // Other games
   const currentWord = words[round];
   return (
     <GameComponent
