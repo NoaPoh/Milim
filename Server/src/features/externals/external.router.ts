@@ -10,8 +10,8 @@ export const externalsRouter = router({
       if (input.word) return await translateWord(input.word);
     }),
   detectObject: protectedProcedure
-    .input(z.object({ image: z.string() }))
+    .input(z.string())
     .mutation(async ({ ctx, input }) => {
-      return await detectObjectFromBase64(input.image);
+      return await detectObjectFromBase64(input);
     }),
 });

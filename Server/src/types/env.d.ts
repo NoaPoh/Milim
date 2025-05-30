@@ -7,5 +7,6 @@ declare namespace NodeJS {
     CLIENT_URL: string;
     GOOGLE_API_KEY: string;
     DISABLE_SECURITY?: string;
+    DONT_USE_GOOGLE_API?: string;
   }
 }

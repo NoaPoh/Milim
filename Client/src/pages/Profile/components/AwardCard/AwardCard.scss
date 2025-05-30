@@ -1,0 +1,61 @@
+.award-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .award-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    img {
+      width: 48px;
+      height: 48px;
+      border-radius: 0.5rem;
+    }
+
+    .placeholder {
+      width: 48px;
+      height: 48px;
+      background-color: #e5e7eb;
+      border-radius: 0.5rem;
+    }
+
+    .award-name {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+  }
+
+  .award-price-button {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    transition: background 0.2s ease;
+
+    &.active {
+      background-color: #fef9c3;
+      color: #92400e;
+    }
+
+    &.disabled {
+      background-color: #e5e7eb;
+      color: #9ca3af;
+      cursor: not-allowed;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Profile.scss';
 import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
 import coinsIcon from '../../assets/images/coins.png';
@@ -9,10 +9,13 @@ import { api } from '../../utils/trpcClient.ts';
 import { RoutesValues } from '../../routes/routes.ts';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDeleteLeft, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faDeleteLeft, faShop, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import AwardShopModal from './components/ShopModal.tsx';
 
 const Profile: React.FC = () => {
   const { user, isLoading }: {user: UserDTO, isLoading: boolean} = useUser();
+  const [isShopOpen, setShopOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -27,7 +30,20 @@ const Profile: React.FC = () => {
       <button className="logout-button" onClick={handleLogout}>
         <FontAwesomeIcon icon={faSignOut} />
       </button>
-      <AnimalIcon iconWidth={230} path={user.spiritAnimal} />
+      <div className="profile-section">
+        <AnimalIcon iconWidth={230} path={user.spiritAnimal} />
+        <button
+          className="shop"
+          onClick={() => setShopOpen(true)}
+        >
+          <FontAwesomeIcon icon={faShop} />
+        </button>
+
+        <AwardShopModal
+          open={isShopOpen}
+          onClose={() => setShopOpen(false)}
+        />
+      </div>
       <div className="coins-section">
         <img
           src={coinsIcon}
