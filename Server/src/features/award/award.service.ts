@@ -1,4 +1,5 @@
-import { AwardType, PrismaClient } from '@prisma/client';
+import { Award, AwardType, PrismaClient, Purchase, User } from '@prisma/client';
+import { TRPCError } from '@trpc/server';
 
 export const awardService = {
   getAllAwards: async (prisma: PrismaClient) => {
@@ -12,6 +13,9 @@ export const awardService = {
           userId,
           awardId,
         },
+      },
+      include: {
+        award: true,
       },
     });
 
@@ -33,6 +37,11 @@ export const awardService = {
         createdAt: new Date(),
       },
     });
+    if (purchase.award.category === AwardType.PROFILE_ICON)
+      await prisma.user.update({
+        where: { id: userId },
+        data: { animalId: awardId },
+      });
 
     return { success: true };
   },
