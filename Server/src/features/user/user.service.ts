@@ -29,6 +29,19 @@ export const getUser = async (
 ): Promise<Partial<UserDTO>> => {
   const user = await prisma.user.findUnique({
     where: { id },
+    include: {
+      purchases: {
+        include: {
+          award: {
+            select: {
+              id: true,
+              name: true,
+              category: true,
+            },
+          },
+        },
+      }
+    }
   });
   if (!user) {
     throw new TRPCError({

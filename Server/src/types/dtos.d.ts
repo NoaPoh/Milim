@@ -1,4 +1,4 @@
-import { Animal, Category, Prisma, User, Word } from '@prisma/client';
+import { Animal, Category, Prisma, Purchase, User, Word } from '@prisma/client';
 
 export type DisplayCategory = Category & { picture: string };
 
@@ -20,8 +20,6 @@ export interface LoginInput {
 
 export interface LoginResponse {
   userId: User['id'];
-  // accessToken: string;
-  // refreshToken: string;
 }
 
 export interface WinAGameInput {
@@ -51,4 +49,6 @@ export interface UserDTO {
   lastUsedDate: string | null;
   spiritAnimal: string;
   coins: number;
+  purchases: { awardId: number; createdAt: Date }[];
 }
+export type PurchaseDTO = Pick<Purchase,['awardId', 'createdAt']>;
