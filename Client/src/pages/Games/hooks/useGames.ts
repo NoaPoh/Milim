@@ -1,5 +1,6 @@
 import { api } from '../../../utils/trpcClient';
 import { GameNames, games } from '../../../constants/games';
+import { useEffect } from 'react';
 
 interface props {
   game: (typeof games)[number]['name'];
@@ -11,14 +12,6 @@ export const useGames = (props: props) => {
     api.word.fetchRandomUserWords.useQuery({
       amount,
     });
-
-  useEffect(() => {
-    if (game === 'flashcards') setAmount(20);
-  }, [game]);
-
-  const { data: words } = api.word.fetchRandomUserWords.useQuery({
-    amount,
-  });
 
   return { words, isLoading };
 };
