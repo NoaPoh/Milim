@@ -47,6 +47,20 @@ export const register = async (
       animalId,
     },
   });
+  await prisma.purchase.create({
+    data: {
+      userId: newUser.id,
+      awardId: animalId,
+    },
+  });
+
+  // Default background should be automatically unlocked
+  await prisma.purchase.create({
+    data: {
+      userId: newUser.id,
+      awardId: 14,
+    },
+  });
 
   return newUser;
 };
