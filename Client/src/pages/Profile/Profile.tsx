@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import './Profile.scss';
 import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
 import coinsIcon from '../../assets/images/coins.png';
-import { useUser } from '../../context/UserContext';
+import { ActiveAwards, useUser } from '../../context/UserContext';
 import Loader from '../../components/Loader/Loader';
 import { UserDTO } from 'milim-server/src/@types/dtos';
 import { api } from '../../utils/trpcClient.ts';
 import { RoutesValues } from '../../routes/routes.ts';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDeleteLeft, faShop, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faShop, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import AwardShopModal from './components/ShopModal.tsx';
+import { AwardType } from '@prisma/client';
 
 const Profile: React.FC = () => {
   const { user, isLoading }: {user: UserDTO & ActiveAwards, isLoading: boolean} = useUser();
@@ -35,7 +36,9 @@ const Profile: React.FC = () => {
         <FontAwesomeIcon icon={faSignOut} />
       </button>
       <div className="profile-section">
-        <AnimalIcon iconWidth={230} path={user.spiritAnimal} />
+        <AnimalIcon iconWidth={230} path={spiritAnimal}
+                    frame={activeAwards[AwardType.ICON_FRAME]}
+                    background={activeAwards[AwardType.ICON_BACKGROUND]}/>
         <button
           className="shop"
           onClick={() => setShopOpen(true)}
