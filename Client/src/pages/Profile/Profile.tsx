@@ -13,17 +13,21 @@ import { faDeleteLeft, faShop, faSignOut } from '@fortawesome/free-solid-svg-ico
 import AwardShopModal from './components/ShopModal.tsx';
 
 const Profile: React.FC = () => {
-  const { user, isLoading }: {user: UserDTO, isLoading: boolean} = useUser();
+  const { user, isLoading }: {user: UserDTO & ActiveAwards, isLoading: boolean} = useUser();
   const [isShopOpen, setShopOpen] = useState(false);
-
   const navigate = useNavigate();
+
+  if (isLoading)
+    return <Loader />;
+
+  const { activeAwards, coins, purchases, spiritAnimal } = user;
+
+  const ownedAwardIds = purchases.map(purchase => purchase.awardId);
+  const activeAwardIds: number[] = Object.values(activeAwards);
 
   const handleLogout = () => {
     api.auth.logout.useMutation({ onSuccess: navigate(RoutesValues.LOGIN) });
   };
-
-  if (isLoading)
-    return <Loader />;
 
   return (
     <div className="profile-container">
@@ -42,6 +46,9 @@ const Profile: React.FC = () => {
         <AwardShopModal
           open={isShopOpen}
           onClose={() => setShopOpen(false)}
+          coinBalance={coins}
+          ownedAwardIds={ownedAwardIds}
+          activeAwardNames={activeAwardIds}
         />
       </div>
       <div className="coins-section">
@@ -50,7 +57,7 @@ const Profile: React.FC = () => {
           className="image rounded-full"
           alt="missing your info!" />
         <span className="text">
-        {user.coins}
+        {coins}
         </span>
       </div>
     </div>

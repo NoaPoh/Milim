@@ -3,23 +3,22 @@ import { useAwards } from '../hooks/useAwards';
 import { SwipeableDrawer } from '@mui/material';
 import { AwardType } from '@prisma/client';
 import AwardCard from './AwardCard/AwardCard.tsx';
-import { api } from '../../../utils/trpcClient';
 import './ShopModal.scss';
+import { awardTypeLabels } from '../../../constants/awards.types.ts';
 
-const awardTypeLabels: Record<AwardType, string> = {
-  BACKGROUND_COLOR: 'Habitat',
-  PROFILE_ICON: 'Spirit Animal',
-  ICON_BACKGROUND: 'Animal Background',
-  ICON_FRAME: 'Frames',
-};
+interface Props {
+  open: boolean;
+  onClose: () => void;
+  coinBalance: number;
+  ownedAwardIds: number[];
+  activeAwardNames: number[];
+}
 
-export default function ShopModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+export default function ShopModal({ open, onClose, coinBalance, ownedAwardIds, activeAwardNames }: Props) {
   const { data: awards = [] } = useAwards();
-  const [selectedType, setSelectedType] = useState<AwardType>('BACKGROUND_COLOR');
-  const { data: user } = api.auth.getMe.useQuery();
-  const coinBalance = user?.coinBalance ?? 0;
+  const [selectedAwardType, setSelectedAwardType] = useState<AwardType>('BACKGROUND_COLOR');
 
-  const filtered = awards.filter((a) => a.category === selectedType);
+  const awardsToShow = awards.filter((a) => a.category === selectedAwardType).sort((a, b) => a.price - b.price);
 
   return (
     <SwipeableDrawer
@@ -42,8 +41,8 @@ export default function ShopModal({ open, onClose }: { open: boolean; onClose: (
           {Object.entries(awardTypeLabels).map(([key, label]) => (
             <button
               key={key}
-              onClick={() => setSelectedType(key as AwardType)}
-              className={selectedType === key ? 'active' : ''}
+              onClick={() => setSelectedAwardType(key as AwardType)}
+              className={selectedAwardType === key ? 'active' : ''}
             >
               {label}
             </button>
@@ -51,12 +50,16 @@ export default function ShopModal({ open, onClose }: { open: boolean; onClose: (
         </div>
 
         <div className="awards-grid">
-          {filtered.length ? (
-            filtered.map((award) => (
+          {awardsToShow.length ? (
+            awardsToShow.map((award) => (
               <AwardCard
+                disabled={ownedAwardIds.includes(award.id)}
                 key={award.id}
                 award={award}
                 canAfford={coinBalance >= award.price}
+                onClose={onClose}
+                isOwned={ownedAwardIds.includes(award.id)}
+                isActive={activeAwardNames.includes(award.name)}
               />
             ))
           ) : (
