@@ -40,7 +40,7 @@ const Profile: React.FC = () => {
                     frame={activeAwards[AwardType.ICON_FRAME]}
                     background={activeAwards[AwardType.ICON_BACKGROUND]}/>
         <button
-          className="shop"
+          className="shop button"
           onClick={() => setShopOpen(true)}
         >
           <FontAwesomeIcon icon={faShop} />
