@@ -1,7 +1,7 @@
 import { createContext, useContext, ReactNode, useMemo } from 'react';
 import { api } from '../utils/trpcClient';
 import { PurchaseDTO, UserDTO } from 'milim-server/types';
-import { Award, AwardType } from '@prisma/client';
+import { AwardType } from '@prisma/client';
 
 type UserContextValue = {
   user: Partial<UserDTO> | undefined;
@@ -50,14 +50,18 @@ function setUserBackgroundColor(backgroundColor?: string) {
 }
 
 function getActiveAwardsByCategory(purchases: PurchaseDTO[]): ActiveAwards {
-  const latestAwardByType: Record<AwardType, Award | undefined> = {};
+  const latestAwardByType: Record<AwardType, string> = {};
 
-  for (const purchase of purchases) {
-    const category = purchase.award.category;
-    const current = latestAwardByType[category];
+  if (purchases?.length) {
+    const sortedPurchasesByDate = [...purchases].sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
 
-    if (!current || new Date(purchase.createdAt) > new Date(current.createdAt)) {
-      latestAwardByType[category] = purchase.award.name
+    for (const category of Object.values(AwardType)) {
+      const match = sortedPurchasesByDate.find(p => p.award.category === category);
+      if (match) {
+        latestAwardByType[category] = match.award.name;
+      }
     }
   }
 
