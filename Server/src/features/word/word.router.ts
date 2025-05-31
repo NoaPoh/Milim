@@ -10,13 +10,22 @@ import { WordWithStringPic } from '../../types';
 
 export const wordRouter = router({
   fetchRandomUserWords: protectedProcedure
-    .input(z.object({ amount: z.number(), categoryId: z.number().optional() }))
+    .input(
+      z.object({
+        amount: z.number(),
+        categoryId: z.number().optional(),
+        noSpaceLimitation: z.boolean().optional(),
+        charsLimitation: z.number().optional(),
+      })
+    )
     .query(async ({ ctx, input }): Promise<WordWithStringPic[]> => {
       return await fetchRandomUserWords(
         ctx.userId,
         ctx.prisma,
         input.amount,
-        input.categoryId
+        input.categoryId,
+        input.noSpaceLimitation,
+        input.charsLimitation
       );
     }),
 
