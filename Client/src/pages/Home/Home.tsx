@@ -9,18 +9,20 @@ import { RoutesValues } from '../../routes/routes';
 import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
 import Loader from '../../components/Loader/Loader';
 import { useUser } from '../../context/UserContext';
+import { AwardType } from '@prisma/client';
 
 const Home: React.FC = () => {
-  // const userDetails = useUserDetails();
-
   const { data: categories, isLoading } = useGetCategories();
-
   const { user } = useUser();
+  const { activeAwards } = user || {};
+
   return (
     <div className="home__container">
       {user && (
         <div className="home__user-details">
-          <AnimalIcon iconWidth={140} path={user.spiritAnimal}></AnimalIcon>
+          <AnimalIcon iconWidth={140} path={user.spiritAnimal}
+                      frame={activeAwards[AwardType.ICON_FRAME]}
+                      background={activeAwards[AwardType.ICON_BACKGROUND]}></AnimalIcon>
           <p className="text-xl text-gray-700 mb-6">
             Hello {user.username}, <br /> Where are you now?
           </p>

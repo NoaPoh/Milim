@@ -8,9 +8,9 @@ interface Props {
 }
 
 export const FrameToStyle = new Map<string, string>([
-  ['dotted frame', '1px black dotted'],
-  ['dashed frame', '2px red dashed'],
-  ['solid frame', '2px black solid'],
+  ['dotted frame', '5px black dotted'],
+  ['dashed frame', '5px red dashed'],
+  ['solid frame', '5px black solid'],
 ]);
 interface Accessory {
   style: React.CSSProperties;
@@ -22,9 +22,9 @@ interface Accessory {
 const AnimalIcon = ({ path, iconWidth, background, frame }: Props) => {
   return (
     <img
-      src={`src/assets/images/animals/${path}`}
+      src={`src/assets/images/${path}`}
       className={`animal rounded-full`}
-      style={{ width: `${iconWidth}px`, backgroundColor: background, border: `${FrameToStyle.get(frame)}` }}
+      style={{ width: `${iconWidth}px`, height: `${iconWidth}px`, backgroundColor: background, border: `${FrameToStyle.get(frame)}` }}
       alt="missing your photo!"
     />
   );
