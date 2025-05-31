@@ -42,7 +42,6 @@ export const wordRouter = router({
     }),
 
   getWordSum: protectedProcedure.query(async ({ ctx }) => {
-    // Use the service function instead of direct prisma call
     const wordSum = await getWordSum(ctx.userId, ctx.prisma);
     return wordSum;
   }),
