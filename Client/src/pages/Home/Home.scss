@@ -34,7 +34,9 @@
     flex-grow: 1;
 
     :last-child {
-      background-color: transparent
+      background-color: transparent;
+      display: flex;
+      justify-content: center;
     }
   }
 }
