@@ -12,7 +12,9 @@ export const fetchRandomUserWords = async (
   userId: number,
   prisma: PrismaClient,
   amount: number = 10,
-  categoryId?: number
+  categoryId?: number,
+  noSpaceLimitation?: boolean,
+  charsLimitation?: number
 ): Promise<WordWithStringPic[]> => {
   const condition: Prisma.WordWhereInput = categoryId
     ? { userId, categoryId }
@@ -48,7 +50,19 @@ export const fetchRandomUserWords = async (
     };
   });
 
-  const randomWords = rightPicWords
+  const filteredWords = rightPicWords.filter((word) => {
+    const text = word.originalText;
+
+    const passesSpaceCheck = noSpaceLimitation ? !text.includes(' ') : true;
+    const passesLengthCheck =
+      typeof charsLimitation === 'number'
+        ? text.length <= charsLimitation
+        : true;
+
+    return passesSpaceCheck && passesLengthCheck;
+  });
+
+  const randomWords = filteredWords
     .sort(() => Math.random() - 0.5)
     .slice(0, amount);
 
