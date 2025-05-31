@@ -25,7 +25,7 @@ export const winAGame = async (
 
 export const getUser = async (
   prisma: PrismaClient,
-  id: number
+  id: number,
 ): Promise<Partial<UserDTO>> => {
   const user = await prisma.user.findUnique({
     where: { id },
@@ -63,42 +63,4 @@ export const getUser = async (
     coins: user.coinBalance,
     purchases: user.purchases,
   };
-};
-
-export const purchase = async (
-  userId: number,
-  awardId: number,
-  prisma: PrismaClient
-): Promise<Purchase> => {
-  const user = await prisma.user.findUnique({ where: { id: userId } });
-
-  if (!user) {
-    throw new Error('User not found');
-  }
-
-  const award = await prisma.award.findUnique({ where: { id: awardId } });
-
-  if (!award) {
-    throw new Error('Award not found');
-  }
-
-  if (user.coinBalance < award.price) {
-    throw new Error('Not enough coins');
-  }
-
-  const newPurchase = await prisma.purchase.create({
-    data: {
-      userId: user.id,
-      awardId: award.id,
-    },
-  });
-
-  const updatedUser = await prisma.user.update({
-    where: { id: userId },
-    data: {
-      coinBalance: user.coinBalance - award.price,
-    },
-  });
-
-  return newPurchase;
 };
