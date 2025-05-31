@@ -16,7 +16,7 @@ type FlashCardsProps = {
 };
 
 type GenericGameProps = {
-  GameComponent: React.ComponentType<any>;
+  GameComponent: React.ComponentType<GameProps | FlashCardsProps>;
 };
 
 const GenericGame = ({ GameComponent }: GenericGameProps) => {
