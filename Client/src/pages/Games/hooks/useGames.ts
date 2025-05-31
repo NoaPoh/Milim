@@ -12,5 +12,13 @@ export const useGames = (props: props) => {
       amount,
     });
 
+  useEffect(() => {
+    if (game === 'flashcards') setAmount(20);
+  }, [game]);
+
+  const { data: words } = api.word.fetchRandomUserWords.useQuery({
+    amount,
+  });
+
   return { words, isLoading };
 };
