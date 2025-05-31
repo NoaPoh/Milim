@@ -53,10 +53,9 @@ export default function ShopModal({ open, onClose, coinBalance, ownedAwardIds, a
           {awardsToShow.length ? (
             awardsToShow.map((award) => (
               <AwardCard
-                disabled={ownedAwardIds.includes(award.id)}
                 key={award.id}
                 award={award}
-                canAfford={coinBalance >= award.price}
+                canAfford={ownedAwardIds.includes(award.id) || coinBalance >= award.price}
                 onClose={onClose}
                 isOwned={ownedAwardIds.includes(award.id)}
                 isActive={activeAwardNames.includes(award.name)}
