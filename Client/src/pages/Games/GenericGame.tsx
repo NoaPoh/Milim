@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useEndGamePopup } from './components/EndGamePopup/EndGamePopupContext';
 import { api } from '../../utils/trpcClient';
 import { useGames } from './hooks/useGames';
+import { GameNames } from '../../constants/games';
 
 type GameProps = {
   onComplete: (correct: boolean) => void;
@@ -48,7 +49,7 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
 
   if (isLoading || words.length < 5) return <div>Loading...</div>;
 
-  if (GameComponent.name === 'FlashCards') {
+  if (GameComponent.name === GameNames.FLASH_CARDS) {
     const correct = words[round];
     const others = words.filter((w) => w.id !== correct.id);
     const distractors = others.slice(0, 3);
