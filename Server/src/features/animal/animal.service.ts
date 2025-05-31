@@ -1,12 +1,13 @@
-import { Animal, PrismaClient } from '@prisma/client';
+import { Award, AwardType, PrismaClient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 
 export const getFreeAnimals = async (
   prisma: PrismaClient
-): Promise<Animal[]> => {
-  const animals = await prisma.animal.findMany({
+): Promise<Award[]> => {
+  const animals = await prisma.award.findMany({
     where: {
       price: 0,
+      category: AwardType.PROFILE_ICON,
     },
   });
   if (!animals) {

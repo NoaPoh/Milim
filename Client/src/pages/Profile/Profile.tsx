@@ -2,28 +2,33 @@ import React, { useState } from 'react';
 import './Profile.scss';
 import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
 import coinsIcon from '../../assets/images/coins.png';
-import { useUser } from '../../context/UserContext';
+import { ActiveAwards, useUser } from '../../context/UserContext';
 import Loader from '../../components/Loader/Loader';
 import { UserDTO } from 'milim-server/src/@types/dtos';
 import { api } from '../../utils/trpcClient.ts';
 import { RoutesValues } from '../../routes/routes.ts';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDeleteLeft, faShop, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faShop, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import AwardShopModal from './components/ShopModal.tsx';
+import { AwardType } from '@prisma/client';
 
 const Profile: React.FC = () => {
-  const { user, isLoading }: {user: UserDTO, isLoading: boolean} = useUser();
+  const { user, isLoading }: {user: UserDTO & ActiveAwards, isLoading: boolean} = useUser();
   const [isShopOpen, setShopOpen] = useState(false);
-
   const navigate = useNavigate();
+
+  if (isLoading)
+    return <Loader />;
+
+  const { activeAwards, coins, purchases, spiritAnimal } = user;
+
+  const ownedAwardIds = purchases.map(purchase => purchase.awardId);
+  const activeAwardIds: number[] = Object.values(activeAwards);
 
   const handleLogout = () => {
     api.auth.logout.useMutation({ onSuccess: navigate(RoutesValues.LOGIN) });
   };
-
-  if (isLoading)
-    return <Loader />;
 
   return (
     <div className="profile-container">
@@ -31,9 +36,11 @@ const Profile: React.FC = () => {
         <FontAwesomeIcon icon={faSignOut} />
       </button>
       <div className="profile-section">
-        <AnimalIcon iconWidth={230} path={user.spiritAnimal} />
+        <AnimalIcon iconWidth={230} path={spiritAnimal}
+                    frame={activeAwards[AwardType.ICON_FRAME]}
+                    background={activeAwards[AwardType.ICON_BACKGROUND]}/>
         <button
-          className="shop"
+          className="shop button"
           onClick={() => setShopOpen(true)}
         >
           <FontAwesomeIcon icon={faShop} />
@@ -42,6 +49,9 @@ const Profile: React.FC = () => {
         <AwardShopModal
           open={isShopOpen}
           onClose={() => setShopOpen(false)}
+          coinBalance={coins}
+          ownedAwardIds={ownedAwardIds}
+          activeAwardNames={activeAwardIds}
         />
       </div>
       <div className="coins-section">
@@ -50,7 +60,7 @@ const Profile: React.FC = () => {
           className="image rounded-full"
           alt="missing your info!" />
         <span className="text">
-        {user.coins}
+        {coins}
         </span>
       </div>
     </div>

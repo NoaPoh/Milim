@@ -7,7 +7,7 @@
   justify-content: space-around;
   padding: 0.75rem;
   border-top: 1px solid #6d6d6d24;
-  background: #fbf3df;
+  background-color: var(--user-background, #fbf3df);
 
   &__link {
     color: #1f2937;

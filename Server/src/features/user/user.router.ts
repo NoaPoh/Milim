@@ -1,5 +1,5 @@
 import { protectedProcedure, router } from '../../core/trpc/trpc';
-import { getUser, purchase, winAGame } from './user.service';
+import { getUser, winAGame } from './user.service';
 import { z } from 'zod';
 
 const winAGameSchema = z.object({
@@ -14,10 +14,5 @@ export const userRouter = router({
     .input(winAGameSchema)
     .mutation(async ({ ctx, input }) => {
       return await winAGame(ctx.userId, input.coins, ctx.prisma);
-    }),
-  purchase: protectedProcedure
-    .input(z.object({ awardId: z.number() }))
-    .mutation(async ({ ctx, input }) => {
-      return await purchase(ctx.userId, input.awardId, ctx.prisma);
     }),
 });

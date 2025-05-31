@@ -97,7 +97,7 @@ const Register = () => {
               onClick={() => setSpiritAnimal(animal.id)}
             >
               <img
-                src={`src/assets/images/animals/${animal.imagePath}`}
+                src={`src/assets/images/${animal.iconUrl}`}
                 alt="Spirit Animal"
                 className="w-16 h-16 object-cover rounded-full"
               />
