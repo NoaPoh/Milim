@@ -43,12 +43,14 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// once user is logged in, set the background color based on the user's active awards
 function setUserBackgroundColor(backgroundColor?: string) {
   const resolvedBackground = backgroundColor === 'default' ? '#fbf3df' : backgroundColor ?? '';
 
   document.documentElement.style.setProperty('--user-background', resolvedBackground);
 }
 
+// Get the latest award for each category based on the purchase date
 function getActiveAwardsByCategory(purchases: PurchaseDTO[]): ActiveAwards {
   const latestAwardByType: Record<AwardType, string> = {};
 

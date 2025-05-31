@@ -9,8 +9,9 @@ interface Props {
 
 export const FrameToStyle = new Map<string, string>([
   ['dotted frame', '5px black dotted'],
-  ['dashed frame', '5px red dashed'],
-  ['solid frame', '5px black solid'],
+  ['red dashed frame', '5px red dashed'],
+  ['aqua solid frame', '5px aqua solid'],
+  ['dotted olive frame', '9px dotted darkolivegreen'],
 ]);
 interface Accessory {
   style: React.CSSProperties;
