@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import giraffeIcon from '../../assets/images/animals/giraffe.png';
 import './Home.scss';
 import { useGetCategories } from './hooks/useGetCategories';
@@ -20,7 +20,7 @@ const Home: React.FC = () => {
     <div className="home__container">
       {user && (
         <div className="home__user-details">
-          <AnimalIcon iconWidth={120} path={user.spiritAnimal}></AnimalIcon>
+          <AnimalIcon iconWidth={140} path={user.spiritAnimal}></AnimalIcon>
           <p className="text-xl text-gray-700 mb-6">
             Hello {user.username}, <br /> Where are you now?
           </p>
