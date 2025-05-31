@@ -1,16 +1,23 @@
 import { useState } from 'react';
+import { useEndGamePopup } from './components/EndGamePopup/EndGamePopupContext';
 import { api } from '../../utils/trpcClient';
 import { useGames } from './hooks/useGames';
-import { useEndGamePopup } from './components/EndGamePopup/EndGamePopupContext';
+import { GameNames } from '../../constants/games';
 
 type GameProps = {
   onComplete: (correct: boolean) => void;
-  words: string | string[];
+  words: string | string[]; // for non-flashcards
   image: string;
 };
 
+type FlashCardsProps = {
+  onNextRound: (correct: boolean) => void;
+  roundWords: any[];
+  correctId: number;
+};
+
 type GenericGameProps = {
-  GameComponent: React.ComponentType<GameProps>;
+  GameComponent: React.ComponentType<GameProps | FlashCardsProps>;
 };
 
 const GenericGame = ({ GameComponent }: GenericGameProps) => {
@@ -20,20 +27,18 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
   const { showPopup } = useEndGamePopup();
   const winAGame = api.user.winAGame.useMutation();
 
-  const { words } = useGames({ game: GameComponent.name });
+  const { words, isLoading } = useGames({ game: GameComponent.name });
 
   const handleCompleteRound = (correct: boolean) => {
     if (correct) setCorrectCount((c) => c + 1);
 
     if (round < 4) {
-      setRound((round) => round + 1);
+      setRound((r) => r + 1);
     } else {
-      const earnedCoins = correct ? (correctCount + 1) * 10 : correctCount * 10;
-      winAGame.mutate({
-        coins: earnedCoins,
-      });
+      const earnedCoins = (correct ? correctCount + 1 : correctCount) * 10;
+      winAGame.mutate({ coins: earnedCoins });
       showPopup({
-        earnedCoins: earnedCoins,
+        earnedCoins,
         onPlayAgain: () => {
           setRound(0);
           setCorrectCount(0);
@@ -42,20 +47,34 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
     }
   };
 
-  if (!words || words.length <= round) {
-    return <div>Loading...</div>;
-  }
-  const currentWord = words[round];
+  if (isLoading || words.length < 5) return <div>Loading...</div>;
 
-  return (
-    <>
+  if (GameComponent.name === GameNames.FLASH_CARDS) {
+    const correct = words[round];
+    const others = words.filter((w) => w.id !== correct.id);
+    const distractors = others.slice(0, 3);
+    const roundWords = [...distractors, correct].sort(
+      () => 0.5 - Math.random()
+    );
+
+    return (
       <GameComponent
         key={round}
-        onComplete={handleCompleteRound}
-        words={currentWord.originalText.toLowerCase()}
-        image={currentWord.picture}
+        roundWords={roundWords}
+        correctId={correct.id}
+        onNextRound={handleCompleteRound}
       />
-    </>
+    );
+  }
+
+  const currentWord = words[round];
+  return (
+    <GameComponent
+      key={round}
+      onComplete={handleCompleteRound}
+      words={currentWord.originalText.toLowerCase()}
+      image={currentWord.picture}
+    />
   );
 };
 
