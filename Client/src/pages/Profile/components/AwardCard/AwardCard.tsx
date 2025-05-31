@@ -14,7 +14,47 @@ interface AwardCardProps {
   isActive: boolean;
 }
 
-export default function AwardCard({ award, canAfford }: AwardCardProps) {
+export default function AwardCard({ award, canAfford, onClose, isOwned, isActive }: AwardCardProps) {
+  const apiUtils = api.useUtils();
+
+  const refreshUser = async () => {
+    await apiUtils.user.getUser.invalidate();
+    await apiUtils.award.getAll.invalidate();
+    onClose?.();
+  }
+
+  const { mutate: purchaseAward, isLoading } = api.award.purchase.useMutation({
+    onSuccess: async () => {
+      if (refreshUser) await refreshUser()
+      showSuccessToast(`award purchased <3`);
+    },
+    onError: () => {
+      showErrorToast('Error purchasing award :(');
+    },
+  });
+
+  const { mutate: useAward, isLoading: isUsing } = api.award.useAward.useMutation({
+    onSuccess: async () => {
+      if (refreshUser) await refreshUser()
+      showSuccessToast(`award enabled <3`);
+    },
+    onError: () => {
+      showErrorToast('Error using award :(');
+      if (onClose) onClose();
+    },
+  });
+
+  const handleUse = () => {
+    if (!isOwned || isUsing) return;
+    useAward({ awardId: award.id });
+  };
+
+  const handlePurchase = () => {
+    if (!canAfford || isLoading) return;
+    purchaseAward({ awardId: award.id });
+  };
+  const isCardDisabled = isActive || !canAfford;
+
   return (
     <div className={`award-card ${isCardDisabled ? 'disabled' : ''}`}>
       <div className="award-left">
