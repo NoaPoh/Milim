@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import CrosswordBoard from './CrosswordBoard';
+import './Crossword.scss';
 
 type CrosswordProps = {
   onComplete: (correct: boolean) => void;
@@ -9,11 +10,12 @@ type CrosswordProps = {
 
 const Crossword = ({ onComplete, words, image }: CrosswordProps) => {
   const [success, setSuccess] = useState(false);
-  const boardLengthAddition = Math.floor(Math.random() * 3);
-  const boardSize = words.length + boardLengthAddition;
+  const [boardSize] = useState(
+    () => words.length + Math.floor(Math.random() * 2)
+  );
 
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div>
       <img src={image} alt={words} className="image" />
       <CrosswordBoard
         boardSize={boardSize}

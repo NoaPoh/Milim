@@ -53,7 +53,7 @@ const CrosswordBoard = ({ boardSize, word, setSuccess }: Props) => {
     if (word === typed) {
       setSuccess?.(true);
     }
-  }, [selectedLetters, word]);
+  }, [selectedLetters]);
 
   return (
     <div className="crossword-container">

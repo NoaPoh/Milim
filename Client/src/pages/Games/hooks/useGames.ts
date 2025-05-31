@@ -10,7 +10,7 @@ export const useGames = ({ game }: props) => {
   const [amount, setAmount] = useState<number>(5);
 
   useEffect(() => {
-    game === 'flashcards' && setAmount(20);
+    if (game === 'flashcards') setAmount(20);
   }, [game]);
 
   const { data: words } = api.word.fetchRandomUserWords.useQuery({
