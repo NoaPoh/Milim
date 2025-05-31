@@ -7,10 +7,10 @@ export const awardRouter = router({
   getAll: publicProcedure.query(async ({ ctx}) => {
     return awardService.getAllAwards(ctx.prisma);
   }),
-  useAward: protectedProcedure
+  activateAward: protectedProcedure
     .input(z.object({ awardId: z.number() }))
     .mutation(async ({ input, ctx }) => {
-      return await awardService.useAward(ctx.prisma ,ctx.userId, input.awardId);
+      return await awardService.activateAward(ctx.prisma ,ctx.userId, input.awardId);
     }),
   purchase: protectedProcedure
     .input(z.object({ awardId: z.number() }))

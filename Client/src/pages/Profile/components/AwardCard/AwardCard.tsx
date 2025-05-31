@@ -33,7 +33,7 @@ export default function AwardCard({ award, canAfford, onClose, isOwned, isActive
     },
   });
 
-  const { mutate: useAward, isLoading: isUsing } = api.award.useAward.useMutation({
+  const { mutate: activateAward, isLoading: isUsing } = api.award.activateAward.useMutation({
     onSuccess: async () => {
       if (refreshUser) await refreshUser()
       showSuccessToast(`award enabled <3`);
@@ -46,7 +46,7 @@ export default function AwardCard({ award, canAfford, onClose, isOwned, isActive
 
   const handleUse = () => {
     if (!isOwned || isUsing) return;
-    useAward({ awardId: award.id });
+    activateAward({ awardId: award.id });
   };
 
   const handlePurchase = () => {

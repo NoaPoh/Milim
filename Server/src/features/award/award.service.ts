@@ -6,7 +6,7 @@ export const awardService = {
     return prisma.award.findMany();
   },
 
-  useAward: async (prisma: PrismaClient, userId: number, awardId: number) => {
+  activateAward: async (prisma: PrismaClient, userId: number, awardId: number) => {
     const purchase = await prisma.purchase.findUnique({
       where: {
         userId_awardId: {
