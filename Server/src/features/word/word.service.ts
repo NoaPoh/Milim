@@ -92,3 +92,16 @@ export const saveWordInCategory = async (
 
   return newWord;
 };
+
+export const getWordSum = async (
+  userId: number,
+  prisma: PrismaClient
+): Promise<number> => {
+  const wordCount = await prisma.word.count({
+    where: {
+      userId,
+    },
+  });
+
+  return wordCount;
+};
