@@ -6,15 +6,11 @@ interface props {
 }
 
 export const useGames = ({ game }: props) => {
-  const amount = game === GameNames.FLASH_CARDS ? 10 : 5;
-
   const { data: words = [], isLoading } =
     api.word.fetchRandomUserWords.useQuery({
-      amount: amount,
-      noSpaceLimitation:
-        game === GameNames.CROSSWORD || game === GameNames.SPELLING
-          ? true
-          : false,
+      amount: 5,
+      noSpaceLimitation: (game === GameNames.CROSSWORD ||
+        game === GameNames.SPELLING)!!,
       charsLimitation:
         game === GameNames.CROSSWORD
           ? 6
