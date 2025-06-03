@@ -16,16 +16,25 @@ export const fetchRandomUserWords = async (
   noSpaceLimitation?: boolean,
   charsLimitation?: number
 ): Promise<WordWithStringPic[]> => {
-  const condition: Prisma.WordWhereInput = categoryId
-    ? { userId, categoryId }
-    : { userId };
+  const condition: Prisma.WordWhereInput = {
+    userId,
+    ...(categoryId ? { categoryId } : {}),
+    ...(noSpaceLimitation
+      ? {
+          NOT: {
+            originalText: {
+              contains: ' ',
+            },
+          },
+        }
+      : {}),
+  };
 
   const userWords = await prisma.word.findMany({
     where: condition,
   });
 
-  // if there is no category filtering, we need to remove
-  // duplicates by text, so we can return a unique set of words
+  // de-duplicate if needed
   const uniqueWords: Word[] =
     categoryId === undefined
       ? userWords.reduce((acc: Word[], word) => {
@@ -39,27 +48,19 @@ export const fetchRandomUserWords = async (
         }, [])
       : userWords;
 
+  // convert picture buffers to base64
   const rightPicWords: WordWithStringPic[] = uniqueWords.map((word) => {
     const picture = uint8ArrayToClientReadyImage(word.picture);
-
     const objToUse = _.omit(word, 'picture');
-
-    return {
-      ...objToUse,
-      picture,
-    };
+    return { ...objToUse, picture };
   });
 
+  // Filter by char length
   const filteredWords = rightPicWords.filter((word) => {
     const text = word.originalText;
-
-    const passesSpaceCheck = noSpaceLimitation ? !text.includes(' ') : true;
-    const passesLengthCheck =
-      typeof charsLimitation === 'number'
-        ? text.length <= charsLimitation
-        : true;
-
-    return passesSpaceCheck && passesLengthCheck;
+    return typeof charsLimitation === 'number'
+      ? text.length <= charsLimitation
+      : true;
   });
 
   const randomWords = filteredWords
