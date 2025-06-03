@@ -3,7 +3,6 @@ import { useEndGamePopup } from './components/EndGamePopup/EndGamePopupContext';
 import { api } from '../../utils/trpcClient';
 import { useGames } from './hooks/useGames';
 import { GameNames } from '../../constants/games';
-
 type GameProps = {
   onComplete: (correct: boolean) => void;
   words: string | string[]; // for non-flashcards

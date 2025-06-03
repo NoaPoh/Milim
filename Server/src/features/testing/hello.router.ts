@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import { protectedProcedure, router } from '../../core/trpc/trpc';
+import { publicProcedure, router } from '../../core/trpc/trpc';
 
 export const helloRouter = router({
-  world: protectedProcedure.query(() => {
+  world: publicProcedure.query(() => {
     return `Hello world `;
   }),
 });
