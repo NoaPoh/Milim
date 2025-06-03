@@ -1,16 +1,14 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useCrossword } from '../hooks/useCrossword';
 import './CrosswordBoard.scss';
 
 interface Props {
   boardSize: number;
   word: string;
+  setSuccess?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-//TODO: After clicking on word.length letters, it will toast a fail/success message
-//TODO: When clicking on an already selected cell again it will uncolour it
-//TODO: Remove styles to a css file, improve the styles
-const CrosswordBoard = ({ boardSize, word }: Props) => {
+const CrosswordBoard = ({ boardSize, word, setSuccess }: Props) => {
   const [clickedCells, setClickedCells] = useState<
     { row: number; col: number }[]
   >([]);
@@ -33,7 +31,7 @@ const CrosswordBoard = ({ boardSize, word }: Props) => {
       );
       setSelectedLetters((prev) => {
         const index = prev.findIndex(
-          (l, i) => clickedCells[i]?.row === row && clickedCells[i]?.col === col
+          (_, i) => clickedCells[i]?.row === row && clickedCells[i]?.col === col
         );
         if (index !== -1) {
           const updated = [...prev];
@@ -48,6 +46,14 @@ const CrosswordBoard = ({ boardSize, word }: Props) => {
       setSelectedLetters((prev) => [...prev, letter]);
     }
   };
+
+  useEffect(() => {
+    const typed = selectedLetters.join('');
+
+    if (word === typed) {
+      setSuccess?.(true);
+    }
+  }, [selectedLetters]);
 
   return (
     <div className="crossword-container">

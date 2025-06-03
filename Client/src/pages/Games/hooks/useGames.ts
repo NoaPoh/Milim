@@ -1,21 +1,17 @@
 import { api } from '../../../utils/trpcClient';
-import { games } from '../../../constants/games';
-import { useEffect, useState } from 'react';
+import { GameNames, games } from '../../../constants/games';
+import { useEffect } from 'react';
 
 interface props {
   game: (typeof games)[number]['name'];
 }
 
-export const useGames = ({ game }: props) => {
-  const [amount, setAmount] = useState<number>(5);
+export const useGames = (props: props) => {
+  const amount = props.game === GameNames.FLASH_CARDS ? 5 : 10;
+  const { data: words = [], isLoading } =
+    api.word.fetchRandomUserWords.useQuery({
+      amount,
+    });
 
-  useEffect(() => {
-    game === 'flashcards' && setAmount(20);
-  }, [game]);
-
-  const { data: words } = api.word.fetchRandomUserWords.useQuery({
-    amount,
-  });
-
-  return { words };
+  return { words, isLoading };
 };

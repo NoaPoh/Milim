@@ -6,14 +6,12 @@
 
   table {
     border-collapse: collapse;
-    margin: 20px auto;
+    margin: 15px auto;
 
     td {
-      width: 50px;
-      height: 50px;
       border: 3px solid black;
       text-align: center;
-      font-size: 24px;
+      font-size: 15px;
       padding: 0;
 
       button {
@@ -34,7 +32,7 @@
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin: 50px 30px 0px 30px;
+    margin: 0px 30px 0px 30px;
     direction: ltr;
 
     .letter-slot {
@@ -51,7 +49,7 @@
       .underline {
         height: 2px;
         background-color: black;
-        width: 50px;
+        width: 40px;
       }
     }
   }

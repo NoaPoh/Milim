@@ -1,7 +1,11 @@
 import { z } from 'zod';
 import { protectedProcedure, router } from '../../core/trpc/trpc';
-import type { Word } from '@prisma/client';
-import { saveWordInCategory, fetchRandomUserWords } from './word.service';
+// import type { Word } from '@prisma/client';
+import {
+  saveWordInCategory,
+  fetchRandomUserWords,
+  getWordSum,
+} from './word.service';
 import { WordWithStringPic } from '../../types';
 
 export const wordRouter = router({
@@ -36,4 +40,9 @@ export const wordRouter = router({
         ctx.prisma
       );
     }),
+
+  getWordSum: protectedProcedure.query(async ({ ctx }) => {
+    const wordSum = await getWordSum(ctx.userId, ctx.prisma);
+    return wordSum;
+  }),
 });

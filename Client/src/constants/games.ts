@@ -26,3 +26,9 @@ export const games: GameProps[] = [
     image: spellingIcon,
   },
 ];
+
+export enum GameNames {
+  CROSSWORD = 'Crossword',
+  FLASH_CARDS = 'FlashCards',
+  SPELLING = 'Spelling',
+}
