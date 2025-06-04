@@ -3,10 +3,9 @@ import { useEndGamePopup } from './components/EndGamePopup/EndGamePopupContext';
 import { api } from '../../utils/trpcClient';
 import { useGames } from './hooks/useGames';
 import { GameNames } from '../../constants/games';
-
 type GameProps = {
   onComplete: (correct: boolean) => void;
-  words: string | string[]; // for non-flashcards
+  words: string | string[];
   image: string;
 };
 
@@ -32,7 +31,7 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
   const handleCompleteRound = (correct: boolean) => {
     if (correct) setCorrectCount((c) => c + 1);
 
-    if (round < 4) {
+    if (round < words.length - 1) {
       setRound((r) => r + 1);
     } else {
       const earnedCoins = (correct ? correctCount + 1 : correctCount) * 10;
@@ -47,7 +46,7 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
     }
   };
 
-  if (isLoading || words.length < 5) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>;
 
   if (GameComponent.name === GameNames.FLASH_CARDS) {
     const correct = words[round];

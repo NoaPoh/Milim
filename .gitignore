@@ -75,6 +75,7 @@ firebase.json
 *.p12
 *.key
 *.pem
+*.crt
 *.jks
 
 # Temporary files

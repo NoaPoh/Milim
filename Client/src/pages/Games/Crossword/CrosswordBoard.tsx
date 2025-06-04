@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useCrossword } from '../Hooks/useCrossword';
+import { useCrossword } from '../hooks/useCrossword';
 import './CrosswordBoard.scss';
 
 interface Props {
