@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Profile.scss';
 import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
 import coinsIcon from '../../assets/images/coins.png';
-import { ActiveAwards, useUser } from '../../context/UserContext';
+import { useUser } from '../../context/UserContext';
 import Loader from '../../components/Loader/Loader';
 import { UserDTO } from 'milim-server/types';
 import { api } from '../../utils/trpcClient.ts';

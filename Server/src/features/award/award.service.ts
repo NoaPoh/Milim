@@ -68,3 +68,22 @@ export const purchase = async (
 
   return newPurchase;
 };
+
+export const getFreeAnimals = async (
+  prisma: PrismaClient
+): Promise<Award[]> => {
+  const animals = await prisma.award.findMany({
+    where: {
+      price: 0,
+      type: AwardType.PROFILE_ICON,
+    },
+  });
+  if (!animals) {
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: 'No free animals found.',
+    });
+  }
+  return animals;
+};
+

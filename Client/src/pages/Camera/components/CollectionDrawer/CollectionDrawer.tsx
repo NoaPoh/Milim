@@ -4,6 +4,7 @@ import { useGetCategories } from '../../../Home/hooks/useGetCategories';
 import { api } from '../../../../utils/trpcClient';
 import { showErrorToast, showSuccessToast } from '../../../../utils/toast';
 import { useNavigate } from 'react-router-dom';
+import { RoutesValues } from '../../../../routes/routes.ts';
 
 interface CollectionDrawerProps {
   isOpen: boolean;
@@ -30,7 +31,7 @@ const CollectionDrawer = ({
   );
   const handleSuccess = () => {
     showSuccessToast(`added to ${selectedCategory?.name} collection!`);
-    navigate(`/category/${selectedCategory?.id}`);
+    navigate(`${RoutesValues.CATEGORY}/category/${selectedCategory?.id}`);
     onClose();
   };
   const handleError = () => {

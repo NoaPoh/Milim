@@ -19,7 +19,7 @@ const Register = () => {
     navigate(RoutesValues.LOGIN);
   };
 
-  const { data: freeAnimals } = api.animal.getFreeAnimals.useQuery();
+  const { data: freeAnimals } = api.award.getFreeAnimals.useQuery();
 
   const { mutateAsync: register, isPending: registerIsPending } =
     api.auth.register.useMutation({ onSuccess: navToLogin });

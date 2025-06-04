@@ -6,3 +6,6 @@ export const awardTypeLabels: Record<AwardType, string> = {
   ICON_BACKGROUND: 'Animal Background',
   ICON_FRAME: 'Frames',
 };
+
+export type ActiveAwards = Record<AwardType, string | undefined>;
+

@@ -2,6 +2,7 @@
 // Get the latest award for each category based on the purchase date
 import { PurchaseDTO } from 'milim-server/types';
 import { AwardType } from '@prisma/client';
+import { ActiveAwards } from 'milim-client/src/constants/awards.types';
 
 export function getActiveAwardsByCategory(purchases: PurchaseDTO[]): ActiveAwards {
   const latestAwardByType: ActiveAwards = {
@@ -29,5 +30,3 @@ export function getActiveAwardsByCategory(purchases: PurchaseDTO[]): ActiveAward
 
   return latestAwardByType;
 }
-
-export type ActiveAwards = Record<AwardType, string | undefined>;

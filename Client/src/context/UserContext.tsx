@@ -1,8 +1,7 @@
 import { createContext, useContext, ReactNode, useMemo } from 'react';
 import { api } from '../utils/trpcClient';
-import { PurchaseDTO, UserDTO } from 'milim-server/types';
-import { AwardType } from '@prisma/client';
-import { ActiveAwards } from '../../../Server/src/utils/getActiveAwards.ts';
+import { UserDTO } from 'milim-server/types';
+import { ActiveAwards } from '../constants/awards.types.ts';
 
 type UserContextValue = {
   user: Partial<UserDTO> | undefined;

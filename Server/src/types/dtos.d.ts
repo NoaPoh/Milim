@@ -1,5 +1,5 @@
 import { Award, Category, Prisma, User, Word } from '@prisma/client';
-import { ActiveAwards } from 'milim-client/src/context/UserContext';
+import { ActiveAwards } from 'milim-client/src/constants/awards.types';
 
 export type DisplayCategory = Category & { picture: string };
 
