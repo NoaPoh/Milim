@@ -1,5 +1,4 @@
 import React from 'react';
-import giraffeIcon from '../../assets/images/animals/giraffe.png';
 import './Home.scss';
 import { useGetCategories } from './hooks/useGetCategories';
 import { CategoryCard } from './components/CategoryCard';
@@ -11,8 +10,6 @@ import Loader from '../../components/Loader/Loader';
 import { useUser } from '../../context/UserContext';
 
 const Home: React.FC = () => {
-  // const userDetails = useUserDetails();
-
   const { data: categories, isLoading } = useGetCategories();
 
   const { user } = useUser();
@@ -22,7 +19,7 @@ const Home: React.FC = () => {
         <div className="home__user-details">
           <AnimalIcon iconWidth={120} path={user.spiritAnimal}></AnimalIcon>
           <p className="text-xl text-gray-700 mb-6">
-            Hello {user.username}, <br /> Where are you now?
+            שלום {user.username}, <br /> איפה אתה עכשיו?
           </p>
         </div>
       )}
