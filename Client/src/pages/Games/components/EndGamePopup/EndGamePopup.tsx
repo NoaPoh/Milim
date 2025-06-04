@@ -40,7 +40,7 @@ const EndGamePopup = ({
           <div className="comfort-content">
             <img src={ohno} alt="comfort face" className="comfort-icon" />
             <p className="coins-earned">
-              לא הרווחת נקודות הפעם! תמיד אפשר לשחק שוב!
+              לא הרווחת מטבעות הפעם! תמיד אפשר לשחק שוב!
             </p>
           </div>
         ) : (

@@ -4,7 +4,7 @@ export const generateRandomLetter = (): string => {
 };
 
 export const generateButtonValues = (
-  sheffledWord: string,
+  shuffledWord: string,
   buttonsAmount: number
 ): string[] => {
   const buttonsValues = Array(buttonsAmount).fill('');
@@ -15,7 +15,7 @@ export const generateButtonValues = (
   );
 
   // Fill the buttons with letters from the shuffled word
-  sheffledWord.split('').forEach((letter, index) => {
+  shuffledWord.split('').forEach((letter, index) => {
     buttonsValues[shuffledIndices[index]] = letter;
   });
 
