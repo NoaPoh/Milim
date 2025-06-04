@@ -11,21 +11,29 @@ import './Login.scss';
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const navToRegister = () => {
     navigate(RoutesValues.REGISTER);
   };
+
   const navToHome = () => {
     console.log('Login successful');
     navigate(RoutesValues.HOME);
   };
 
   const { isPending: loginIsPending, mutateAsync: login } =
-    api.auth.login.useMutation({ onSuccess: navToHome });
+    api.auth.login.useMutation({
+      onSuccess: navToHome,
+      onError: (error) => {
+        setErrorMessage(error.message || 'Invalid email or password');
+      },
+    });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage(''); // Clear any previous error
     login({ email, password });
   };
 
@@ -34,7 +42,11 @@ const Login: React.FC = () => {
       {/* Header hippos */}
       <div className="login-page__header">
         <img src={crocodilePicture} alt="Crocodile" className="left-animal" />
-        <img src={monkeyPicture} alt="Monkey" className="animated-animal pop-off-top" />
+        <img
+          src={monkeyPicture}
+          alt="Monkey"
+          className="animated-animal pop-off-top"
+        />
       </div>
 
       {/* Center form */}
@@ -42,12 +54,16 @@ const Login: React.FC = () => {
         <div className="login-box">
           <h2>Milim</h2>
           <form onSubmit={handleSubmit}>
+            {errorMessage && (
+              <p className="login-error-message">{errorMessage}</p>
+            )}
             <input
               type="email"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              className={errorMessage ? 'error' : ''}
             />
             <input
               type="password"
@@ -55,7 +71,9 @@ const Login: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              className={errorMessage ? 'error' : ''}
             />
+
             <button type="submit" disabled={loginIsPending}>
               GO
             </button>
