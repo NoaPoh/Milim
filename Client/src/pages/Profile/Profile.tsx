@@ -26,7 +26,7 @@ const Profile: React.FC = () => {
   const { activeAwards, coins, purchases } = user;
 
   const ownedAwardIds = purchases.map((purchase) => purchase.awardId);
-  const activeAwardIds: number[] = Object.values(activeAwards);
+  const activeAwardNames: string[] = Object.values(activeAwards);
 
   const handleLogout = () => {
     api.auth.logout.useMutation({
@@ -55,7 +55,7 @@ const Profile: React.FC = () => {
           onClose={() => setShopOpen(false)}
           coinBalance={coins}
           ownedAwardIds={ownedAwardIds}
-          activeAwardNames={activeAwardIds}
+          activeAwardNames={activeAwardNames}
         />
       </div>
       <div className="coins-section">
