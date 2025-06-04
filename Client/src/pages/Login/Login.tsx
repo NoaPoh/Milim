@@ -27,7 +27,7 @@ const Login: React.FC = () => {
     api.auth.login.useMutation({
       onSuccess: navToHome,
       onError: (error) => {
-        setErrorMessage(error.message || 'Invalid email or password');
+        setErrorMessage(error.message || 'שם משתמש או סיסמה לא תקינים');
       },
     });
 

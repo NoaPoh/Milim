@@ -37,7 +37,7 @@ export const register = async (
   if (existing) {
     throw new TRPCError({
       code: 'BAD_REQUEST',
-      message: 'User with this email already exists.',
+      message: 'משתמש עם אימייל זה כבר קיים.',
     });
   }
 
@@ -71,7 +71,7 @@ export const login = async (
   if (!user) {
     throw new TRPCError({
       code: 'NOT_FOUND',
-      message: 'User with this email does not exist.',
+      message: 'משתמש עם אימייל זה לא קיים.',
     });
   }
 
@@ -79,7 +79,7 @@ export const login = async (
   if (!isPasswordValid) {
     throw new TRPCError({
       code: 'FORBIDDEN',
-      message: 'invalid password.',
+      message: 'סיסמה ואימייל לא מתאימים.',
     });
   }
 
@@ -92,5 +92,5 @@ export const login = async (
 
 export const logout = async (res: Response): Promise<MessageResponse> => {
   res.clearCookie('access-token', cookieOptions);
-  return { message: 'Logged out successfully' };
+  return { message: 'יצאנו בהצלחה' };
 };

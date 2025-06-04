@@ -33,7 +33,7 @@ export const getUser = async (
   if (!user) {
     throw new TRPCError({
       code: 'NOT_FOUND',
-      message: 'User with this id does not exist.',
+      message: 'משתמש זה לא קייםת אוי לי.',
     });
   }
 

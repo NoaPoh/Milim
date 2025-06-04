@@ -27,11 +27,11 @@ const CollectionDrawer = ({
     (category) => category.id === selectedCategoryId
   );
   const handleSuccess = () => {
-    showSuccessToast(`added to ${selectedCategory?.name} collection!`);
+    showSuccessToast(`מילה נוספה לאוסף ${selectedCategory?.name}!`);
     onClose();
   };
   const handleError = () => {
-    showErrorToast(`Failed to add to ${selectedCategory?.id} collection!`);
+    showErrorToast(`לא הצלחנו להוסיף את המילה לאוסף 😭`);
     onClose();
   };
 
