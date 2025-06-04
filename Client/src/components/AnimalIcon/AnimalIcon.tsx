@@ -18,7 +18,7 @@ const AnimalIcon = ({ path, iconWidth }: Props) => {
       src={`src/assets/images/animals/${path}`}
       className={`animal rounded-full`}
       style={{ width: `${iconWidth}px` }}
-      alt="missing your photo!"
+      alt="אין תמונה"
     />
   );
 };

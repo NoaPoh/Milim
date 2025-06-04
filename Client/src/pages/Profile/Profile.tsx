@@ -9,11 +9,11 @@ import { api } from '../../utils/trpcClient.ts';
 import { RoutesValues } from '../../routes/routes.ts';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDeleteLeft, faShop, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faShop, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import AwardShopModal from './components/ShopModal.tsx';
 
 const Profile: React.FC = () => {
-  const { user, isLoading }: {user: UserDTO, isLoading: boolean} = useUser();
+  const { user, isLoading }: { user: UserDTO; isLoading: boolean } = useUser();
   const [isShopOpen, setShopOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -22,8 +22,7 @@ const Profile: React.FC = () => {
     api.auth.logout.useMutation({ onSuccess: navigate(RoutesValues.LOGIN) });
   };
 
-  if (isLoading)
-    return <Loader />;
+  if (isLoading) return <Loader />;
 
   return (
     <div className="profile-container">
@@ -32,30 +31,22 @@ const Profile: React.FC = () => {
       </button>
       <div className="profile-section">
         <AnimalIcon iconWidth={230} path={user.spiritAnimal} />
-        <button
-          className="shop"
-          onClick={() => setShopOpen(true)}
-        >
+        <button className="shop" onClick={() => setShopOpen(true)}>
           <FontAwesomeIcon icon={faShop} />
         </button>
 
-        <AwardShopModal
-          open={isShopOpen}
-          onClose={() => setShopOpen(false)}
-        />
+        <AwardShopModal open={isShopOpen} onClose={() => setShopOpen(false)} />
       </div>
       <div className="coins-section">
         <img
           src={coinsIcon}
           className="image rounded-full"
-          alt="missing your info!" />
-        <span className="text">
-        {user.coins}
-        </span>
+          alt="אין לנו את המידע שלך!"
+        />
+        <span className="text">{user.coins}</span>
       </div>
     </div>
   );
 };
-
 
 export default Profile;
