@@ -58,7 +58,7 @@ const Login: React.FC = () => {
             )}
             <input
               type="email"
-              placeholder="Email"
+              placeholder="אימייל"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -66,7 +66,7 @@ const Login: React.FC = () => {
             />
             <input
               type="password"
-              placeholder="Password"
+              placeholder="סיסמה ממש חזקה"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required

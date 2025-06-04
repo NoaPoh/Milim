@@ -42,7 +42,7 @@ const Register = () => {
 
         <input
           type="text"
-          placeholder="Username"
+          placeholder="השם הכי מגניב שלך"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           className="register__input"
@@ -50,7 +50,7 @@ const Register = () => {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder="סיסמה סופר חזקה"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="register__input"
@@ -58,7 +58,7 @@ const Register = () => {
 
         <input
           type="email"
-          placeholder="Email"
+          placeholder="אימייל"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="register__input"
@@ -87,7 +87,7 @@ const Register = () => {
           className="submit-button"
           disabled={registerIsPending}
         >
-          {!registerIsPending ? "Let's do it!" : ''}
+          {!registerIsPending ? 'בואו נתחיל ללמוד!' : ''}
         </button>
       </form>
     </div>
