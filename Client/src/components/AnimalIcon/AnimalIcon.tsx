@@ -3,8 +3,8 @@ import './AnimalIcon.scss';
 
 interface Props {
   path: string;
-  accessories?: Accessory[];
   iconWidth: number;
+  background: string;
 }
 
 export const FrameToStyle = new Map<string, string>([
@@ -13,12 +13,6 @@ export const FrameToStyle = new Map<string, string>([
   ['aqua solid frame', '5px aqua solid'],
   ['dotted olive frame', '9px dotted darkolivegreen'],
 ]);
-interface Accessory {
-  style: React.CSSProperties;
-  name: string;
-  background: string;
-  frame: string;
-}
 
 const AnimalIcon = ({ path, iconWidth, background, frame }: Props) => {
   return (
