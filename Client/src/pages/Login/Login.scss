@@ -75,6 +75,11 @@ $background-color: #fbf3df;
           border-radius: 9999px;
           outline: none;
 
+          &.error {
+            border-color: #a41111; // Tailwind red-600
+            box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+          }
+
           //   &:focus {
           //     border-color: $button-hover;
           //     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
@@ -136,4 +141,16 @@ $background-color: #fbf3df;
       top: 25vh;
     }
   }
+}
+
+.login-error-message {
+  background-color: rgba(185, 28, 28, 0.1); // soft red tint
+  color: $primary-dark !important;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 0.6rem 1rem;
+  border-radius: 2rem;
+  width: 100%;
+  max-width: 18rem;
 }
