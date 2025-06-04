@@ -6,7 +6,11 @@ export const awardService = {
     return prisma.award.findMany();
   },
 
-  activateAward: async (prisma: PrismaClient, userId: number, awardId: number) => {
+  activateAward: async (
+    prisma: PrismaClient,
+    userId: number,
+    awardId: number
+  ) => {
     const purchase = await prisma.purchase.findUnique({
       where: {
         userId_awardId: {
@@ -37,7 +41,8 @@ export const awardService = {
         createdAt: new Date(),
       },
     });
-    if (purchase.award.category === AwardType.PROFILE_ICON)
+
+    if (purchase.award.type === AwardType.PROFILE_ICON)
       await prisma.user.update({
         where: { id: userId },
         data: { animalId: awardId },
@@ -49,10 +54,12 @@ export const awardService = {
 export const purchase = async (
   userId: number,
   awardId: number,
-  prisma: PrismaClient,
+  prisma: PrismaClient
 ): Promise<Purchase> => {
   const user = await prisma.user.findUnique({ where: { id: userId } });
-  let award = await prisma.award.findUnique({ where: { id: awardId } }) as Award;
+  let award = (await prisma.award.findUnique({
+    where: { id: awardId },
+  })) as Award;
 
   if (!user) throw new Error('User not found');
   if (!award) throw new Error('Award not found');
@@ -71,12 +78,12 @@ export const purchase = async (
 };
 
 async function updateUserInfoAfterPurchase(
-  award: Award, user: User,
-  prisma: PrismaClient,
+  award: Award,
+  user: User,
+  prisma: PrismaClient
 ) {
-
   const data: any = { coinBalance: user.coinBalance - award.price };
-  if (award.category === AwardType.PROFILE_ICON) data['animalId'] = award.id;
+  if (award.type === AwardType.PROFILE_ICON) data['animalId'] = award.id;
 
   await prisma.user.update({
     where: { id: user.id },

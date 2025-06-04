@@ -14,11 +14,20 @@ interface Props {
   activeAwardNames: number[];
 }
 
-export default function ShopModal({ open, onClose, coinBalance, ownedAwardIds, activeAwardNames }: Props) {
+export default function ShopModal({
+  open,
+  onClose,
+  coinBalance,
+  ownedAwardIds,
+  activeAwardNames,
+}: Props) {
   const { data: awards = [] } = useAwards();
-  const [selectedAwardType, setSelectedAwardType] = useState<AwardType>('BACKGROUND_COLOR');
+  const [selectedAwardType, setSelectedAwardType] =
+    useState<AwardType>('BACKGROUND_COLOR');
 
-  const awardsToShow = awards.filter((a) => a.category === selectedAwardType).sort((a, b) => a.price - b.price);
+  const awardsToShow = awards
+    .filter((a) => a.type === selectedAwardType)
+    .sort((a, b) => a.price - b.price);
 
   return (
     <SwipeableDrawer
@@ -55,7 +64,9 @@ export default function ShopModal({ open, onClose, coinBalance, ownedAwardIds, a
               <AwardCard
                 key={award.id}
                 award={award}
-                canAfford={ownedAwardIds.includes(award.id) || coinBalance >= award.price}
+                canAfford={
+                  ownedAwardIds.includes(award.id) || coinBalance >= award.price
+                }
                 onClose={onClose}
                 isOwned={ownedAwardIds.includes(award.id)}
                 isActive={activeAwardNames.includes(award.name)}

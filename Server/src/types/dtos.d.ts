@@ -1,4 +1,4 @@
-import { Animal, Category, Prisma, Purchase, User, Word } from '@prisma/client';
+import { Award, Category, Prisma, User, Word } from '@prisma/client';
 
 export type DisplayCategory = Category & { picture: string };
 
@@ -10,7 +10,7 @@ export interface RegisterInput {
   username: User['username'];
   email: User['email'];
   password: string;
-  animalId: Animal['id'];
+  animalId: Award['id'];
 }
 
 export interface LoginInput {
@@ -49,6 +49,12 @@ export interface UserDTO {
   lastUsedDate: string | null;
   spiritAnimal: string;
   coins: number;
-  purchases: { awardId: number; createdAt: Date }[];
+  purchases: PurchaseDTO[];
 }
-export type PurchaseDTO = Pick<Purchase,['awardId', 'createdAt']>;
+
+export type PurchaseDTO = Pick<
+  Prisma.PurchaseGetPayload<{
+    include: { award: true };
+  }>,
+  'award' | 'createdAt'
+>;
