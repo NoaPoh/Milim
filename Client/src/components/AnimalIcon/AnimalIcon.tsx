@@ -5,6 +5,7 @@ interface Props {
   path: string;
   iconWidth: number;
   background: string;
+  frame: string;
 }
 
 export const FrameToStyle = new Map<string, string>([
