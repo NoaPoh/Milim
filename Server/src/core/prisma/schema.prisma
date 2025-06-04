@@ -26,8 +26,8 @@ model User {
 
   // Relations
   categories Category[] @relation("CreatedCategories")
-  words      Word[] @relation("userWords")
-  purchases  Purchase[]  @relation("userPurchases")
+  words      Word[]     @relation("userWords")
+  purchases  Purchase[] @relation("userPurchases")
 }
 
 model Category {
@@ -57,14 +57,14 @@ model Word {
 }
 
 model Award {
-  id       Int        @id @default(autoincrement())
-  name     String
-  type AwardType
-  price    Int
-  iconUrl  String?
+  id      Int       @id @default(autoincrement())
+  name    String
+  type    AwardType
+  price   Int
+  iconUrl String?
 
   // Relations
-  ownedBy  Purchase[] @relation("AwardPurchases")
+  ownedBy Purchase[] @relation("AwardPurchases")
 }
 
 model Purchase {
@@ -74,8 +74,8 @@ model Purchase {
   createdAt DateTime @default(now())
 
   // Relations
-  user  User  @relation("userPurchases",fields: [userId], references: [id])
-  award Award @relation("AwardPurchases",fields: [awardId], references: [id])
+  user  User  @relation("userPurchases", fields: [userId], references: [id])
+  award Award @relation("AwardPurchases", fields: [awardId], references: [id])
 
   // composite key
   @@unique([userId, awardId])

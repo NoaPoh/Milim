@@ -3,6 +3,7 @@ import './Register.scss';
 import { api } from '../../utils/trpcClient';
 import { useNavigate } from 'react-router';
 import { RoutesValues } from '../../routes/routes';
+import { showSuccessToast } from '../../utils/toast.ts';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -14,6 +15,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   const navToLogin = () => {
+    showSuccessToast('Registration successful! Please log in.');
     navigate(RoutesValues.LOGIN);
   };
 
@@ -110,7 +112,7 @@ const Register = () => {
           className="submit-button"
           disabled={registerIsPending}
         >
-          {!registerIsPending ? "Let's do it!" : ''}
+          {!registerIsPending ? 'Let\'s do it!' : ''}
         </button>
       </form>
     </div>

@@ -51,7 +51,7 @@ export const register = async (
       passwordHash: hashedPassword,
       currentStreak: 0,
       lastUsedDate: new Date(),
-      animalId,
+      coinBalance: 30,
     },
   });
   await prisma.purchase.create({

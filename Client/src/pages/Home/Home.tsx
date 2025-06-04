@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import giraffeIcon from '../../assets/images/animals/giraffe.png';
+import React from 'react';
 import './Home.scss';
 import { useGetCategories } from './hooks/useGetCategories';
 import { CategoryCard } from './components/CategoryCard';
@@ -20,7 +19,7 @@ const Home: React.FC = () => {
     <div className="home__container">
       {user && (
         <div className="home__user-details">
-          <AnimalIcon iconWidth={140} path={user.spiritAnimal}
+          <AnimalIcon iconWidth={140} path={activeAwards[AwardType.PROFILE_ICON]}
                       frame={activeAwards[AwardType.ICON_FRAME]}
                       background={activeAwards[AwardType.ICON_BACKGROUND]}></AnimalIcon>
           <p className="text-xl text-gray-700 mb-6">

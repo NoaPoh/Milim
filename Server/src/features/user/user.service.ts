@@ -1,6 +1,7 @@
 import { Award, PrismaClient, User } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { UserDTO } from '../../types';
+import { getActiveAwardsByCategory } from '../../utils/getActiveAwards';
 
 export const winAGame = async (
   userId: number,
@@ -31,14 +32,16 @@ export const getUser = async (
     where: { id },
     include: {
       purchases: {
-        include: {
+        select: {
           award: {
             select: {
               id: true,
               name: true,
-              category: true,
+              type: true,
             },
           },
+          createdAt: true,
+          awardId: true,
         },
       },
     },
@@ -50,17 +53,10 @@ export const getUser = async (
     });
   }
 
-  const animal: Award['iconUrl'] =
-    (
-      await prisma.award.findUnique({
-        where: { id: user.animalId || 0 },
-      })
-    )?.iconUrl || '/animals/giraffe.png';
-
   return {
-    spiritAnimal: animal,
     username: user.username,
     coins: user.coinBalance,
     purchases: user.purchases,
+    activeAwards: getActiveAwardsByCategory(user.purchases),
   };
 };

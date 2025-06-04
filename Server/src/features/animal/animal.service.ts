@@ -7,7 +7,7 @@ export const getFreeAnimals = async (
   const animals = await prisma.award.findMany({
     where: {
       price: 0,
-      category: AwardType.PROFILE_ICON,
+      type: AwardType.PROFILE_ICON,
     },
   });
   if (!animals) {

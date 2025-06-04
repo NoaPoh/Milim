@@ -1,4 +1,5 @@
 import { Award, Category, Prisma, User, Word } from '@prisma/client';
+import { ActiveAwards } from 'milim-client/src/context/UserContext';
 
 export type DisplayCategory = Category & { picture: string };
 
@@ -47,14 +48,20 @@ export interface UserDTO {
   currentStreak: number | null;
   longestStreak: number | null;
   lastUsedDate: string | null;
-  spiritAnimal: string;
   coins: number;
   purchases: PurchaseDTO[];
+  activeAwards: ActiveAwards;
 }
 
 export type PurchaseDTO = Pick<
   Prisma.PurchaseGetPayload<{
-    include: { award: true };
+    include: { award: {
+        select: {
+          id: true,
+          name: true,
+          type: true,
+        },
+      } };
   }>,
-  'award' | 'createdAt'
+  'award' | 'createdAt' | 'awardId'
 >;

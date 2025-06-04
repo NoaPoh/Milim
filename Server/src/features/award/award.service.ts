@@ -42,12 +42,6 @@ export const awardService = {
       },
     });
 
-    if (purchase.award.type === AwardType.PROFILE_ICON)
-      await prisma.user.update({
-        where: { id: userId },
-        data: { animalId: awardId },
-      });
-
     return { success: true };
   },
 };
@@ -72,21 +66,5 @@ export const purchase = async (
     },
   });
 
-  await updateUserInfoAfterPurchase(award, user, prisma);
-
   return newPurchase;
 };
-
-async function updateUserInfoAfterPurchase(
-  award: Award,
-  user: User,
-  prisma: PrismaClient
-) {
-  const data: any = { coinBalance: user.coinBalance - award.price };
-  if (award.type === AwardType.PROFILE_ICON) data['animalId'] = award.id;
-
-  await prisma.user.update({
-    where: { id: user.id },
-    data,
-  });
-}

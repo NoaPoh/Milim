@@ -17,13 +17,13 @@ const Profile: React.FC = () => {
   const {
     user,
     isLoading,
-  }: { user: UserDTO & ActiveAwards; isLoading: boolean } = useUser();
+  }: { user: UserDTO; isLoading: boolean } = useUser();
   const [isShopOpen, setShopOpen] = useState(false);
   const navigate = useNavigate();
 
   if (isLoading) return <Loader />;
 
-  const { activeAwards, coins, purchases, spiritAnimal } = user;
+  const { activeAwards, coins, purchases } = user;
 
   const ownedAwardIds = purchases.map((purchase) => purchase.awardId);
   const activeAwardIds: number[] = Object.values(activeAwards);
@@ -42,7 +42,7 @@ const Profile: React.FC = () => {
       <div className="profile-section">
         <AnimalIcon
           iconWidth={230}
-          path={spiritAnimal}
+          path={activeAwards[AwardType.PROFILE_ICON]}
           frame={activeAwards[AwardType.ICON_FRAME]}
           background={activeAwards[AwardType.ICON_BACKGROUND]}
         />
