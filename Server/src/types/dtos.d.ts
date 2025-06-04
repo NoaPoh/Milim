@@ -1,6 +1,9 @@
 import { Animal, Category, Prisma, User, Word } from '@prisma/client';
 
-export type DisplayCategory = Category & { picture: string };
+export type DisplayCategory = Category & {
+  picture: string;
+  hasThisWord: boolean;
+};
 
 export type MessageResponse = {
   message: string;

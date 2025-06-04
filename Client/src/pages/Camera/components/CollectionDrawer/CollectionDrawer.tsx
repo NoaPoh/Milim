@@ -19,7 +19,7 @@ const CollectionDrawer = ({
   translatedText,
   picture,
 }: CollectionDrawerProps) => {
-  const { data: categories } = useGetCategories(isOpen);
+  const { data: categories } = useGetCategories(isOpen, translatedText);
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     null
   );
@@ -74,6 +74,7 @@ const CollectionDrawer = ({
                   selectedCategoryId === category.id ? 'selected' : ''
                 }`}
                 onClick={() => handleCategoryClick(category.id)}
+                aria-disabled={category.hasThisWord}
               >
                 <img
                   src={category.picture}
