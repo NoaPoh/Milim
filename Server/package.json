@@ -9,11 +9,15 @@
     "./types": "./src/types/index.ts"
   },
   "scripts": {
-    "dev": "nodemon ./src/main.ts",
-    "start": "node ./build/main.js",
+    "dev": "cross-env NODE_ENV=development nodemon ./src/main.ts",
+    "start": "cross-env NODE_ENV=production node ./dist/main.js",
+    "build": "tsc",
     "create-migration": "npx prisma migrate dev --name",
     "migrate": "npx prisma migrate deploy",
-    "update-prisma-client": "npx prisma generate"
+    "update-prisma-client": "npx prisma generate",
+    "pm2-start": "pm2 delete milim-server && pm2 start npm --name milim-server -- start",
+    "prod": "npx prisma generate && npm run build && npm run pm2-start",
+    "local-serve": "npm run build && npm run start"
   },
   "keywords": [],
   "author": "",

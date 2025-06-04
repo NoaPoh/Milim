@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { GoogleTranslateResponse } from '../../types/googleDtos';
 
-const googleAPIKey = process.env.GOOGLE_API_KEY;
-
 export const translateWord = async (word: string): Promise<string> => {
   if (process.env.DONT_USE_GOOGLE_API === 'true') {
     return 'בדיקה'; // For testing purposes, return a dummy object
   }
+
+  const googleAPIKey = process.env.GOOGLE_API_KEY;
 
   if (!googleAPIKey) {
     throw new Error(

@@ -1,7 +1,7 @@
 import { PrismaClient, User } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { compare, genSalt, hash } from 'bcrypt';
-import { Response } from 'express';
+import { CookieOptions, Response } from 'express';
 import jwt, { SignOptions } from 'jsonwebtoken';
 import {
   LoginInput,
@@ -15,6 +15,13 @@ const generateAccessToken = (userId: User['id']) => {
     expiresIn:
       (process.env.JWT_ACCESS_EXPIRATION as SignOptions['expiresIn']) || '15m',
   });
+};
+
+const cookieOptions: CookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'strict',
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
 };
 
 export const register = async (
@@ -92,17 +99,12 @@ export const login = async (
 
   const accessToken = generateAccessToken(user.id);
 
-  res.cookie('access-token', accessToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-  });
+  res.cookie('access-token', accessToken, cookieOptions);
 
   return { userId: user.id };
 };
 
 export const logout = async (res: Response): Promise<MessageResponse> => {
-  res.clearCookie('access-token', { httpOnly: true, sameSite: 'strict' });
+  res.clearCookie('access-token', cookieOptions);
   return { message: 'Logged out successfully' };
 };

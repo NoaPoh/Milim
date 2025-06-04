@@ -40,7 +40,7 @@ export const isAuthed = base.middleware<Context>(({ ctx, next }) => {
         userId: payload.userId,
       },
     });
-  } catch {
+  } catch (error) {
     throw new TRPCError({ code: 'UNAUTHORIZED' });
   }
 });
