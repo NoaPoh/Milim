@@ -14,10 +14,7 @@ import AwardShopModal from './components/ShopModal.tsx';
 import { AwardType } from '@prisma/client';
 
 const Profile: React.FC = () => {
-  const {
-    user,
-    isLoading,
-  }: { user: UserDTO; isLoading: boolean } = useUser();
+  const { user, isLoading } = useUser();
   const [isShopOpen, setShopOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -42,9 +39,9 @@ const Profile: React.FC = () => {
       <div className="profile-section">
         <AnimalIcon
           iconWidth={230}
-          path={activeAwards[AwardType.PROFILE_ICON]}
-          frame={activeAwards[AwardType.ICON_FRAME]}
-          background={activeAwards[AwardType.ICON_BACKGROUND]}
+          path={activeAwards[AwardType.PROFILE_ICON] || ''}
+          frame={activeAwards[AwardType.ICON_FRAME] || ''}
+          background={activeAwards[AwardType.ICON_BACKGROUND] || ''}
         />
         <button className="shop button" onClick={() => setShopOpen(true)}>
           <FontAwesomeIcon icon={faShop} />
