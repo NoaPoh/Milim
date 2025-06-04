@@ -9,8 +9,9 @@ export const useGames = ({ game }: props) => {
   const { data: words = [], isLoading } =
     api.word.fetchRandomUserWords.useQuery({
       amount: 5,
-      noSpaceLimitation: (game === GameNames.CROSSWORD ||
-        game === GameNames.SPELLING)!!,
+      noSpaceLimitation: !!(
+        game === GameNames.CROSSWORD || game === GameNames.SPELLING
+      ),
       charsLimitation:
         game === GameNames.CROSSWORD
           ? 6
