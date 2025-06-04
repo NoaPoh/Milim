@@ -24,9 +24,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const { data, isLoading, error } = api.user.getUser.useQuery();
 
   const decoratedUser = useMemo(() => {
-    if (!data) return undefined;
+    if (!data?.purchases) return undefined;
 
-    const purchases: PurchaseDTO = data.purchases;
+    const purchases: PurchaseDTO[] = data.purchases;
     const activeAwards: ActiveAwards = getActiveAwardsByCategory(purchases);
     setUserBackgroundColor(activeAwards['BACKGROUND_COLOR'] || 'default');
 
@@ -56,20 +56,25 @@ function setUserBackgroundColor(backgroundColor?: string) {
 
 // Get the latest award for each category based on the purchase date
 function getActiveAwardsByCategory(purchases: PurchaseDTO[]): ActiveAwards {
-  const latestAwardByType: Record<AwardType, string> = {};
+  const latestAwardByType: ActiveAwards = {
+    BACKGROUND_COLOR: undefined,
+    PROFILE_ICON: undefined,
+    ICON_BACKGROUND: undefined,
+    ICON_FRAME: undefined,
+  };
 
   if (purchases?.length) {
-    const sortedPurchasesByDate = [...purchases].sort(
+    const purchasesSortedByDateDesc = [...purchases].sort(
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
 
-    for (const category of Object.values(AwardType)) {
-      const match = sortedPurchasesByDate.find(
-        (p) => p.award.category === category
+    for (const type_ of Object.values(AwardType)) {
+      const match = purchasesSortedByDateDesc.find(
+        (p) => p.award.type === type_
       );
       if (match) {
-        latestAwardByType[category] = match.award.name;
+        latestAwardByType[type_] = match.award.name;
       }
     }
   }
