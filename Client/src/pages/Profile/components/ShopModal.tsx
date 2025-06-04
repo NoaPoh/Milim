@@ -13,9 +13,16 @@ const awardTypeLabels: Record<AwardType, string> = {
   ICON_FRAME: 'Frames',
 };
 
-export default function ShopModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+export default function ShopModal({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
   const { data: awards = [] } = useAwards();
-  const [selectedType, setSelectedType] = useState<AwardType>('BACKGROUND_COLOR');
+  const [selectedType, setSelectedType] =
+    useState<AwardType>('BACKGROUND_COLOR');
   const { data: user } = api.auth.getMe.useQuery();
   const coinBalance = user?.coinBalance ?? 0;
 
@@ -36,7 +43,7 @@ export default function ShopModal({ open, onClose }: { open: boolean; onClose: (
       }}
     >
       <div className="shop-modal">
-        <h2 className="title">Shop</h2>
+        <h2 className="title">חנות</h2>
 
         <div className="tabs">
           {Object.entries(awardTypeLabels).map(([key, label]) => (
@@ -60,7 +67,7 @@ export default function ShopModal({ open, onClose }: { open: boolean; onClose: (
               />
             ))
           ) : (
-            <div className="empty-state">Nothing to see here ☺️</div>
+            <div className="empty-state">עוד אין כאן פרסים ☺️</div>
           )}
         </div>
       </div>

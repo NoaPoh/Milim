@@ -64,7 +64,7 @@ const CollectionDrawer = ({
         className={`drawer-content ${isOpen ? 'open' : ''}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 className="drawer-title">Choose a Collection</h3>
+        <h3 className="drawer-title">בחר אוסף</h3>
         <ul className="drawer-list">
           {categories &&
             categories.map((category) => (
@@ -92,7 +92,7 @@ const CollectionDrawer = ({
               selectedCategoryId === null || saveWordInCategoryIsPending
             }
           >
-            Add To Collection
+            הוסף לאוסף
           </button>
         )}
       </div>

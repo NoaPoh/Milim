@@ -51,8 +51,8 @@ const EndGamePopup = ({
               autoplay
               className="coin-animation"
             />
-            <p className="success-message">Congratulations!</p>
-            <p className="coins-earned">You've won {earnedCoins} coins!</p>
+            <p className="success-message">ברכות!</p>
+            <p className="coins-earned">זכית ב-{earnedCoins} מטבעות!</p>
           </div>
         )}
 
@@ -64,10 +64,10 @@ const EndGamePopup = ({
               onClose?.();
             }}
           >
-            Play again
+            שחק שוב
           </button>
           <button className="popup-button right" onClick={onBack}>
-            Back to games
+            חזרה למשחקים
           </button>
         </div>
       </div>

@@ -49,7 +49,6 @@ const Login: React.FC = () => {
         />
       </div>
 
-      {/* Center form */}
       <div className="login-page__center">
         <div className="login-box">
           <h2>Milim</h2>
@@ -75,11 +74,11 @@ const Login: React.FC = () => {
             />
 
             <button type="submit" disabled={loginIsPending}>
-              GO
+              יאללה
             </button>
           </form>
           <p>
-            Don't have an account yet? <a onClick={navToRegister}>sign up</a>
+            אין לך חשבון עדיין? <a onClick={navToRegister}>הרשם</a>
           </p>
         </div>
       </div>

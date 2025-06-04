@@ -8,8 +8,6 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [learningLanguage, setLearningLanguage] = useState('');
-  const [nativeLanguage, setNativeLanguage] = useState('');
   const [spiritAnimal, setSpiritAnimal] = useState<number>(0);
   const navigate = useNavigate();
 
@@ -40,7 +38,7 @@ const Register = () => {
   return (
     <div className="register">
       <form onSubmit={handleSubmit} className="register__form">
-        <h2 className="register__title">Let's get to know you !</h2>
+        <h2 className="register__title">בוא.י נכיר!</h2>
 
         <input
           type="text"
@@ -66,28 +64,7 @@ const Register = () => {
           className="register__input"
         />
 
-        <select
-          value={nativeLanguage}
-          onChange={(e) => setNativeLanguage(e.target.value)}
-          className="register__input"
-        >
-          <option value="" disabled hidden>
-            I speak
-          </option>
-          <option value="English">English</option>
-        </select>
-
-        <select
-          onChange={(e) => setLearningLanguage(e.target.value)}
-          className="register__input"
-        >
-          <option value="" disabled hidden>
-            I want to learn
-          </option>
-          <option value="Spanish">Hebrew</option>
-        </select>
-
-        <label className="register__text">Pick Your Spirit Animal:</label>
+        <label className="register__text">בחר.י את החיה שלך:</label>
         <div className="register__spirit-animals">
           {freeAnimals?.map((animal) => (
             <button
