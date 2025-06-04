@@ -4,26 +4,32 @@ import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
 import coinsIcon from '../../assets/images/coins.png';
 import { useUser } from '../../context/UserContext';
 import Loader from '../../components/Loader/Loader';
-import { UserDTO } from 'milim-server/src/@types/dtos';
+import { UserDTO } from 'milim-server/types';
 import { api } from '../../utils/trpcClient.ts';
 import { RoutesValues } from '../../routes/routes.ts';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDeleteLeft, faShop, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faShop, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import AwardShopModal from './components/ShopModal.tsx';
+import { AwardType } from '@prisma/client';
 
 const Profile: React.FC = () => {
-  const { user, isLoading }: {user: UserDTO, isLoading: boolean} = useUser();
+  const { user, isLoading } = useUser();
   const [isShopOpen, setShopOpen] = useState(false);
-
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    api.auth.logout.useMutation({ onSuccess: navigate(RoutesValues.LOGIN) });
-  };
+  if (isLoading) return <Loader />;
 
-  if (isLoading)
-    return <Loader />;
+  const { activeAwards, coins, purchases } = user;
+
+  const ownedAwardIds = purchases.map((purchase) => purchase.awardId);
+  const activeAwardNames: string[] = Object.values(activeAwards);
+
+  const handleLogout = () => {
+    api.auth.logout.useMutation({
+      onSuccess: () => navigate(RoutesValues.LOGIN),
+    });
+  };
 
   return (
     <div className="profile-container">
@@ -31,31 +37,34 @@ const Profile: React.FC = () => {
         <FontAwesomeIcon icon={faSignOut} />
       </button>
       <div className="profile-section">
-        <AnimalIcon iconWidth={230} path={user.spiritAnimal} />
-        <button
-          className="shop"
-          onClick={() => setShopOpen(true)}
-        >
+        <AnimalIcon
+          iconWidth={230}
+          path={activeAwards[AwardType.PROFILE_ICON] || ''}
+          frame={activeAwards[AwardType.ICON_FRAME] || ''}
+          background={activeAwards[AwardType.ICON_BACKGROUND] || ''}
+        />
+        <button className="shop button" onClick={() => setShopOpen(true)}>
           <FontAwesomeIcon icon={faShop} />
         </button>
 
         <AwardShopModal
           open={isShopOpen}
           onClose={() => setShopOpen(false)}
+          coinBalance={coins}
+          ownedAwardIds={ownedAwardIds}
+          activeAwardNames={activeAwardNames}
         />
       </div>
       <div className="coins-section">
         <img
           src={coinsIcon}
           className="image rounded-full"
-          alt="missing your info!" />
-        <span className="text">
-        {user.coins}
-        </span>
+          alt="missing your info!"
+        />
+        <span className="text">{coins}</span>
       </div>
     </div>
   );
 };
-
 
 export default Profile;

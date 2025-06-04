@@ -3,6 +3,7 @@ import './Register.scss';
 import { api } from '../../utils/trpcClient';
 import { useNavigate } from 'react-router';
 import { RoutesValues } from '../../routes/routes';
+import { showSuccessToast } from '../../utils/toast.ts';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -14,10 +15,11 @@ const Register = () => {
   const navigate = useNavigate();
 
   const navToLogin = () => {
+    showSuccessToast('Registration successful! Please log in.');
     navigate(RoutesValues.LOGIN);
   };
 
-  const { data: freeAnimals } = api.animal.getFreeAnimals.useQuery();
+  const { data: freeAnimals } = api.award.getFreeAnimals.useQuery();
 
   const { mutateAsync: register, isPending: registerIsPending } =
     api.auth.register.useMutation({ onSuccess: navToLogin });
@@ -97,7 +99,7 @@ const Register = () => {
               onClick={() => setSpiritAnimal(animal.id)}
             >
               <img
-                src={`src/assets/images/animals/${animal.imagePath}`}
+                src={`src/assets/images/${animal.iconUrl}`}
                 alt="Spirit Animal"
                 className="w-16 h-16 object-cover rounded-full"
               />
@@ -110,7 +112,7 @@ const Register = () => {
           className="submit-button"
           disabled={registerIsPending}
         >
-          {!registerIsPending ? "Let's do it!" : ''}
+          {!registerIsPending ? 'Let\'s do it!' : ''}
         </button>
       </form>
     </div>

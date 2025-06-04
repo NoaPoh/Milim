@@ -1,4 +1,5 @@
-import { Animal, Category, Prisma, User, Word } from '@prisma/client';
+import { Award, Category, Prisma, User, Word } from '@prisma/client';
+import { ActiveAwards } from 'milim-client/src/constants/awards.types';
 
 export type DisplayCategory = Category & { picture: string };
 
@@ -10,7 +11,7 @@ export interface RegisterInput {
   username: User['username'];
   email: User['email'];
   password: string;
-  animalId: Animal['id'];
+  animalId: Award['id'];
 }
 
 export interface LoginInput {
@@ -20,8 +21,6 @@ export interface LoginInput {
 
 export interface LoginResponse {
   userId: User['id'];
-  // accessToken: string;
-  // refreshToken: string;
 }
 
 export interface WinAGameInput {
@@ -48,7 +47,20 @@ export interface UserDTO {
   username: string | null;
   currentStreak: number | null;
   longestStreak: number | null;
-  lastUsedDate: string | null;
-  spiritAnimal: string;
   coins: number;
+  purchases: PurchaseDTO[];
+  activeAwards: ActiveAwards;
 }
+
+export type PurchaseDTO = Pick<
+  Prisma.PurchaseGetPayload<{
+    include: { award: {
+        select: {
+          id: true,
+          name: true,
+          type: true,
+        },
+      } };
+  }>,
+  'award' | 'createdAt' | 'awardId'
+>;
