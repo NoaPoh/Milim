@@ -27,7 +27,7 @@ export const winAGame = async (
 export const getUser = async (
   prisma: PrismaClient,
   id: number,
-): Promise<Partial<UserDTO>> => {
+): Promise<UserDTO> => {
   const user = await prisma.user.findUnique({
     where: { id },
     include: {
@@ -54,6 +54,8 @@ export const getUser = async (
   }
 
   return {
+    currentStreak: user.currentStreak,
+    longestStreak: user.longestStreak,
     username: user.username,
     coins: user.coinBalance,
     purchases: user.purchases,

@@ -47,7 +47,6 @@ export interface UserDTO {
   username: string | null;
   currentStreak: number | null;
   longestStreak: number | null;
-  lastUsedDate: string | null;
   coins: number;
   purchases: PurchaseDTO[];
   activeAwards: ActiveAwards;

@@ -17,10 +17,7 @@ export const awardService = {
           userId,
           awardId,
         },
-      },
-      include: {
-        award: true,
-      },
+      }
     });
 
     if (!purchase) {

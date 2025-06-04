@@ -22,7 +22,7 @@ export const useUser = () => {
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const { data, isLoading, error } = api.user.getUser.useQuery();
 
-  const decoratedUser = useMemo(() => {
+  const decoratedUser: Partial<UserDTO> = useMemo(() => {
     if (!data?.purchases) return undefined;
 
     const activeAwards: ActiveAwards = data.activeAwards ;

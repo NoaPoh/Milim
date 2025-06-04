@@ -1,8 +1,7 @@
 import { z } from 'zod';
 import { protectedProcedure, publicProcedure } from '../../core/trpc/trpc';
-import { awardService, purchase } from './award.service';
+import { awardService, getFreeAnimals, purchase } from './award.service';
 import { router } from '../../core/trpc/trpc';
-import { getFreeAnimals } from '../animal/animal.service';
 
 export const awardRouter = router({
   getAll: publicProcedure.query(async ({ ctx}) => {
