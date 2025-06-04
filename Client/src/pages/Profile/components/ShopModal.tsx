@@ -11,7 +11,7 @@ interface Props {
   onClose: () => void;
   coinBalance: number;
   ownedAwardIds: number[];
-  activeAwardNames: number[];
+  activeAwardNames: string[];
 }
 
 export default function ShopModal({

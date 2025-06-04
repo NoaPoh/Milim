@@ -22,15 +22,14 @@ export const useUser = () => {
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const { data, isLoading, error } = api.user.getUser.useQuery();
 
-  const decoratedUser: Partial<UserDTO> = useMemo(() => {
+  const decoratedUser: UserDTO = useMemo(() => {
     if (!data?.purchases) return undefined;
 
     const activeAwards: ActiveAwards = data.activeAwards ;
     setUserBackgroundColor(activeAwards['BACKGROUND_COLOR'] || 'default');
 
     return {
-      ...data,
-      activeAwards,
+      ...data
     };
   }, [data]);
 
