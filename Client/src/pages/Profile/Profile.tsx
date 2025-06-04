@@ -4,7 +4,7 @@ import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
 import coinsIcon from '../../assets/images/coins.png';
 import { ActiveAwards, useUser } from '../../context/UserContext';
 import Loader from '../../components/Loader/Loader';
-import { UserDTO } from 'milim-server/src/@types/dtos';
+import { UserDTO } from 'milim-server/types';
 import { api } from '../../utils/trpcClient.ts';
 import { RoutesValues } from '../../routes/routes.ts';
 import { useNavigate } from 'react-router-dom';
