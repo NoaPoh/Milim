@@ -12,6 +12,7 @@ const GamesHome: React.FC = () => {
           name={game.name}
           image={game.image}
           path={game.path}
+          nameToShow={game.nameToShow}
         />
       ))}
     </div>

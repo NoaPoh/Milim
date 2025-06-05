@@ -4,7 +4,7 @@ import { GameProps } from '../../../../constants/games';
 import './GameCard.scss';
 import { RoutesValues } from '../../../../routes/routes';
 
-const GameCard = ({ name, image, path }: GameProps) => {
+const GameCard = ({ name, image, path, nameToShow }: GameProps) => {
   const navigate = useNavigate();
 
   return (
@@ -16,8 +16,8 @@ const GameCard = ({ name, image, path }: GameProps) => {
         })
       }
     >
-      <p className="game-card-title">{name}</p>
-      <img className="game-card-image" src={image} alt={name} />
+      <p className="game-card-title">{nameToShow}</p>
+      <img className="game-card-image" src={image} alt={nameToShow} />
     </button>
   );
 };
