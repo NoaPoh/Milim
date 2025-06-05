@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './CollectionDrawer.scss';
 import { useGetCategories } from '../../../Home/hooks/useGetCategories';
 import { api } from '../../../../utils/trpcClient';
@@ -49,7 +49,14 @@ const CollectionDrawer = ({
 
   const handleCategoryClick = (categoryId: number) => {
     setSelectedCategoryId(categoryId);
+    console.log(
+      `Selected category ID: ${categoryId}, Category name: ${
+        categories?.find((cat) => cat.id === categoryId)?.name
+      }`
+    );
   };
+
+  useEffect(()=>{console.log(selectedCategoryId)},[selectedCategoryId]);
 
   const handleAddClick = async () => {
     if (selectedCategoryId === null) return;
