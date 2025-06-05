@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './CollectionDrawer.scss';
 import { useGetCategories } from '../../../Home/hooks/useGetCategories';
 import { api } from '../../../../utils/trpcClient';
@@ -21,8 +21,8 @@ const CollectionDrawer = ({
   translatedText,
   picture,
 }: CollectionDrawerProps) => {
+  const { data: categories } = useGetCategories(isOpen, translatedText);
   const navigate = useNavigate();
-  const { data: categories } = useGetCategories(isOpen);
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     null
   );
@@ -49,7 +49,14 @@ const CollectionDrawer = ({
 
   const handleCategoryClick = (categoryId: number) => {
     setSelectedCategoryId(categoryId);
+    console.log(
+      `Selected category ID: ${categoryId}, Category name: ${
+        categories?.find((cat) => cat.id === categoryId)?.name
+      }`
+    );
   };
+
+  useEffect(()=>{console.log(selectedCategoryId)},[selectedCategoryId]);
 
   const handleAddClick = async () => {
     if (selectedCategoryId === null) return;
@@ -78,6 +85,7 @@ const CollectionDrawer = ({
                   selectedCategoryId === category.id ? 'selected' : ''
                 }`}
                 onClick={() => handleCategoryClick(category.id)}
+                aria-disabled={category.hasThisWord}
               >
                 <img
                   src={category.picture}
