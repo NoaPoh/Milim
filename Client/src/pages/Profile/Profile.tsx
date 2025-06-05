@@ -15,6 +15,10 @@ import { AwardType } from '@prisma/client';
 
 const Profile: React.FC = () => {
   const { user, isLoading }: { user: UserDTO; isLoading: boolean } = useUser();
+  const { mutate: logOut } = api.auth.logout.useMutation({
+    onSuccess: () => navigate(RoutesValues.LOGIN),
+  });
+
   const [isShopOpen, setShopOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -26,9 +30,7 @@ const Profile: React.FC = () => {
   const activeAwardNames: string[] = Object.values(activeAwards);
 
   const handleLogout = () => {
-    api.auth.logout.useMutation({
-      onSuccess: () => navigate(RoutesValues.LOGIN),
-    });
+    logOut();
   };
 
   if (isLoading) return <Loader />;
