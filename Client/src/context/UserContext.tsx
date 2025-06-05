@@ -1,6 +1,7 @@
-import { createContext, useContext, ReactNode } from 'react';
+import { createContext, useContext, ReactNode, useMemo } from 'react';
 import { api } from '../utils/trpcClient';
 import { UserDTO } from 'milim-server/types';
+import { ActiveAwards } from '../constants/awards.types.ts';
 
 type UserContextValue = {
   user: Partial<UserDTO> | undefined;
@@ -21,9 +22,31 @@ export const useUser = () => {
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const { data, isLoading, error } = api.user.getUser.useQuery();
 
+  const decoratedUser: UserDTO = useMemo(() => {
+    if (!data?.purchases) return undefined;
+
+    const activeAwards: ActiveAwards = data.activeAwards ;
+    setUserBackgroundColor(activeAwards['BACKGROUND_COLOR'] || 'default');
+
+    return {
+      ...data
+    };
+  }, [data]);
+
   return (
-    <UserContext.Provider value={{ user: data, isLoading, error }}>
+    <UserContext.Provider value={{ user: decoratedUser, isLoading, error }}>
       {children}
     </UserContext.Provider>
   );
 };
+
+// once user is logged in, set the background color based on the user's active awards
+function setUserBackgroundColor(backgroundColor?: string) {
+  const resolvedBackground =
+    backgroundColor === 'default' ? '#fbf3df' : backgroundColor ?? '';
+
+  document.documentElement.style.setProperty(
+    '--user-background',
+    resolvedBackground
+  );
+}

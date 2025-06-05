@@ -1,6 +1,6 @@
 import React from 'react';
 import { FunctionComponent } from 'react';
-import { GamesRoutesValues, RoutesValues } from './routes';
+import { GamesRoutes, RoutesValues } from './routes';
 import Home from '../pages/Home/Home';
 import { Route, Routes } from 'react-router-dom';
 import CameraPage from '../pages/Camera/Camera';
@@ -62,17 +62,17 @@ const routes: RouteProps[] = [
     navbar: true,
   },
   {
-    path: GamesRoutesValues.CROSSWORD,
+    path: GamesRoutes.CROSSWORD,
     component: <GenericGame GameComponent={Crossword} />,
     navbar: false,
   },
   {
-    path: GamesRoutesValues.FLASH_CARDS,
+    path: GamesRoutes.FLASH_CARDS,
     component: <GenericGame GameComponent={FlashCards} />,
     navbar: false,
   },
   {
-    path: GamesRoutesValues.SPELLING,
+    path: GamesRoutes.SPELLING,
     component: <GenericGame GameComponent={Spelling} />,
     navbar: false,
   },

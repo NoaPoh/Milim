@@ -1,11 +1,12 @@
-import { Animal, PrismaClient, Purchase, User } from '@prisma/client';
+import { Award, PrismaClient, User } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { UserDTO } from '../../types';
+import { getActiveAwardsByCategory } from '../../utils/getActiveAwards';
 
 export const winAGame = async (
   userId: number,
   coins: number,
-  prisma: PrismaClient
+  prisma: PrismaClient,
 ): Promise<User> => {
   const user = await prisma.user.findUnique({ where: { id: userId } });
 
@@ -25,66 +26,39 @@ export const winAGame = async (
 
 export const getUser = async (
   prisma: PrismaClient,
-  id: number
-): Promise<Partial<UserDTO>> => {
+  id: number,
+): Promise<UserDTO> => {
   const user = await prisma.user.findUnique({
     where: { id },
+    include: {
+      purchases: {
+        select: {
+          award: {
+            select: {
+              id: true,
+              name: true,
+              type: true,
+            },
+          },
+          createdAt: true,
+          awardId: true,
+        },
+      },
+    },
   });
   if (!user) {
     throw new TRPCError({
       code: 'NOT_FOUND',
-      message: 'User with this id does not exist.',
+      message: 'משתמש זה לא קייםת אוי לי.',
     });
   }
 
-  const animal: Animal['imagePath'] =
-    (
-      await prisma.animal.findUnique({
-        where: { id: user.animalId || 0 },
-      })
-    )?.imagePath || 'giraffe.png';
-
   return {
-    spiritAnimal: animal,
+    currentStreak: user.currentStreak,
+    longestStreak: user.longestStreak,
     username: user.username,
     coins: user.coinBalance,
+    purchases: user.purchases,
+    activeAwards: getActiveAwardsByCategory(user.purchases),
   };
-};
-
-export const purchase = async (
-  userId: number,
-  awardId: number,
-  prisma: PrismaClient
-): Promise<Purchase> => {
-  const user = await prisma.user.findUnique({ where: { id: userId } });
-
-  if (!user) {
-    throw new Error('User not found');
-  }
-
-  const award = await prisma.award.findUnique({ where: { id: awardId } });
-
-  if (!award) {
-    throw new Error('Award not found');
-  }
-
-  if (user.coinBalance < award.price) {
-    throw new Error('Not enough coins');
-  }
-
-  const newPurchase = await prisma.purchase.create({
-    data: {
-      userId: user.id,
-      awardId: award.id,
-    },
-  });
-
-  const updatedUser = await prisma.user.update({
-    where: { id: userId },
-    data: {
-      coinBalance: user.coinBalance - award.price,
-    },
-  });
-
-  return newPurchase;
 };

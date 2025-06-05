@@ -27,7 +27,7 @@ const Login: React.FC = () => {
     api.auth.login.useMutation({
       onSuccess: navToHome,
       onError: (error) => {
-        setErrorMessage(error.message || 'Invalid email or password');
+        setErrorMessage(error.message || 'שם משתמש או סיסמה לא תקינים');
       },
     });
 
@@ -49,7 +49,6 @@ const Login: React.FC = () => {
         />
       </div>
 
-      {/* Center form */}
       <div className="login-page__center">
         <div className="login-box">
           <h2>Milim</h2>
@@ -59,7 +58,7 @@ const Login: React.FC = () => {
             )}
             <input
               type="email"
-              placeholder="Email"
+              placeholder="אימייל"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -67,7 +66,7 @@ const Login: React.FC = () => {
             />
             <input
               type="password"
-              placeholder="Password"
+              placeholder="סיסמה ממש חזקה"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -75,11 +74,11 @@ const Login: React.FC = () => {
             />
 
             <button type="submit" disabled={loginIsPending}>
-              GO
+              יאללה
             </button>
           </form>
           <p>
-            Don't have an account yet? <a onClick={navToRegister}>sign up</a>
+            אין לך חשבון עדיין? <a onClick={navToRegister}>הרשם</a>
           </p>
         </div>
       </div>

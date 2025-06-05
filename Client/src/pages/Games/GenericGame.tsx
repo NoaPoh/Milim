@@ -46,7 +46,7 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>טוען...</div>;
 
   if (GameComponent.name === GameNames.FLASH_CARDS) {
     const correct = words[round];

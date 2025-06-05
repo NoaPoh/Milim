@@ -4,7 +4,7 @@ import { RoutesValues } from '../../../routes/routes';
 import './CategoryCard.scss';
 
 export type CategoryCardProps = {
-  id: number
+  id: number;
   name: string;
   picture: string;
 };

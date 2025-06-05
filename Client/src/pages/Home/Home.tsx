@@ -1,5 +1,4 @@
 import React from 'react';
-import giraffeIcon from '../../assets/images/animals/giraffe.png';
 import './Home.scss';
 import { useGetCategories } from './hooks/useGetCategories';
 import { CategoryCard } from './components/CategoryCard';
@@ -9,20 +8,25 @@ import { RoutesValues } from '../../routes/routes';
 import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
 import Loader from '../../components/Loader/Loader';
 import { useUser } from '../../context/UserContext';
+import { AwardType } from '../../constants/awards.types.ts';
 
 const Home: React.FC = () => {
-  // const userDetails = useUserDetails();
-
   const { data: categories, isLoading } = useGetCategories();
-
   const { user } = useUser();
+  const { activeAwards } = user || {};
+
   return (
     <div className="home__container">
       {user && (
         <div className="home__user-details">
-          <AnimalIcon iconWidth={120} path={user.spiritAnimal}></AnimalIcon>
+          <AnimalIcon
+            iconWidth={140}
+            path={activeAwards[AwardType.PROFILE_ICON]}
+            frame={activeAwards[AwardType.ICON_FRAME]}
+            background={activeAwards[AwardType.ICON_BACKGROUND]}
+          ></AnimalIcon>
           <p className="text-xl text-gray-700 mb-6">
-            Hello {user.username}, <br /> Where are you now?
+            שלום {user.username}, <br /> איפה אתה עכשיו?
           </p>
         </div>
       )}

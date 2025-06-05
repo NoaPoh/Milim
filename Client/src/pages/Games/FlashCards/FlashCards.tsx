@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import './FlashCards.scss';
 
+type CardClass = '' | 'chosen' | 'correct' | 'wrong';
+
 type Word = {
   id: number;
   originalText: string;
@@ -37,7 +39,7 @@ const FlashCards = ({
     }
   };
 
-  const getCardClass = (id: number) => {
+  const getCardClass = (id: number): CardClass => {
     if (!submitted) return id === chosenId ? 'chosen' : '';
     if (id === correctId) return 'correct';
     if (id === chosenId && id !== correctId) return 'wrong';

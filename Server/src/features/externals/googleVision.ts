@@ -68,7 +68,7 @@ export async function detectObjectFromBase64(
 
     if (objects.length === 0) {
       throw new TRPCError({
-        message: 'No objects found in the image.',
+        message: 'אין חפצים מזוהים בתמונה.',
         code: 'NOT_FOUND',
       });
     }
