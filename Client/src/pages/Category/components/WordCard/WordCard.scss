@@ -90,3 +90,8 @@
     z-index: 1001;
   }
 }
+
+.WordCard__container:not(.WordCard__modal .WordCard__container) {
+  height: 14rem;
+  margin: 0.5rem;
+}

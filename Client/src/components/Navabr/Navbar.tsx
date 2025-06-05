@@ -16,7 +16,7 @@ const Navbar = () => {
   const handleGamesClick = (e: React.MouseEvent) => {
     if (!isLoading && wordSum !== undefined && wordSum < 5) {
       e.preventDefault();
-      showInfoToast(`Oops! Learn 5 words first to unlock the games!`);
+      showInfoToast(`אוי לי! עליך להשלים לפחות 5 מילים כדי לשחק במשחקים!`);
     }
   };
 

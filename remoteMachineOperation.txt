@@ -56,26 +56,21 @@ pass: mypass
 sudo -u postgres psql
 DATABASE_URL=postgresql://milim_user:mypass@10.10.248.99:5432/milim
 
-COPY "User"("id", "username", "email", "passwordHash", "createdAt", "currentStreak", "longestStreak", "lastUsedDate", "animalId", "coinBalance")
+COPY "User"("id", "username", "email", "passwordHash", "createdAt", "currentStreak", "longestStreak", "lastUsedDate", "coinBalance")
 FROM '~/csvs/User.csv'
 WITH (FORMAT csv, HEADER true);
 
 
-\copy "User"("id", "username", "email", "passwordHash", "createdAt", "currentStreak", "longestStreak", "lastUsedDate", "animalId", "coinBalance")
+\copy "User"("id", "username", "email", "passwordHash", "createdAt", "currentStreak", "longestStreak", "lastUsedDate", "coinBalance")
 FROM '~/csvs/User.csv'
 WITH (FORMAT csv, HEADER true);
-
-\copy "Animal"("id","name","imagePath","price")
-FROM '~/csvs/Animal.csv'
-WITH (FORMAT csv, HEADER true);
-
 
 \copy "Category"("id","name","createdById")
 FROM '~/csvs/Category.csv'
 WITH (FORMAT csv, HEADER true);
 
 
-\copy "Award"("id","name","category","price","iconUrl")
+\copy "Award"("id","name","type","price","iconUrl")
 FROM '~/csvs/Award.csv'
 WITH (FORMAT csv, HEADER true);
 

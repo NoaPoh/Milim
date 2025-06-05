@@ -56,7 +56,6 @@ export default function CameraPage() {
 
   return (
     <div className="photo-capture-container">
-      <Toaster position="top-center" />
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       {!stalePhoto ? (

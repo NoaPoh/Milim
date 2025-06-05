@@ -34,6 +34,7 @@
 }
 
 .spelling-container {
+  direction: ltr;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -58,6 +59,7 @@ spelling-lines {
   font-weight: bold;
   height: 24px;
   margin-bottom: 5px;
+  color: black;
 }
 
 .spelling-lines {

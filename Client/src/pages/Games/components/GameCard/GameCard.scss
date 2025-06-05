@@ -1,19 +1,19 @@
 @use '../../../../styles/variables' as *;
 
-.game-card-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
 .game-card-button {
   height: 120px;
-  width: 230px;
+  width: 60%;
   background-color: $secondary-background;
   border-radius: 20px;
   position: relative;
   border: none;
   cursor: pointer;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20%;
 
   &:focus {
     outline: none;
@@ -25,7 +25,7 @@
 }
 
 .game-card-image {
-  height: 60px;
-  position: absolute;
-  transform: translateX(-75%) translateY(-65%);
+  width: 35%;
+  // position: absolute;
+  // transform: translateX(-75%) translateY(-65%);
 }

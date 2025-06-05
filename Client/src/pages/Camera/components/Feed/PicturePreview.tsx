@@ -45,7 +45,7 @@ export default function PicturePreview({
             )}
           </div>
           <button className="btn" onClick={openDrawer}>
-            Add To Collection
+            הוסף לאוסף
           </button>
         </div>
       )}

@@ -3,21 +3,21 @@ import './Register.scss';
 import { api } from '../../utils/trpcClient';
 import { useNavigate } from 'react-router';
 import { RoutesValues } from '../../routes/routes';
+import { showSuccessToast } from '../../utils/toast.ts';
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [learningLanguage, setLearningLanguage] = useState('');
-  const [nativeLanguage, setNativeLanguage] = useState('');
   const [spiritAnimal, setSpiritAnimal] = useState<number>(0);
   const navigate = useNavigate();
 
   const navToLogin = () => {
+    showSuccessToast('Registration successful! Please log in.');
     navigate(RoutesValues.LOGIN);
   };
 
-  const { data: freeAnimals } = api.animal.getFreeAnimals.useQuery();
+  const { data: freeAnimals } = api.award.getFreeAnimals.useQuery();
 
   const { mutateAsync: register, isPending: registerIsPending } =
     api.auth.register.useMutation({ onSuccess: navToLogin });
@@ -40,11 +40,11 @@ const Register = () => {
   return (
     <div className="register">
       <form onSubmit={handleSubmit} className="register__form">
-        <h2 className="register__title">Let's get to know you !</h2>
+        <h2 className="register__title">בוא.י נכיר!</h2>
 
         <input
           type="text"
-          placeholder="Username"
+          placeholder="השם הכי מגניב שלך"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           className="register__input"
@@ -52,7 +52,7 @@ const Register = () => {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder="סיסמה סופר חזקה"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="register__input"
@@ -60,34 +60,13 @@ const Register = () => {
 
         <input
           type="email"
-          placeholder="Email"
+          placeholder="אימייל"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="register__input"
         />
 
-        <select
-          value={nativeLanguage}
-          onChange={(e) => setNativeLanguage(e.target.value)}
-          className="register__input"
-        >
-          <option value="" disabled hidden>
-            I speak
-          </option>
-          <option value="English">English</option>
-        </select>
-
-        <select
-          onChange={(e) => setLearningLanguage(e.target.value)}
-          className="register__input"
-        >
-          <option value="" disabled hidden>
-            I want to learn
-          </option>
-          <option value="Spanish">Hebrew</option>
-        </select>
-
-        <label className="register__text">Pick Your Spirit Animal:</label>
+        <label className="register__text">בחר.י את החיה שלך:</label>
         <div className="register__spirit-animals">
           {freeAnimals?.map((animal) => (
             <button
@@ -97,7 +76,7 @@ const Register = () => {
               onClick={() => setSpiritAnimal(animal.id)}
             >
               <img
-                src={`src/assets/images/animals/${animal.imagePath}`}
+                src={`src/assets/images/${animal.iconUrl}`}
                 alt="Spirit Animal"
                 className="w-16 h-16 object-cover rounded-full"
               />
@@ -110,7 +89,7 @@ const Register = () => {
           className="submit-button"
           disabled={registerIsPending}
         >
-          {!registerIsPending ? "Let's do it!" : ''}
+          {!registerIsPending ? 'בואו נתחיל ללמוד!' : ''}
         </button>
       </form>
     </div>

@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    background-color: #FBF3DF;
     padding: 2.5rem 1rem;
   }
 
@@ -16,6 +15,7 @@
       width: 8rem;
       height: 8rem;
       border-radius: 50%;
+      animation: spin 19s linear infinite;
     }
 
     p {
@@ -35,7 +35,9 @@
     flex-grow: 1;
 
     :last-child {
-      background-color: transparent
+      background-color: transparent;
+      display: flex;
+      justify-content: center;
     }
   }
 }
