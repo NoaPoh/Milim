@@ -3,22 +3,25 @@ import './AnimalIcon.scss';
 
 interface Props {
   path: string;
-  accessories?: Accessory[];
   iconWidth: number;
+  background: string;
+  frame: string;
 }
 
-interface Accessory {
-  style: React.CSSProperties;
-  name: string;
-}
+export const FrameToStyle = new Map<string, string>([
+  ['dotted frame', '5px black dotted'],
+  ['red dashed frame', '5px red dashed'],
+  ['aqua solid frame', '5px aqua solid'],
+  ['dotted olive frame', '9px dotted darkolivegreen'],
+]);
 
-const AnimalIcon = ({ path, iconWidth }: Props) => {
+const AnimalIcon = ({ path, iconWidth, background, frame }: Props) => {
   return (
     <img
-      src={`src/assets/images/animals/${path}`}
+      src={`src/assets/images/animals/${path}.png`}
       className={`animal rounded-full`}
-      style={{ width: `${iconWidth}px` }}
       alt="אין תמונה"
+      style={{ width: `${iconWidth}px`, height: `${iconWidth}px`, backgroundColor: background, border: `${FrameToStyle.get(frame)}` }}
     />
   );
 };

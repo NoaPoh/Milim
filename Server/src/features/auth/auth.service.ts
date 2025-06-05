@@ -51,7 +51,21 @@ export const register = async (
       passwordHash: hashedPassword,
       currentStreak: 0,
       lastUsedDate: new Date(),
-      animalId,
+      coinBalance: 30,
+    },
+  });
+  await prisma.purchase.create({
+    data: {
+      userId: newUser.id,
+      awardId: animalId,
+    },
+  });
+
+  // Default background should be automatically unlocked
+  await prisma.purchase.create({
+    data: {
+      userId: newUser.id,
+      awardId: 14,
     },
   });
 
