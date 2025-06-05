@@ -34,7 +34,8 @@
   animation: popOffTop 5s ease-in-out infinite;
 }
 @keyframes pop {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -43,6 +44,7 @@
 }
 
 .add-icon {
+  margin-left: 2rem;
   animation: pop 1.5s infinite ease-in-out;
   width: 5rem !important;
   height: 5rem !important;
