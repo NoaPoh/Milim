@@ -44,7 +44,6 @@
 }
 
 .add-icon {
-  margin-left: 2rem;
   animation: pop 1.5s infinite ease-in-out;
   width: 5rem !important;
   height: 5rem !important;
