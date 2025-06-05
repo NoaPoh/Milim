@@ -15,14 +15,17 @@ const Crossword = ({ onComplete, words, image }: CrosswordProps) => {
   );
 
   return (
-    <div>
+    <div className="crossword-page">
       <img src={image} alt={words} className="image" />
       <CrosswordBoard
         boardSize={boardSize}
         word={words}
         setSuccess={setSuccess}
       />
-      <button className="button" onClick={() => onComplete(success)}>
+      <button
+        className="crossword-page__button button"
+        onClick={() => onComplete(success)}
+      >
         next
       </button>
     </div>
