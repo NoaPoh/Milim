@@ -20,8 +20,8 @@ const AnimalIcon = ({ path, iconWidth, background, frame }: Props) => {
     <img
       src={`src/assets/images/animals/${path}.png`}
       className={`animal rounded-full`}
+      alt="אין תמונה"
       style={{ width: `${iconWidth}px`, height: `${iconWidth}px`, backgroundColor: background, border: `${FrameToStyle.get(frame)}` }}
-      alt="missing your photo!"
     />
   );
 };

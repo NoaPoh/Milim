@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { SwipeableDrawer } from '@mui/material';
-import { AwardType } from '@prisma/client';
 import AwardCard from './AwardCard/AwardCard.tsx';
 import './ShopModal.scss';
-import { awardTypeLabels } from '../../../constants/awards.types.ts';
+import { awardTypeLabels, AwardType } from '../../../constants/awards.types.ts';
 import { api } from '../../../utils/trpcClient.ts';
 
 interface Props {
@@ -21,9 +20,10 @@ export default function ShopModal({
   ownedAwardIds,
   activeAwardNames,
 }: Props) {
-  const { data: awards = [] } =   api.award.getAll.useQuery();
-  const [selectedAwardType, setSelectedAwardType] =
-    useState<AwardType>('BACKGROUND_COLOR');
+  const { data: awards = [] } = api.award.getAll.useQuery();
+  const [selectedAwardType, setSelectedAwardType] = useState<AwardType>(
+    AwardType.BACKGROUND_COLOR
+  );
 
   const awardsToShow = awards
     .filter((a) => a.type === selectedAwardType)
@@ -44,7 +44,7 @@ export default function ShopModal({
       }}
     >
       <div className="shop-modal">
-        <h2 className="title">Shop</h2>
+        <h2 className="title">חנות</h2>
 
         <div className="tabs">
           {Object.entries(awardTypeLabels).map(([key, label]) => (
@@ -73,7 +73,7 @@ export default function ShopModal({
               />
             ))
           ) : (
-            <div className="empty-state">Nothing to see here ☺️</div>
+            <div className="empty-state">עוד אין כאן פרסים ☺️</div>
           )}
         </div>
       </div>

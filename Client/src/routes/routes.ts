@@ -11,7 +11,7 @@ export enum RoutesValues {
   CATEGORY = '/category',
 }
 
-export enum GamesRoutesValues {
+export enum GamesRoutes {
   FLASH_CARDS = '/games/flashcards',
   SPELLING = '/games/spelling',
   CROSSWORD = '/games/crossword',
