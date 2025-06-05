@@ -8,6 +8,7 @@
     align-items: center;
     margin-bottom: 2rem;
     position: relative;
+    padding: 1rem;
 
     &-icon {
       position: absolute;
@@ -19,7 +20,7 @@
   }
 
   &__title {
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: bold;
     color: $text-dark;
     text-overflow: ellipsis;
@@ -27,9 +28,10 @@
 
   &__words {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); // Two columns
-    gap: 1rem; // Space between grid items
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
     margin: auto;
+    justify-items: center;
   }
 
   .category__add-word {
