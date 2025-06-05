@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShop, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import AwardShopModal from './components/ShopModal.tsx';
-import { AwardType } from '@prisma/client';
+import { AwardType } from '../../constants/awards.types.ts';
 
 const Profile: React.FC = () => {
   const { user, isLoading }: { user: UserDTO; isLoading: boolean } = useUser();
