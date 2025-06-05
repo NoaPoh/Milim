@@ -64,8 +64,6 @@ const Profile: React.FC = () => {
           alt="אין לנו את המידע שלך!"
         />
         <span className="text">{coins}</span>
-        />
-        <span className="text">{user.coins}</span>
       </div>
     </div>
   );

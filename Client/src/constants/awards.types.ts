@@ -1,10 +1,10 @@
 import { AwardType } from '@prisma/client';
 
 export const awardTypeLabels: Record<AwardType, string> = {
-  BACKGROUND_COLOR: 'Habitat',
-  PROFILE_ICON: 'Spirit Animal',
-  ICON_BACKGROUND: 'Animal Background',
-  ICON_FRAME: 'Frames',
+  BACKGROUND_COLOR: 'רקעים',
+  PROFILE_ICON: 'חיות',
+  ICON_BACKGROUND: 'רקעי חיה',
+  ICON_FRAME: 'מסגרות',
 };
 
 export type ActiveAwards = Record<AwardType, string | undefined>;
