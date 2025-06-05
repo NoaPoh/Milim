@@ -23,6 +23,8 @@ const FlashCards = ({
   const [chosenId, setChosenId] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
+  console.log('FlashCards component rendered with roundWords:', roundWords);
+
   useEffect(() => {
     setChosenId(null);
     setSubmitted(false);
