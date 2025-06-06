@@ -1,7 +1,6 @@
-import SpellingBoard from './SpellingBoard';
 import './Spelling.scss';
+import SpellingBoard from './SpellingBoard';
 import { useState } from 'react';
-import { toast } from 'react-hot-toast';
 
 type SpellingProps = {
   onComplete: (correct: boolean) => void;
@@ -11,24 +10,35 @@ type SpellingProps = {
 
 const Spelling = ({ onComplete, words, image }: SpellingProps) => {
   const [success, setSuccess] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  const handleNext = () => {
-    console.log(success);
-    if (success) {
-      toast.success('Great job! You spelled it correctly!');
+  const handleClick = () => {
+    if (!submitted) {
+      setSubmitted(true);
     } else {
-      toast.error(`Oops... The correct word was: ${words}`);
+      onComplete(success);
+      setSubmitted(false);
+      setSuccess(false);
     }
-
-    onComplete(success);
   };
 
   return (
     <div className="container">
       <img src={image} alt={words} className="image" />
-      <SpellingBoard word={words} setSuccess={setSuccess}></SpellingBoard>
-      <button className="button" onClick={handleNext}>
-        next
+      <SpellingBoard
+        word={words}
+        setSuccess={setSuccess}
+        disabled={submitted}
+      />
+
+      {submitted && (
+        <div className={`feedback ${success ? 'success' : 'error'}`}>
+          {success ? 'כל הכבוד!' : `אופס... המילה הנכונה היא- ${words}`}
+        </div>
+      )}
+
+      <button className="button" onClick={handleClick}>
+        {submitted ? 'Next' : 'Submit'}
       </button>
     </div>
   );
