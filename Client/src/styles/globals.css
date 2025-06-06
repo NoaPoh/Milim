@@ -34,7 +34,8 @@
   animation: popOffTop 5s ease-in-out infinite;
 }
 @keyframes pop {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
