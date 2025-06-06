@@ -20,8 +20,8 @@ const Crossword = ({ onComplete, words, image }: CrosswordProps) => {
       setSubmitted(true);
     } else {
       onComplete(success);
-      setSubmitted(false); // reset for next round
-      setSuccess(false); // reset for next round
+      setSubmitted(false);
+      setSuccess(false);
     }
   };
 
