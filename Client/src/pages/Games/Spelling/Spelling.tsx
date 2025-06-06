@@ -1,6 +1,7 @@
 import SpellingBoard from './SpellingBoard';
 import './Spelling.scss';
 import { useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 type SpellingProps = {
   onComplete: (correct: boolean) => void;
@@ -10,13 +11,23 @@ type SpellingProps = {
 
 const Spelling = ({ onComplete, words, image }: SpellingProps) => {
   const [success, setSuccess] = useState(false);
-  //TODO: check if the given word is above 11 letters, if so, generate another word until it's ok
+
+  const handleNext = () => {
+    console.log(success);
+    if (success) {
+      toast.success('Great job! You spelled it correctly!');
+    } else {
+      toast.error(`Oops... The correct word was: ${words}`);
+    }
+
+    onComplete(success);
+  };
 
   return (
     <div className="container">
       <img src={image} alt={words} className="image" />
       <SpellingBoard word={words} setSuccess={setSuccess}></SpellingBoard>
-      <button className="button" onClick={() => onComplete(success)}>
+      <button className="button" onClick={handleNext}>
         next
       </button>
     </div>

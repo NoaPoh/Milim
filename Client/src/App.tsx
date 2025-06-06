@@ -12,6 +12,7 @@ const App = () => {
     <div className="app">
       {howManyFetching + howManyMutating > 0 && <Loader />}
       <Router />
+      <Toaster />
     </div>
   );
 };
