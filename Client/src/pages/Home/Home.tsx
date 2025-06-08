@@ -35,14 +35,6 @@ const Home: React.FC = () => {
 
         {categories && (
           <div className="home__category-grid">
-            {categories.map((category) => (
-              <CategoryCard
-                key={category.id}
-                id={category.id}
-                name={category.name}
-                picture={category.picture}
-              />
-            ))}
             <div key={0} className="category__word">
               <img
                 onClick={() => setOpenCreateCategoryModal(true)}
@@ -51,6 +43,14 @@ const Home: React.FC = () => {
                 className="add-icon object-cover"
               />
             </div>
+            {categories.map((category) => (
+              <CategoryCard
+                key={category.id}
+                id={category.id}
+                name={category.name}
+                picture={category.picture}
+              />
+            ))}
           </div>
         )}
       </div>
