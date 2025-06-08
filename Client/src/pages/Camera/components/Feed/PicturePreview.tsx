@@ -3,7 +3,6 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import SpeakerButton from '../../../../components/SpeakerButton';
 import CollectionDrawer from '../CollectionDrawer/CollectionDrawer';
 import { useState } from 'react';
-import './PicturePreview.scss';
 
 type PicturePreviewProps = {
   image: string;
@@ -27,9 +26,11 @@ export default function PicturePreview({
 
   return (
     <>
-      <div className="picture-preview">
-        <img src={image} alt="Captured" className="captured-photo" />
-        <div className="picture-preview__bottom">
+      <>
+        <div className="CameraPage__top">
+          <img src={image} alt="Captured" />
+        </div>
+        <div className="CameraPage__bottom">
           <button className="retake button" onClick={onRestart}>
             <FontAwesomeIcon icon={faPlay} className="icon" />
           </button>
@@ -52,7 +53,7 @@ export default function PicturePreview({
             </>
           )}
         </div>
-      </div>
+      </>
 
       <CollectionDrawer
         isOpen={drawerOpen}
