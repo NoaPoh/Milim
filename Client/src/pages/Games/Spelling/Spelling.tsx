@@ -1,5 +1,5 @@
-import SpellingBoard from './SpellingBoard';
 import './Spelling.scss';
+import SpellingBoard from './SpellingBoard';
 import { useState } from 'react';
 
 type SpellingProps = {
@@ -10,14 +10,35 @@ type SpellingProps = {
 
 const Spelling = ({ onComplete, words, image }: SpellingProps) => {
   const [success, setSuccess] = useState(false);
-  //TODO: check if the given word is above 11 letters, if so, generate another word until it's ok
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleClick = () => {
+    if (!submitted) {
+      setSubmitted(true);
+    } else {
+      onComplete(success);
+      setSubmitted(false);
+      setSuccess(false);
+    }
+  };
 
   return (
     <div className="container">
       <img src={image} alt={words} className="image" />
-      <SpellingBoard word={words} setSuccess={setSuccess}></SpellingBoard>
-      <button className="button" onClick={() => onComplete(success)}>
-        next
+      <SpellingBoard
+        word={words}
+        setSuccess={setSuccess}
+        disabled={submitted}
+      />
+
+      {submitted && (
+        <div className={`feedback ${success ? 'success' : 'error'}`}>
+          {success ? 'כל הכבוד!' : `אופס... המילה הנכונה היא- ${words}`}
+        </div>
+      )}
+
+      <button className="button" onClick={handleClick}>
+        {submitted ? 'Next' : 'Submit'}
       </button>
     </div>
   );

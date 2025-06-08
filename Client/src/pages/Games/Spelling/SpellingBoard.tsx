@@ -7,9 +7,10 @@ import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons';
 interface SpellingBoardProps {
   word: string;
   setSuccess?: React.Dispatch<React.SetStateAction<boolean>>;
+  disabled?: boolean;
 }
 
-const SpellingBoard = ({ word, setSuccess }: SpellingBoardProps) => {
+const SpellingBoard = ({ word, setSuccess, disabled }: SpellingBoardProps) => {
   const [selectedLetters, setSelectedLetters] = useState<string[]>([]);
   const [disabledIndexes, setDisabledIndexes] = useState<Set<number>>(
     new Set()
@@ -22,7 +23,11 @@ const SpellingBoard = ({ word, setSuccess }: SpellingBoardProps) => {
   );
 
   const handleLetterClick = (letter: string, index: number) => {
-    if (selectedLetters.length < word.length && !disabledIndexes.has(index)) {
+    if (
+      selectedLetters.length < word.length &&
+      !disabledIndexes.has(index) &&
+      !disabled
+    ) {
       setSelectedLetters((prev) => [...prev, letter]);
       setSelectedIndexes((prev) => [...prev, index]);
       setDisabledIndexes((prev) => new Set(prev).add(index));
@@ -56,7 +61,7 @@ const SpellingBoard = ({ word, setSuccess }: SpellingBoardProps) => {
         ))}
       </div>
       <div className="icon-button-wrapper">
-        <button onClick={() => deleteLastLetter()}>
+        <button onClick={deleteLastLetter} hidden={disabled}>
           <FontAwesomeIcon icon={faDeleteLeft} />
         </button>
       </div>
@@ -71,10 +76,10 @@ const SpellingBoard = ({ word, setSuccess }: SpellingBoardProps) => {
         {buttonsValues.map((letter, index) => (
           <button
             key={index}
-            disabled={disabledIndexes.has(index)}
+            disabled={disabledIndexes.has(index) || disabled}
             className={`spelling-button ${
               buttonsAmount === 8 ? 'large' : 'small'
-            } ${disabledIndexes.has(index) ? 'disabled' : ''}`}
+            } ${disabledIndexes.has(index) || disabled ? 'disabled' : ''}`}
             onClick={() => handleLetterClick(letter, index)}
           >
             {letter}

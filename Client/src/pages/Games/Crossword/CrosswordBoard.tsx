@@ -6,9 +6,10 @@ interface Props {
   boardSize: number;
   word: string;
   setSuccess?: React.Dispatch<React.SetStateAction<boolean>>;
+  disabled?: boolean;
 }
 
-const CrosswordBoard = ({ boardSize, word, setSuccess }: Props) => {
+const CrosswordBoard = ({ boardSize, word, setSuccess, disabled }: Props) => {
   const [clickedCells, setClickedCells] = useState<
     { row: number; col: number }[]
   >([]);
@@ -21,6 +22,8 @@ const CrosswordBoard = ({ boardSize, word, setSuccess }: Props) => {
   };
 
   const handleCellClick = (row: number, col: number, letter: string) => {
+    if (disabled) return;
+
     const alreadyClicked = clickedCells.some(
       (cell) => cell.row === row && cell.col === col
     );
@@ -68,6 +71,7 @@ const CrosswordBoard = ({ boardSize, word, setSuccess }: Props) => {
                       isCellClicked(rowIndex, colIndex) ? 'selected' : ''
                     }
                     onClick={() => handleCellClick(rowIndex, colIndex, letter)}
+                    disabled={disabled}
                   >
                     {letter}
                   </button>
