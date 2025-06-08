@@ -1,3 +1,5 @@
+import Modal from '../../../../components/Moal/Modal';
+
 export interface ClickedWord {
   wordId: number;
   categoryId: number;
@@ -14,10 +16,9 @@ export const WordModal = (props: WordModalProps) => {
   return (
     <>
       {props.wordId && (
-        <div className="WordCard__modal">
-          {/* <ClickAwayListener onClickAway={() => props.closeModal()}> */}
+        <Modal>
           <div
-            className="WordCard__container"
+            className="WordCard__container WordCard__modal"
             onClick={() => props.closeModal()}
           >
             <img
@@ -33,8 +34,7 @@ export const WordModal = (props: WordModalProps) => {
               אני יודע את זה!
             </button>
           </div>
-          {/* </ClickAwayListener> */}
-        </div>
+        </Modal>
       )}
     </>
   );
