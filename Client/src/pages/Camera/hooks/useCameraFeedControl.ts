@@ -1,5 +1,10 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { convertVideoToBase64 } from '../../../utils/video';
+
+export enum CameraFacingMode {
+  FRONT = 'user',
+  BACK = 'environment',
+}
 
 function useCameraFeedControl() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -8,14 +13,34 @@ function useCameraFeedControl() {
   const [stalePhoto, setStalePhoto] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [cantUseCamera, setCantUseCamera] = useState<boolean>(false);
+  const [facingMode, setFacingMode] = useState<CameraFacingMode>(
+    CameraFacingMode.BACK
+  );
 
   const captureFrameAsBase64 = (): string | null => {
     return convertVideoToBase64(videoRef.current);
   };
 
+  useEffect(() => {
+    console.log(`Camera facing mode set to: ${facingMode}.`);
+    restartFeed(() => {
+      console.log(`Camera feed restarted with facing mode: ${facingMode}`);
+    });
+  }, [facingMode]);
+
+  const toggleCameraFacingMode = () => {
+    setFacingMode((prevMode) =>
+      prevMode === CameraFacingMode.BACK
+        ? CameraFacingMode.FRONT
+        : CameraFacingMode.BACK
+    );
+  };
+
   const startFeed = async (onStart?: () => void) => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { exact: facingMode } }, // request back camera
+      });
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
@@ -23,9 +48,16 @@ function useCameraFeedControl() {
       onStart?.();
     } catch (error: any) {
       setCantUseCamera(true);
+
+      if (error.name === 'OverconstrainedError') {
+        stopFeed();
+      }
+
       setErrorMessage(
         error.name === 'NotAllowedError'
           ? 'Permission denied. Please allow access to your webcam.'
+          : error.name === 'OverconstrainedError'
+          ? 'Back camera not available. Try switching to the front camera.'
           : 'Error accessing webcam. Please try again.'
       );
     }
@@ -60,6 +92,7 @@ function useCameraFeedControl() {
     stalePhoto,
     errorMessage,
     cantUseCamera,
+    toggleCameraFacingMode,
   };
 }
 

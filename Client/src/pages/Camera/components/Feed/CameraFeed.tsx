@@ -1,25 +1,32 @@
 import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
+import './CameraFeed.scss';
 
 type CameraFeedProps = {
   onTakePicture: () => void;
+  toggleCameraFacingMode: () => void;
   cantUseCamera: boolean;
 };
 
 const CameraFeed = forwardRef<HTMLVideoElement, CameraFeedProps>(
-  ({ onTakePicture, cantUseCamera }, ref) => {
+  (props, ref) => {
     return (
-      <>
-        <video ref={ref} autoPlay muted className="video-preview" />
-        <button
-          className="button"
-          disabled={cantUseCamera}
-          onClick={onTakePicture}
-        >
-          <FontAwesomeIcon icon={faCamera} className="icon" />
-        </button>
-      </>
+      <div className="CameraFeed">
+        <video ref={ref} autoPlay muted className="CameraFeed__video-preview" />
+        <div className="">
+          <button
+            className="button"
+            disabled={props.cantUseCamera}
+            onClick={props.onTakePicture}
+          >
+            <FontAwesomeIcon icon={faCamera} className="icon" />
+          </button>
+          <button className="button" onClick={props.toggleCameraFacingMode}>
+            <FontAwesomeIcon icon={faArrowsRotate} className="icon" />
+          </button>
+        </div>
+      </div>
     );
   }
 );

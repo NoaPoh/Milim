@@ -19,6 +19,7 @@ export default function CameraPage() {
     errorMessage,
     cantUseCamera,
     captureFrameAsBase64,
+    toggleCameraFacingMode,
   } = useCameraFeedControl();
 
   const {
@@ -28,6 +29,11 @@ export default function CameraPage() {
   } = api.externals.detectObject.useMutation({
     onSuccess: (_data, originalImage) => {
       freezeFrame(originalImage);
+      apiUtils.externals.translateWord.invalidate();
+    },
+    onError: (error) => {
+      console.error('Error detecting object:', error);
+      restartFeed();
       apiUtils.externals.translateWord.invalidate();
     },
     retryDelay: 2000,
@@ -51,10 +57,10 @@ export default function CameraPage() {
     return () => stopFeed();
   }, []);
 
-  useVideoStability(videoRef, takePicture);
+  useVideoStability(videoRef, cantUseCamera, takePicture);
 
   return (
-    <div className="photo-capture-container">
+    <div className="CameraPage">
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       {!stalePhoto ? (
@@ -62,6 +68,7 @@ export default function CameraPage() {
           ref={videoRef}
           onTakePicture={takePicture}
           cantUseCamera={cantUseCamera}
+          toggleCameraFacingMode={toggleCameraFacingMode}
         />
       ) : (
         <PicturePreview
