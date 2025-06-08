@@ -79,7 +79,7 @@ const FlashCards = ({
         </button>
       ) : (
         <button className="next-button" onClick={handleNext}>
-          Next
+          הבא
         </button>
       )}
     </div>
