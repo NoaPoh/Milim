@@ -88,23 +88,22 @@
     }
   }
 
-  &__error {
-    color: red;
-    text-align: center;
-    font-size: 0.9rem;
-  }
-}
+  .submit-button {
+    background: $primary-dark;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
 
-.submit-button {
-  background: $primary-dark;
-  color: white;
-  padding: 0.75rem;
-  border-radius: 9999px;
-  font-weight: 600;
-  transition: all 0.2s ease-in-out;
+    &:hover {
+      background-color: $primary-dark;
+    }
 
-  &:hover {
-    background-color: $primary-dark;
+    &:disabled {
+      background-color: $primary-light;
+      cursor: not-allowed;
+    }
   }
 }
 

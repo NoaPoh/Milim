@@ -3,7 +3,7 @@ import './Register.scss';
 import { api } from '../../utils/trpcClient';
 import { useNavigate } from 'react-router';
 import { RoutesValues } from '../../routes/routes';
-import { showSuccessToast } from '../../utils/toast.ts';
+import { showSuccessToast, showErrorToast } from '../../utils/toast.ts';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -20,12 +20,19 @@ const Register = () => {
   const { data: freeAnimals } = api.award.getFreeAnimals.useQuery();
 
   const { mutateAsync: register, isPending: registerIsPending } =
-    api.auth.register.useMutation({ onSuccess: navToLogin });
+    api.auth.register.useMutation({
+      onSuccess: navToLogin,
+      onError: (error) => {
+        showErrorToast(error.message || 'ההרשמה נכשלה, אנא נסו שוב.');
+      },
+    });
+  const isSubmitDisabled =
+    registerIsPending || !username || !email || !password || !spiritAnimal;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!username || !email || !password || !spiritAnimal) {
+    if (isSubmitDisabled) {
       return;
     }
 
@@ -40,7 +47,7 @@ const Register = () => {
   return (
     <div className="register">
       <form onSubmit={handleSubmit} className="register__form">
-        <h2 className="register__title">בוא.י נכיר!</h2>
+        <h2 className="register__title">בואו נכיר!</h2>
 
         <input
           type="text"
@@ -86,10 +93,10 @@ const Register = () => {
 
         <button
           type="submit"
-          className="submit-button"
-          disabled={registerIsPending}
+          className={`submit-button`}
+          disabled={isSubmitDisabled}
         >
-          {!registerIsPending ? 'בואו נתחיל ללמוד!' : ''}
+          אפשר להתחיל ללמוד!
         </button>
       </form>
     </div>

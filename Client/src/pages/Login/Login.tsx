@@ -7,11 +7,11 @@ import monkeyPicture from '../../assets/images/animals/monkey.png';
 import crocodilePicture from '../../assets/images/animals/crocodile.png';
 import tigerPicture from '../../assets/images/animals/tiger.png';
 import './Login.scss';
+import { showErrorToast, showSuccessToast } from '../../utils/toast';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const navToRegister = () => {
@@ -20,6 +20,7 @@ const Login: React.FC = () => {
 
   const navToHome = () => {
     console.log('Login successful');
+    showSuccessToast('ברוכים השבים!');
     navigate(RoutesValues.HOME);
   };
 
@@ -27,13 +28,12 @@ const Login: React.FC = () => {
     api.auth.login.useMutation({
       onSuccess: navToHome,
       onError: (error) => {
-        setErrorMessage(error.message || 'שם משתמש או סיסמה לא תקינים');
+        showErrorToast(error.message || 'התחברות נכשלה, אנא נסו שוב');
       },
     });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMessage(''); // Clear any previous error
     login({ email, password });
   };
 
@@ -53,16 +53,12 @@ const Login: React.FC = () => {
         <div className="login-box">
           <h2>Milim</h2>
           <form onSubmit={handleSubmit}>
-            {errorMessage && (
-              <p className="login-error-message">{errorMessage}</p>
-            )}
             <input
               type="email"
               placeholder="אימייל"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className={errorMessage ? 'error' : ''}
             />
             <input
               type="password"
@@ -70,7 +66,6 @@ const Login: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className={errorMessage ? 'error' : ''}
             />
 
             <button type="submit" disabled={loginIsPending}>
