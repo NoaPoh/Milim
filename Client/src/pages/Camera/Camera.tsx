@@ -5,6 +5,7 @@ import CameraFeed from './components/Feed/CameraFeed';
 import PicturePreview from './components/Feed/PicturePreview';
 import { api } from '../../utils/trpcClient';
 import { useVideoStability } from './hooks/useVideoStability';
+import { showErrorToast } from '../../utils/toast';
 
 export default function CameraPage() {
   const apiUtils = api.useUtils();
@@ -59,10 +60,12 @@ export default function CameraPage() {
 
   useVideoStability(videoRef, cantUseCamera, takePicture);
 
+  useEffect(() => {
+    errorMessage && showErrorToast(errorMessage);
+  }, [errorMessage]);
+
   return (
     <div className="CameraPage">
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-
       {!stalePhoto ? (
         <CameraFeed
           ref={videoRef}

@@ -21,15 +21,16 @@ const CameraFeed = forwardRef<HTMLVideoElement, CameraFeedProps>(
           />
         </div>
         <div className="CameraPage__bottom">
+          <p className="desc">נסו להשאר יציבים עם המצלמה!</p>
           <div className="feed-actions">
             <button
-              className="button"
+              className="btn"
               disabled={props.cantUseCamera}
               onClick={props.onTakePicture}
             >
               <FontAwesomeIcon icon={faCamera} className="icon" />
             </button>
-            <button className="button" onClick={props.toggleCameraFacingMode}>
+            <button className="btn" onClick={props.toggleCameraFacingMode}>
               <FontAwesomeIcon icon={faArrowsRotate} className="icon" />
             </button>
           </div>

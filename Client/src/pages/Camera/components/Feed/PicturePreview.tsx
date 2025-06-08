@@ -31,7 +31,7 @@ export default function PicturePreview({
           <img src={image} alt="Captured" />
         </div>
         <div className="CameraPage__bottom">
-          <button className="retake button" onClick={onRestart}>
+          <button className="retake btn" onClick={onRestart}>
             <FontAwesomeIcon icon={faPlay} className="icon" />
           </button>
           {!isDetecting && detectedObject && (

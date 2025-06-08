@@ -55,10 +55,10 @@ function useCameraFeedControl() {
 
       setErrorMessage(
         error.name === 'NotAllowedError'
-          ? 'Permission denied. Please allow access to your webcam.'
+          ? 'אופס! אין הרשאות למצלמה בדפדפן שלך.'
           : error.name === 'OverconstrainedError'
-          ? 'Back camera not available. Try switching to the front camera.'
-          : 'Error accessing webcam. Please try again.'
+          ? 'נראה שאין לנו מצלמה אחורית. בוא ננסה את הקדמית בכפתור החלפה!'
+          : 'שגיאה בהפעלת המצלמה, נסה לרענן את הדף או לבדוק את ההגדרות של הדפדפן שלך.'
       );
     }
   };
