@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { RoutesValues } from '../../../routes/routes';
+import { RoutesValues } from '../../../../routes/routes';
 import './CategoryCard.scss';
 
 export type CategoryCardProps = {

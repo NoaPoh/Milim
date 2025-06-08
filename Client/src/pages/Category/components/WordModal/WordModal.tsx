@@ -1,4 +1,4 @@
-import Modal from '../../../../components/Moal/Modal';
+import Modal from '../../../../components/Modal/Modal';
 
 export interface ClickedWord {
   wordId: number;
