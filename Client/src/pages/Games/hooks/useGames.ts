@@ -19,7 +19,6 @@ export const useGames = ({ game }: props) => {
           ? 10
           : undefined,
     });
-  console.log('words', words);
 
   return { words, isLoading };
 };
