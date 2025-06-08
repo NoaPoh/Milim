@@ -34,7 +34,7 @@
     align-items: center;
     flex-grow: 1;
 
-    :first-child {
+    & :first-child {
       background-color: transparent;
       display: flex;
       justify-content: center;
