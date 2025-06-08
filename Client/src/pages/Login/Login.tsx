@@ -69,7 +69,7 @@ const Login: React.FC = () => {
             />
 
             <button type="submit" disabled={loginIsPending}>
-              יאללה
+              קדימה!
             </button>
           </form>
           <p>
