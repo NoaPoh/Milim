@@ -95,10 +95,10 @@ const routes: RouteProps[] = [
 
 interface RouterProps {}
 
-const Router: FunctionComponent<RouterProps> = (props) => {
+const Router: FunctionComponent<RouterProps> = () => {
   return (
     <Routes>
-      {routes.map((route, index) => {
+      {routes.map((route) => {
         const { path, component, navbar } = route;
         return (
           <Route
