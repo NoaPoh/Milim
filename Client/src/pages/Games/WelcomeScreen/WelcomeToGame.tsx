@@ -20,7 +20,7 @@ const WelcomeToGame = () => {
 
   return (
     <div className="welcome-screen">
-      <p className="text">ברוך הבא אל</p>
+      <p className="text">ברוך הבא למשחק</p>
       <p className="text__game-name">{game.name}</p>
       <img src={game.image} alt={game.name} />
       <button className="button" onClick={() => navigate(path)}>

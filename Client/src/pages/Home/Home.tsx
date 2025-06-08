@@ -27,7 +27,7 @@ const Home: React.FC = () => {
               background={activeAwards?.[AwardType.ICON_BACKGROUND] || ''}
             />
             <p className="text-xl text-gray-700 mb-6">
-              שלום {user.username}, <br /> איפה אתה עכשיו?
+              שלום {user.username}, <br /> איפה אנחנו עכשיו?
             </p>
           </div>
         )}
