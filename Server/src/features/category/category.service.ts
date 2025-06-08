@@ -6,6 +6,7 @@ import { uint8ArrayToClientReadyImage } from '../../utils/images.util';
 
 export const fetchUserCategories = async (
   userId: number,
+  wordToAdd: string | undefined,
   prisma: PrismaClient
 ): Promise<DisplayCategory[]> => {
   const categories = await prisma.category.findMany({
@@ -25,6 +26,7 @@ export const fetchUserCategories = async (
           discoveredAt: 'asc',
         },
         select: {
+          translatedText: true,
           picture: true,
         },
       },
@@ -42,6 +44,9 @@ export const fetchUserCategories = async (
     return {
       ...CategoryObjToUse,
       picture,
+      hasThisWord: !wordToAdd
+        ? false
+        : category.words.some((word) => word.translatedText === wordToAdd),
     };
   });
 
