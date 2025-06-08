@@ -4,7 +4,6 @@ import useCameraFeedControl from './hooks/useCameraFeedControl';
 import CameraFeed from './components/Feed/CameraFeed';
 import PicturePreview from './components/Feed/PicturePreview';
 import { api } from '../../utils/trpcClient';
-import { Toaster } from 'react-hot-toast';
 import { useVideoStability } from './hooks/useVideoStability';
 
 export default function CameraPage() {

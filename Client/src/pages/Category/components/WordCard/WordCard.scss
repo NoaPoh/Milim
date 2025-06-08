@@ -18,10 +18,6 @@
     transform: translateY(-2px) scale(1.03);
   }
 
-  .WordCard__modal & {
-    padding: 1.2rem;
-  }
-
   img {
     border-radius: 12px;
     width: 110px;
@@ -29,11 +25,6 @@
     object-fit: cover;
     margin-top: 10px;
     margin-bottom: 12px;
-
-    .WordCard__modal & {
-      width: 180px;
-      height: 180px;
-    }
   }
 
   p {
@@ -41,8 +32,16 @@
     font-weight: 600;
     margin: 0.5rem 0 0.25rem 0;
     text-align: center;
+  }
 
-    .WordCard__modal & {
+  &.WordCard__modal {
+    padding: 1.2rem;
+
+    img {
+      width: 180px;
+      height: 180px;
+    }
+    p {
       font-size: 2rem;
       margin-top: 1rem;
       margin-bottom: 1rem;
@@ -71,27 +70,4 @@
       background: #0056b3;
     }
   }
-}
-
-.WordCard__modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  pointer-events: none;
-
-  .WordCard__container {
-    z-index: 1001;
-  }
-}
-
-.WordCard__container:not(.WordCard__modal .WordCard__container) {
-  height: 14rem;
-  margin: 0.5rem;
 }

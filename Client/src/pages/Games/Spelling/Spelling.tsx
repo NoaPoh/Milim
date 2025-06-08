@@ -38,7 +38,7 @@ const Spelling = ({ onComplete, words, image }: SpellingProps) => {
       )}
 
       <button className="button" onClick={handleClick}>
-        {submitted ? 'Next' : 'Submit'}
+        {submitted ? 'הבא' : 'זיהוי'}
       </button>
     </div>
   );
