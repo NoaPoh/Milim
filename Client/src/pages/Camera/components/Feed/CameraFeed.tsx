@@ -17,6 +17,7 @@ const CameraFeed = forwardRef<HTMLVideoElement, CameraFeedProps>(
             ref={ref}
             autoPlay
             muted
+            playsInline
             className="CameraFeed__video-preview"
           />
         </div>

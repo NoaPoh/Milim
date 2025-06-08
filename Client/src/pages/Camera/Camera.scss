@@ -9,6 +9,7 @@
   padding-bottom: 2rem;
   width: 100%;
   height: 100%;
+  position: relative;
 
   .error-message {
     color: red;
@@ -20,12 +21,14 @@
   .CameraPage__top {
     max-width: 90%;
     max-height: 60%;
+    overflow: hidden;
 
     img,
     video {
       width: 100%;
       height: auto;
       border-radius: 1rem;
+      object-fit: cover;
     }
   }
 
