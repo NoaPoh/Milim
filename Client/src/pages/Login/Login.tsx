@@ -2,10 +2,6 @@ import React, { useState } from 'react';
 import { RoutesValues } from '../../routes/routes';
 import { api } from '../../utils/trpcClient';
 import { useNavigate } from 'react-router-dom';
-import hippoPicture from '../../assets/images/animals/hippo.png';
-import monkeyPicture from '../../assets/images/animals/monkey.png';
-import crocodilePicture from '../../assets/images/animals/crocodile.png';
-import tigerPicture from '../../assets/images/animals/tiger.png';
 import './Login.scss';
 import { showErrorToast, showSuccessToast } from '../../utils/toast';
 
@@ -41,9 +37,9 @@ const Login: React.FC = () => {
     <div className="login-page">
       {/* Header hippos */}
       <div className="login-page__header">
-        <img src={crocodilePicture} alt="Crocodile" className="left-animal" />
+        <img src='/images/animals/crocodile.png' alt="Crocodile" className="left-animal" />
         <img
-          src={monkeyPicture}
+          src='/images/animals/monkey.png'
           alt="Monkey"
           className="animated-animal pop-off-top"
         />
@@ -81,12 +77,12 @@ const Login: React.FC = () => {
       {/* Footer hippo */}
       <div className="login-page__footer">
         <img
-          src={hippoPicture}
+          src='/images/animals/hippo.png'
           alt="Hippo"
           className="login-page__footer__hippo-img"
         />
         <img
-          src={tigerPicture}
+          src='/images/animals/tiger.png'
           alt="Tiger"
           className="login-page__footer__tiger-img"
         />

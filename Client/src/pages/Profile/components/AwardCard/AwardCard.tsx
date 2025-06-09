@@ -66,7 +66,7 @@ export default function AwardCard({
     <div className={`award-card ${isCardDisabled ? 'disabled' : ''}`}>
       <div className="award-left">
         {award.iconUrl ? (
-          <img src={`src/assets/images/${award.iconUrl}`} alt={award.name} />
+          <img src={`/images/${award.iconUrl}`} alt={award.name} />
         ) : (
           <div className="placeholder" />
         )}
