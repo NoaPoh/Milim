@@ -1,7 +1,10 @@
 import { Award, Category, Prisma, User, Word } from '@prisma/client';
 import { ActiveAwards } from 'milim-client/src/constants/awards.types';
 
-export type DisplayCategory = Category & { picture: string };
+export type DisplayCategory = Category & {
+  picture: string;
+  hasThisWord: boolean;
+};
 
 export type MessageResponse = {
   message: string;

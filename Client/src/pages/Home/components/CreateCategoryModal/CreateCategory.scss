@@ -1,0 +1,52 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
+
+.createCategory {
+  width: 20rem;
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #f0f0f0;
+  border-radius: 0.5rem;
+  color: black;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  input {
+    background-color: $inputs;
+    padding: 10px;
+    border: 1px solid $border-color;
+    border-radius: 30px;
+    font-size: 1rem;
+    transition: border 0.3s ease;
+    background-color: $inputs;
+    &:focus {
+      @include focus-border;
+    }
+  }
+
+  .createCategory__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #f0f0f0;
+
+      &:hover {
+        background-color: $primary-dark;
+      }
+    }
+  }
+}

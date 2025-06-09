@@ -12,10 +12,11 @@ import './styles/globals.css';
 import './index.css';
 import { UserProvider } from './context/UserContext';
 import { EndGamePopupProvider } from './pages/Games/components/EndGamePopup/EndGamePopupContext';
+import { Toaster } from 'react-hot-toast';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
-    onError: (error) => console.error(error),
+    // onError: (error) => console.error(error),
   }),
 });
 
@@ -40,6 +41,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <api.Provider client={trpcClient(queryClient)} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
           <EndGamePopupProvider>
+            <Toaster />
             <AppWithAuth />
           </EndGamePopupProvider>
         </QueryClientProvider>

@@ -49,6 +49,7 @@
 .drawer-item {
   padding: 0.75rem;
   background-color: #f3f4f6;
+  color: #1f2937;
   border-radius: 0.5rem;
   cursor: pointer;
   display: flex;
@@ -56,12 +57,23 @@
   &:hover {
     background-color: #e5e7eb;
   }
+
+  &[aria-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.6;
+    pointer-events: none;
+    background-color: #909090;
+
+    .drawer-icon {
+      filter: grayscale(100%);
+    }
+  }
 }
 
 .drawer-icon {
   width: 1.5rem;
   height: 1.5rem;
-  margin-right: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 .add-button {

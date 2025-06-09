@@ -46,12 +46,17 @@ const GenericGame = ({ GameComponent }: GenericGameProps) => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>טוען...</div>;
+
+  console.log(`Rendering ${GameComponent.name} , ${GameNames.FLASH_CARDS}`);
 
   if (GameComponent.name === GameNames.FLASH_CARDS) {
     const correct = words[round];
     const others = words.filter((w) => w.id !== correct.id);
     const distractors = others.slice(0, 3);
+    console.log('Distractors:', distractors);
+    console.log('Correct word:', correct);
+
     const roundWords = [...distractors, correct].sort(
       () => 0.5 - Math.random()
     );

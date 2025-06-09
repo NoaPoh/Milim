@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import './FlashCards.scss';
 
+type CardClass = '' | 'chosen' | 'correct' | 'wrong';
+
 type Word = {
   id: number;
   originalText: string;
@@ -21,6 +23,8 @@ const FlashCards = ({
   const [chosenId, setChosenId] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
+  console.log('FlashCards component rendered with roundWords:', roundWords);
+
   useEffect(() => {
     setChosenId(null);
     setSubmitted(false);
@@ -37,7 +41,7 @@ const FlashCards = ({
     }
   };
 
-  const getCardClass = (id: number) => {
+  const getCardClass = (id: number): CardClass => {
     if (!submitted) return id === chosenId ? 'chosen' : '';
     if (id === correctId) return 'correct';
     if (id === chosenId && id !== correctId) return 'wrong';
@@ -75,7 +79,7 @@ const FlashCards = ({
         </button>
       ) : (
         <button className="next-button" onClick={handleNext}>
-          Next
+          הבא
         </button>
       )}
     </div>

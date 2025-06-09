@@ -6,7 +6,7 @@ import { getActiveAwardsByCategory } from '../../utils/getActiveAwards';
 export const winAGame = async (
   userId: number,
   coins: number,
-  prisma: PrismaClient,
+  prisma: PrismaClient
 ): Promise<User> => {
   const user = await prisma.user.findUnique({ where: { id: userId } });
 
@@ -26,7 +26,7 @@ export const winAGame = async (
 
 export const getUser = async (
   prisma: PrismaClient,
-  id: number,
+  id: number
 ): Promise<UserDTO> => {
   const user = await prisma.user.findUnique({
     where: { id },
@@ -49,7 +49,7 @@ export const getUser = async (
   if (!user) {
     throw new TRPCError({
       code: 'NOT_FOUND',
-      message: 'User with this id does not exist.',
+      message: 'משתמש זה לא קיים אוי לי.',
     });
   }
 

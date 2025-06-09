@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './CollectionDrawer.scss';
 import { useGetCategories } from '../../../Home/hooks/useGetCategories';
 import { api } from '../../../../utils/trpcClient';
@@ -21,8 +21,8 @@ const CollectionDrawer = ({
   translatedText,
   picture,
 }: CollectionDrawerProps) => {
+  const { data: categories } = useGetCategories(isOpen, translatedText);
   const navigate = useNavigate();
-  const { data: categories } = useGetCategories(isOpen);
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     null
   );
@@ -30,12 +30,12 @@ const CollectionDrawer = ({
     (category) => category.id === selectedCategoryId
   );
   const handleSuccess = () => {
-    showSuccessToast(`added to ${selectedCategory?.name} collection!`);
+    showSuccessToast(`מילה נוספה לאוסף ${selectedCategory?.name}!`);
     navigate(`${RoutesValues.CATEGORY}/category/${selectedCategory?.id}`);
     onClose();
   };
   const handleError = () => {
-    showErrorToast(`Failed to add to ${selectedCategory?.id} collection!`);
+    showErrorToast(`לא הצלחנו להוסיף את המילה לאוסף 😭`);
     onClose();
   };
 
@@ -49,7 +49,14 @@ const CollectionDrawer = ({
 
   const handleCategoryClick = (categoryId: number) => {
     setSelectedCategoryId(categoryId);
+    console.log(
+      `Selected category ID: ${categoryId}, Category name: ${
+        categories?.find((cat) => cat.id === categoryId)?.name
+      }`
+    );
   };
+
+  useEffect(()=>{console.log(selectedCategoryId)},[selectedCategoryId]);
 
   const handleAddClick = async () => {
     if (selectedCategoryId === null) return;
@@ -68,7 +75,7 @@ const CollectionDrawer = ({
         className={`drawer-content ${isOpen ? 'open' : ''}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 className="drawer-title">Choose a Collection</h3>
+        <h3 className="drawer-title">בחר אוסף</h3>
         <ul className="drawer-list">
           {categories &&
             categories.map((category) => (
@@ -78,6 +85,7 @@ const CollectionDrawer = ({
                   selectedCategoryId === category.id ? 'selected' : ''
                 }`}
                 onClick={() => handleCategoryClick(category.id)}
+                aria-disabled={category.hasThisWord}
               >
                 <img
                   src={category.picture}
@@ -96,7 +104,7 @@ const CollectionDrawer = ({
               selectedCategoryId === null || saveWordInCategoryIsPending
             }
           >
-            Add To Collection
+            הוסף לאוסף
           </button>
         )}
       </div>

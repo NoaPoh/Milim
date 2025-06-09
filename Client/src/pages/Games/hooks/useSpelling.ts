@@ -7,7 +7,7 @@ export const useSpelling = (
   setSuccess?: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const [buttonsAmount, setButtonsAmount] = useState<number>(0);
-  const [sheffledWord, setSheffeledWord] = useState<string>('');
+  const [shuffledWord, setSheffeledWord] = useState<string>('');
   const [buttonsValues, setButtonsValues] = useState<string[]>([]);
 
   // Set amount and shuffled word on mount
@@ -20,10 +20,10 @@ export const useSpelling = (
 
   // Generate buttons only after both states are ready
   useEffect(() => {
-    if (sheffledWord && buttonsAmount > 0) {
-      setButtonsValues(generateButtonValues(sheffledWord, buttonsAmount));
+    if (shuffledWord && buttonsAmount > 0) {
+      setButtonsValues(generateButtonValues(shuffledWord, buttonsAmount));
     }
-  }, [sheffledWord, buttonsAmount]);
+  }, [shuffledWord, buttonsAmount]);
 
   useEffect(() => {
     const typedWord = selectedLetters.join('');

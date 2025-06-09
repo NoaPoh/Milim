@@ -11,10 +11,14 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShop, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import AwardShopModal from './components/ShopModal.tsx';
-import { AwardType } from '@prisma/client';
+import { AwardType } from '../../constants/awards.types.ts';
 
 const Profile: React.FC = () => {
-  const { user, isLoading } = useUser();
+  const { user, isLoading }: { user: UserDTO; isLoading: boolean } = useUser();
+  const { mutate: logOut } = api.auth.logout.useMutation({
+    onSuccess: () => navigate(RoutesValues.LOGIN),
+  });
+
   const [isShopOpen, setShopOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -26,10 +30,10 @@ const Profile: React.FC = () => {
   const activeAwardNames: string[] = Object.values(activeAwards);
 
   const handleLogout = () => {
-    api.auth.logout.useMutation({
-      onSuccess: () => navigate(RoutesValues.LOGIN),
-    });
+    logOut();
   };
+
+  if (isLoading) return <Loader />;
 
   return (
     <div className="profile-container">
@@ -59,7 +63,7 @@ const Profile: React.FC = () => {
         <img
           src={coinsIcon}
           className="image rounded-full"
-          alt="missing your info!"
+          alt="אין לנו את המידע שלך!"
         />
         <span className="text">{coins}</span>
       </div>

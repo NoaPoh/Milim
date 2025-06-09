@@ -7,7 +7,6 @@ import PersonIcon from '@mui/icons-material/Person';
 import { RoutesValues } from '../../routes/routes';
 import './Navbar.scss';
 import { showInfoToast } from '../../utils/toast';
-import { Toaster } from 'react-hot-toast';
 
 const Navbar = () => {
   const location = useLocation();
@@ -16,13 +15,12 @@ const Navbar = () => {
   const handleGamesClick = (e: React.MouseEvent) => {
     if (!isLoading && wordSum !== undefined && wordSum < 5) {
       e.preventDefault();
-      showInfoToast(`Oops! Learn 5 words first to unlock the games!`);
+      showInfoToast(`אוי לי! עליך להשלים לפחות 5 מילים כדי לשחק במשחקים!`);
     }
   };
 
   return (
     <nav className="navbar">
-      <Toaster />
       <Link
         to={RoutesValues.HOME}
         className={`navbar__link ${

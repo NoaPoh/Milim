@@ -3,14 +3,12 @@ import './Register.scss';
 import { api } from '../../utils/trpcClient';
 import { useNavigate } from 'react-router';
 import { RoutesValues } from '../../routes/routes';
-import { showSuccessToast } from '../../utils/toast.ts';
+import { showSuccessToast, showErrorToast } from '../../utils/toast.ts';
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [learningLanguage, setLearningLanguage] = useState('');
-  const [nativeLanguage, setNativeLanguage] = useState('');
   const [spiritAnimal, setSpiritAnimal] = useState<number>(0);
   const navigate = useNavigate();
 
@@ -22,12 +20,19 @@ const Register = () => {
   const { data: freeAnimals } = api.award.getFreeAnimals.useQuery();
 
   const { mutateAsync: register, isPending: registerIsPending } =
-    api.auth.register.useMutation({ onSuccess: navToLogin });
+    api.auth.register.useMutation({
+      onSuccess: navToLogin,
+      onError: (error) => {
+        showErrorToast(error.message || 'ההרשמה נכשלה, אנא נסו שוב.');
+      },
+    });
+  const isSubmitDisabled =
+    registerIsPending || !username || !email || !password || !spiritAnimal;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!username || !email || !password || !spiritAnimal) {
+    if (isSubmitDisabled) {
       return;
     }
 
@@ -42,11 +47,11 @@ const Register = () => {
   return (
     <div className="register">
       <form onSubmit={handleSubmit} className="register__form">
-        <h2 className="register__title">Let's get to know you !</h2>
+        <h2 className="register__title">בואו נכיר!</h2>
 
         <input
           type="text"
-          placeholder="Username"
+          placeholder="השם הכי מגניב שלך"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           className="register__input"
@@ -54,7 +59,7 @@ const Register = () => {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder="סיסמה סופר חזקה"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="register__input"
@@ -62,34 +67,13 @@ const Register = () => {
 
         <input
           type="email"
-          placeholder="Email"
+          placeholder="אימייל"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="register__input"
         />
 
-        <select
-          value={nativeLanguage}
-          onChange={(e) => setNativeLanguage(e.target.value)}
-          className="register__input"
-        >
-          <option value="" disabled hidden>
-            I speak
-          </option>
-          <option value="English">English</option>
-        </select>
-
-        <select
-          onChange={(e) => setLearningLanguage(e.target.value)}
-          className="register__input"
-        >
-          <option value="" disabled hidden>
-            I want to learn
-          </option>
-          <option value="Spanish">Hebrew</option>
-        </select>
-
-        <label className="register__text">Pick Your Spirit Animal:</label>
+        <label className="register__text">בחר.י את החיה שלך:</label>
         <div className="register__spirit-animals">
           {freeAnimals?.map((animal) => (
             <button
@@ -109,10 +93,10 @@ const Register = () => {
 
         <button
           type="submit"
-          className="submit-button"
-          disabled={registerIsPending}
+          className={`submit-button`}
+          disabled={isSubmitDisabled}
         >
-          {!registerIsPending ? 'Let\'s do it!' : ''}
+          אפשר להתחיל ללמוד!
         </button>
       </form>
     </div>

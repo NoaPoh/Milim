@@ -1,6 +1,6 @@
 import { createTRPCReact } from '@trpc/react-query';
 import type { AppRouter } from 'milim-server';
-import { httpBatchLink } from '@trpc/client';
+import { httpBatchLink, httpLink } from '@trpc/client';
 import { resetUserCacheAfterChange } from './trpc/invalidationLink';
 import { QueryClient } from '@tanstack/react-query';
 import { handleUnauthorizedLink } from './trpc/handleUnauthorizedLink';
@@ -12,7 +12,7 @@ export const trpcClient = (queryClient: QueryClient) =>
   api.createClient({
     links: [
       handleUnauthorizedLink,
-      httpBatchLink({
+      httpLink({
         transformer: superjson,
         url: import.meta.env.VITE_API_URL,
         fetch(url, options) {

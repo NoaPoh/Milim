@@ -4,23 +4,21 @@ import { GameProps } from '../../../../constants/games';
 import './GameCard.scss';
 import { RoutesValues } from '../../../../routes/routes';
 
-const GameCard = ({ name, image, path }: GameProps) => {
+const GameCard = ({ name, image, path, nameToShow }: GameProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className="game-card-container">
-      <button
-        className="game-card-button"
-        onClick={() =>
-          navigate(RoutesValues.GAME_WELCOME_SCREEN, {
-            state: { path: path, name: name, image: image },
-          })
-        }
-      >
-        <p className="game-card-title">{name}</p>
-        <img className="game-card-image" src={image} alt={name} />
-      </button>
-    </div>
+    <button
+      className="game-card-button"
+      onClick={() =>
+        navigate(RoutesValues.GAME_WELCOME_SCREEN, {
+          state: { path: path, name: name, image: image },
+        })
+      }
+    >
+      <p className="game-card-title">{nameToShow}</p>
+      <img className="game-card-image" src={image} alt={nameToShow} />
+    </button>
   );
 };
 

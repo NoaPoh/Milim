@@ -8,11 +8,11 @@ import {
 import { DisplayCategory, CategoryPageData } from '../../types';
 
 export const categoryRouter = router({
-  fetchUserCategories: protectedProcedure.query(
-    async ({ ctx }): Promise<DisplayCategory[]> => {
-      return await fetchUserCategories(ctx.userId, ctx.prisma);
-    }
-  ),
+  fetchUserCategories: protectedProcedure
+    .input(z.object({ wordToAdd: z.string().optional() }))
+    .query(async ({ ctx, input }): Promise<DisplayCategory[]> => {
+      return await fetchUserCategories(ctx.userId, input.wordToAdd, ctx.prisma);
+    }),
   fetchUserCategoryById: protectedProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ ctx, input }): Promise<CategoryPageData> => {
