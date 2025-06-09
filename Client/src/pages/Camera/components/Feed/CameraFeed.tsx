@@ -4,7 +4,6 @@ import { faCamera, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 
 type CameraFeedProps = {
   onTakePicture: () => void;
-  toggleCameraFacingMode: () => void;
   cantUseCamera: boolean;
 };
 
@@ -30,9 +29,6 @@ const CameraFeed = forwardRef<HTMLVideoElement, CameraFeedProps>(
               onClick={props.onTakePicture}
             >
               <FontAwesomeIcon icon={faCamera} className="icon" />
-            </button>
-            <button className="btn" onClick={props.toggleCameraFacingMode}>
-              <FontAwesomeIcon icon={faArrowsRotate} className="icon" />
             </button>
           </div>
         </div>

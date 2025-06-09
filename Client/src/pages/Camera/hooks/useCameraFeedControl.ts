@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { convertVideoToBase64 } from '../../../utils/video';
+import { isMobile } from 'react-device-detect';
 
 export enum CameraFacingMode {
   FRONT = 'user',
@@ -13,9 +14,8 @@ function useCameraFeedControl() {
   const [stalePhoto, setStalePhoto] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [cantUseCamera, setCantUseCamera] = useState<boolean>(false);
-  const [facingMode, setFacingMode] = useState<CameraFacingMode>(
-    CameraFacingMode.BACK
-  );
+
+  const facingMode = isMobile ? CameraFacingMode.BACK : CameraFacingMode.FRONT;
 
   const captureFrameAsBase64 = (): string | null => {
     return convertVideoToBase64(videoRef.current);
@@ -27,14 +27,6 @@ function useCameraFeedControl() {
       console.log(`Camera feed restarted with facing mode: ${facingMode}`);
     });
   }, [facingMode]);
-
-  const toggleCameraFacingMode = () => {
-    setFacingMode((prevMode) =>
-      prevMode === CameraFacingMode.BACK
-        ? CameraFacingMode.FRONT
-        : CameraFacingMode.BACK
-    );
-  };
 
   const startFeed = async (onStart?: () => void) => {
     try {
@@ -92,7 +84,6 @@ function useCameraFeedControl() {
     stalePhoto,
     errorMessage,
     cantUseCamera,
-    toggleCameraFacingMode,
   };
 }
 
