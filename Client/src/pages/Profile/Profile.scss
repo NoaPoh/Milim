@@ -20,7 +20,6 @@
 
   .coins-section {
     align-self: flex-start;
-    margin-top: 2rem;
     margin-right: 2rem;
     display: flex;
     flex-direction: column;
@@ -36,6 +35,42 @@
       color: #5d5c5c;
     }
   }
+
+  .streak-section {
+    display: flex;
+    align-items: center;
+    margin-top: 1.5rem;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #ff4500;
+
+    .streak-icon {
+      font-size: 1.8rem;
+      margin-right: 6px;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    .streak-number {
+      letter-spacing: 1px;
+    }
+
+    .streak-comment {
+      margin-right: 1rem;
+      color: #333;
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.15);
+      opacity: 0.8;
+    }
+  }
+
 
   .logout-button {
     margin-top: 1rem;
