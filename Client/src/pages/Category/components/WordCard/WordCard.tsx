@@ -17,7 +17,7 @@ export default function WordCard(props: WordCardProps) {
         alt={props.originalText}
         className="object-cover"
       />
-      <p>{props.translatedText}</p>
+      <p>{props.originalText}</p>
     </div>
   );
 }
