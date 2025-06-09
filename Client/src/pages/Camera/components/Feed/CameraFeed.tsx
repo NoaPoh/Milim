@@ -21,7 +21,7 @@ const CameraFeed = forwardRef<HTMLVideoElement, CameraFeedProps>(
           />
         </div>
         <div className="CameraPage__bottom">
-          <p className="desc">נסו להשאר יציבים עם המצלמה!</p>
+          <p className="desc">נסו להשאר יציבים, והמצלמה תצלם לבד!</p>
           <div className="feed-actions">
             <button
               className="btn"

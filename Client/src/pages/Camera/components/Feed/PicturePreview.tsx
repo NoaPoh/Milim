@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faArrowsSpin } from '@fortawesome/free-solid-svg-icons';
 import SpeakerButton from '../../../../components/SpeakerButton';
 import CollectionDrawer from '../CollectionDrawer/CollectionDrawer';
 import { useState } from 'react';
@@ -32,7 +32,7 @@ export default function PicturePreview({
         </div>
         <div className="CameraPage__bottom">
           <button className="retake btn" onClick={onRestart}>
-            <FontAwesomeIcon icon={faPlay} className="icon" />
+            <FontAwesomeIcon icon={faArrowsSpin} className="icon" />
           </button>
           {!isDetecting && detectedObject && (
             <>
