@@ -22,6 +22,10 @@
     max-width: 90%;
     max-height: 80%;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     img,
     video {
