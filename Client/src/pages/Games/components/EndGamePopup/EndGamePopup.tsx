@@ -51,8 +51,8 @@ const EndGamePopup = ({
               autoplay
               className="coin-animation"
             />
-            <p className="success-message">ברכות!</p>
-            <p className="coins-earned">זכית ב-{earnedCoins} מטבעות!</p>
+            <p className="success-message">כל הכבוד!</p>
+            <p className="coins-earned">זכית ב-{earnedCoins} מטבעות</p>
           </div>
         )}
 

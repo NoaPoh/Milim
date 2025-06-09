@@ -42,7 +42,7 @@ const Crossword = ({ onComplete, words, image }: CrosswordProps) => {
       )}
 
       <button className="crossword-page__button button" onClick={handleClick}>
-        {submitted ? 'Next' : 'Submit'}
+        {submitted ? 'הבא' : 'זיהוי'}
       </button>
     </div>
   );
