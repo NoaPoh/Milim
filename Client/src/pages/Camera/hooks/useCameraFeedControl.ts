@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { convertVideoToBase64 } from '../../../utils/video';
-import { isMobile } from 'react-device-detect';
 
 export enum CameraFacingMode {
   FRONT = 'user',
@@ -15,24 +14,29 @@ function useCameraFeedControl() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [cantUseCamera, setCantUseCamera] = useState<boolean>(false);
 
-  const facingMode = isMobile ? CameraFacingMode.BACK : CameraFacingMode.FRONT;
-
   const captureFrameAsBase64 = (): string | null => {
     return convertVideoToBase64(videoRef.current);
   };
 
-  useEffect(() => {
-    console.log(`Camera facing mode set to: ${facingMode}.`);
-    restartFeed(() => {
-      console.log(`Camera feed restarted with facing mode: ${facingMode}`);
-    });
-  }, [facingMode]);
+  const getCameraStream = async (): Promise<MediaStream> => {
+    try {
+      return await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { exact: CameraFacingMode.BACK } }, // request back camera
+      });
+    } catch (error: any) {
+      if (error.name === 'OverconstrainedError') {
+        return await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { exact: CameraFacingMode.FRONT } }, // fallback to front camera
+        });
+      }
+      console.error('Error accessing camera:', error);
+      throw error;
+    }
+  };
 
   const startFeed = async (onStart?: () => void) => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: { exact: facingMode } }, // request back camera
-      });
+      const stream = await getCameraStream();
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
@@ -48,8 +52,8 @@ function useCameraFeedControl() {
       setErrorMessage(
         error.name === 'NotAllowedError'
           ? 'אופס! אין הרשאות למצלמה בדפדפן שלך.'
-          : error.name === 'OverconstrainedError'
-          ? 'נראה שאין לנו מצלמה אחורית. בוא ננסה את הקדמית בכפתור החלפה!'
+          : error.name === 'NotFoundError'
+          ? 'אופס! לא נמצאה מצלמה בדפדפן שלך.'
           : 'שגיאה בהפעלת המצלמה, נסה לרענן את הדף או לבדוק את ההגדרות של הדפדפן שלך.'
       );
     }
