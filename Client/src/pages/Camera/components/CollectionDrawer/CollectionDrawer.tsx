@@ -56,10 +56,6 @@ const CollectionDrawer = ({
     );
   };
 
-  useEffect(() => {
-    console.log(selectedCategoryId);
-  }, [selectedCategoryId]);
-
   const handleAddClick = async () => {
     if (selectedCategoryId === null) return;
 
