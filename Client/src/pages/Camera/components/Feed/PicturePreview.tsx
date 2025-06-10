@@ -3,7 +3,6 @@ import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import SpeakerButton from '../../../../components/SpeakerButton';
 import CollectionDrawer from '../CollectionDrawer/CollectionDrawer';
 import { useState } from 'react';
-import './PicturePreview.scss';
 
 type PicturePreviewProps = {
   image: string;
@@ -27,28 +26,34 @@ export default function PicturePreview({
 
   return (
     <>
-      <img src={image} alt="Captured" className="captured-photo" />
-      <button className="retake button" onClick={onRestart}>
-        <FontAwesomeIcon icon={faArrowsRotate} className="icon" />
-      </button>
-
-      {!isDetecting && detectedObject && (
-        <div className="predictions-container">
-          <div className="translation">
-            <p className="prediction-item">{detectedObject}</p>
-            <SpeakerButton text={detectedObject} language="en-US" />
-            {translatedWord && (
-              <>
-                <p className="prediction-item">{translatedWord}</p>
-                <SpeakerButton text={translatedWord} language="he-IL" />
-              </>
-            )}
-          </div>
-          <button className="btn" onClick={openDrawer}>
-            הוסף לאוסף
-          </button>
+      <>
+        <div className="CameraPage__top">
+          <img src={image} alt="Captured" />
         </div>
-      )}
+        <div className="CameraPage__bottom">
+          <button className="retake btn" onClick={onRestart}>
+            <FontAwesomeIcon icon={faArrowsRotate} className="icon" />
+          </button>
+          {!isDetecting && detectedObject && (
+            <>
+              <div className="flex-row">
+                <p className="prediction-item">{detectedObject}</p>
+                <SpeakerButton text={detectedObject} language="en-US" />
+              </div>
+
+              {translatedWord && (
+                <div className="flex-row">
+                  <p className="prediction-item">{translatedWord}</p>
+                  <SpeakerButton text={translatedWord} language="he-IL" />
+                </div>
+              )}
+              <button className="btn" onClick={openDrawer}>
+                הוסף לאוסף
+              </button>
+            </>
+          )}
+        </div>
+      </>
 
       <CollectionDrawer
         isOpen={drawerOpen}

@@ -26,7 +26,7 @@ export const WordModal = (props: WordModalProps) => {
               alt={props.originalText}
               className="object-cover"
             />
-            <p>{props.translatedText}</p>
+            <p>{props.originalText}</p>
             <button
               className="WordCard__finish-button"
               onClick={() => props.closeModal()}

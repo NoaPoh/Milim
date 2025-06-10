@@ -1,6 +1,11 @@
 import { useRef, useState } from 'react';
 import { convertVideoToBase64 } from '../../../utils/video';
 
+export enum CameraFacingMode {
+  FRONT = 'user',
+  BACK = 'environment',
+}
+
 function useCameraFeedControl() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -13,9 +18,25 @@ function useCameraFeedControl() {
     return convertVideoToBase64(videoRef.current);
   };
 
+  const getCameraStream = async (): Promise<MediaStream> => {
+    try {
+      return await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { exact: CameraFacingMode.BACK } }, // request back camera
+      });
+    } catch (error: any) {
+      if (error.name === 'OverconstrainedError') {
+        return await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { exact: CameraFacingMode.FRONT } }, // fallback to front camera
+        });
+      }
+      console.error('Error accessing camera:', error);
+      throw error;
+    }
+  };
+
   const startFeed = async (onStart?: () => void) => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const stream = await getCameraStream();
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
@@ -23,10 +44,17 @@ function useCameraFeedControl() {
       onStart?.();
     } catch (error: any) {
       setCantUseCamera(true);
+
+      if (error.name === 'OverconstrainedError') {
+        stopFeed();
+      }
+
       setErrorMessage(
         error.name === 'NotAllowedError'
-          ? 'Permission denied. Please allow access to your webcam.'
-          : 'Error accessing webcam. Please try again.'
+          ? 'אופס! אין הרשאות למצלמה בדפדפן שלך.'
+          : error.name === 'NotFoundError'
+          ? 'אופס! לא נמצאה מצלמה בדפדפן שלך.'
+          : 'שגיאה בהפעלת המצלמה, נסה לרענן את הדף או לבדוק את ההגדרות של הדפדפן שלך.'
       );
     }
   };
