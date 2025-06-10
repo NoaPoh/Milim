@@ -9,6 +9,7 @@ const START_DELAY = 2000; // delay before starting stability checks (1 second)
 
 export function useVideoStability(
   videoRef: React.RefObject<HTMLVideoElement>,
+  cantUseCamera: boolean,
   onStable: () => void
 ) {
   const previousImageData = useRef<ImageData | null>(null);
@@ -18,6 +19,11 @@ export function useVideoStability(
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
     let delayTimeoutId: NodeJS.Timeout;
+
+    if (cantUseCamera) {
+      console.log('Camera is not usable, skipping stability checks');
+      return;
+    }
 
     const checkStability = () => {
       const video = videoRef.current;
@@ -68,5 +74,5 @@ export function useVideoStability(
       clearTimeout(delayTimeoutId);
       clearInterval(intervalId);
     };
-  }, [videoRef, onStable]);
+  }, [videoRef, onStable, cantUseCamera]);
 }

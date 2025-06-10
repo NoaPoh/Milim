@@ -31,7 +31,7 @@ const CollectionDrawer = ({
   );
   const handleSuccess = () => {
     showSuccessToast(`מילה נוספה לאוסף ${selectedCategory?.name}!`);
-    navigate(`${RoutesValues.CATEGORY}/category/${selectedCategory?.id}`);
+    navigate(`${RoutesValues.CATEGORY}/${selectedCategory?.id}`);
     onClose();
   };
   const handleError = () => {
@@ -55,8 +55,6 @@ const CollectionDrawer = ({
       }`
     );
   };
-
-  useEffect(()=>{console.log(selectedCategoryId)},[selectedCategoryId]);
 
   const handleAddClick = async () => {
     if (selectedCategoryId === null) return;

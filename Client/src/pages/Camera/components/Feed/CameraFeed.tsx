@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 
 type CameraFeedProps = {
   onTakePicture: () => void;
@@ -8,17 +8,30 @@ type CameraFeedProps = {
 };
 
 const CameraFeed = forwardRef<HTMLVideoElement, CameraFeedProps>(
-  ({ onTakePicture, cantUseCamera }, ref) => {
+  (props, ref) => {
     return (
       <>
-        <video ref={ref} autoPlay muted className="video-preview" />
-        <button
-          className="button"
-          disabled={cantUseCamera}
-          onClick={onTakePicture}
-        >
-          <FontAwesomeIcon icon={faCamera} className="icon" />
-        </button>
+        <div className="CameraPage__top">
+          <video
+            ref={ref}
+            autoPlay
+            muted
+            playsInline
+            className="CameraFeed__video-preview"
+          />
+        </div>
+        <div className="CameraPage__bottom">
+          <p className="desc">נסו להשאר יציבים, והמצלמה תצלם לבד!</p>
+          <div className="feed-actions">
+            <button
+              className="btn"
+              disabled={props.cantUseCamera}
+              onClick={props.onTakePicture}
+            >
+              <FontAwesomeIcon icon={faCamera} className="icon" />
+            </button>
+          </div>
+        </div>
       </>
     );
   }

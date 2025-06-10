@@ -5,6 +5,7 @@ import CameraFeed from './components/Feed/CameraFeed';
 import PicturePreview from './components/Feed/PicturePreview';
 import { api } from '../../utils/trpcClient';
 import { useVideoStability } from './hooks/useVideoStability';
+import { showErrorToast } from '../../utils/toast';
 
 export default function CameraPage() {
   const apiUtils = api.useUtils();
@@ -30,6 +31,11 @@ export default function CameraPage() {
       freezeFrame(originalImage);
       apiUtils.externals.translateWord.invalidate();
     },
+    onError: (error) => {
+      console.error('Error detecting object:', error);
+      restartFeed();
+      apiUtils.externals.translateWord.invalidate();
+    },
     retryDelay: 2000,
   });
 
@@ -51,12 +57,14 @@ export default function CameraPage() {
     return () => stopFeed();
   }, []);
 
-  useVideoStability(videoRef, takePicture);
+  useVideoStability(videoRef, cantUseCamera, takePicture);
+
+  useEffect(() => {
+    errorMessage && showErrorToast(errorMessage);
+  }, [errorMessage]);
 
   return (
-    <div className="photo-capture-container">
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-
+    <div className="CameraPage">
       {!stalePhoto ? (
         <CameraFeed
           ref={videoRef}
