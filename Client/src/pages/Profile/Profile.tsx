@@ -24,13 +24,20 @@ const Profile: React.FC = () => {
 
   if (isLoading) return <Loader />;
 
-  const { activeAwards, coins, purchases } = user;
+  const { activeAwards, coins, purchases, currentStreak } = user;
 
   const ownedAwardIds = purchases.map((purchase) => purchase.awardId);
   const activeAwardNames: string[] = Object.values(activeAwards);
 
   const handleLogout = () => {
     logOut();
+  };
+
+  const getStreakMessage = (streak: number) => {
+    if (streak >= 30) return '🔥 אתה אגדה! רצף של 30 ימים ומעלה!';
+    if (streak >= 14) return '💪 ממשיך לשרוף! שמור על הקצב!';
+    if (streak >= 7) return '👏 שבוע שלם! המשך ככה!';
+    return ' התחלה מעולה! המשך את הרצף!';
   };
 
   if (isLoading) return <Loader />;
@@ -67,6 +74,13 @@ const Profile: React.FC = () => {
         />
         <span className="text">{coins}</span>
       </div>
+      {currentStreak > 0 && (
+        <div className="streak-section" title="Current Streak">
+          <span role="img" aria-label="fire" className="streak-icon">🔥</span>
+          <span className="streak-number">{currentStreak}</span>
+          <div className="streak-comment">{getStreakMessage(currentStreak)}</div>
+        </div>
+      )}
     </div>
   );
 };
