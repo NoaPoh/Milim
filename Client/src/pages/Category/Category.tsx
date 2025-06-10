@@ -4,15 +4,10 @@ import './Category.scss';
 import { useGetUserCategory } from './hooks/useGetUserCategory';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { RoutesValues } from '../../routes/routes';
-import addIcon from '../../assets/images/categories/add.png';
 import WordCard from './components/WordCard/WordCard';
 import { ClickedWord, WordModal } from './components/WordModal/WordModal';
 import { useState } from 'react';
 import { WordWithStringPic } from 'milim-server/types';
-
-export type CategoryProps = {
-  name: string;
-};
 
 export default function Category() {
   const { id } = useParams(); // Extract the dynamic category ID
@@ -68,15 +63,6 @@ export default function Category() {
                 onClick={() => handleCardClick(word)}
               />
             ))}
-          <div key={0} className="category__add-word">
-            <Link to={RoutesValues.CAMERA}>
-              <img
-                src={addIcon}
-                alt="Add new word"
-                className="add-icon object-cover"
-              />
-            </Link>
-          </div>
         </div>
       </div>
       {openedWord && (

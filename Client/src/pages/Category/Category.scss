@@ -33,15 +33,4 @@
     margin: auto;
     justify-items: center;
   }
-
-  .category__add-word {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-
-    &-icon {
-      color: $text-dark;
-    }
-  }
 }
