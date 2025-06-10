@@ -46,6 +46,19 @@
       margin-top: 1rem;
       margin-bottom: 1rem;
     }
+    .hebrew-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .speaker-button {
+        color: white;
+        height: 3rem;
+        border-radius: 999px;
+        width: 3.5rem;
+        margin-right: 1rem;
+      }
+    }
   }
 
   .WordCard__subtitle {
