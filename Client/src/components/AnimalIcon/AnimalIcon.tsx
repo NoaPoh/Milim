@@ -18,7 +18,7 @@ export const FrameToStyle = new Map<string, string>([
 const AnimalIcon = ({ path, iconWidth, background, frame }: Props) => {
   return (
     <img
-      src={`src/assets/images/animals/${path}.png`}
+      src={`/images/animals/${path}.png`}
       className={`animal rounded-full`}
       alt="אין תמונה"
       style={{ width: `${iconWidth}px`, height: `${iconWidth}px`, backgroundColor: background, border: `${FrameToStyle.get(frame)}` }}
