@@ -53,7 +53,7 @@ export const purchase = async (
   })) as Award;
 
   if (!user) throw new Error('User not found');
-  if (!award) throw new Error('Award not found');
+  if (!award) throw new Error('Award not found');;
   if (user.coinBalance < award.price) throw new Error('Not enough coins');
 
   const newPurchase = await prisma.purchase.create({
@@ -61,6 +61,12 @@ export const purchase = async (
       userId: user.id,
       awardId: award.id,
     },
+  });
+  const data = { coinBalance: user.coinBalance - award.price };
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data,
   });
 
   return newPurchase;

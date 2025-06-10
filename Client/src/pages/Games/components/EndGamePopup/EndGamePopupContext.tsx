@@ -2,6 +2,7 @@ import { createContext, useContext, useState, ReactNode } from 'react';
 import EndGamePopup from './EndGamePopup';
 import { RoutesValues } from '../../../../routes/routes';
 import { useNavigate } from 'react-router-dom';
+import { api } from '../../../../utils/trpcClient.ts';
 
 type EndGamePopupConfig = {
   earnedCoins?: number;
@@ -29,6 +30,8 @@ export const EndGamePopupProvider = ({ children }: { children: ReactNode }) => {
   const [popupConfig, setPopupConfig] = useState<EndGamePopupConfig | null>(
     null
   );
+  const apiUtils = api.useUtils();
+
 
   const showPopup = (config: EndGamePopupConfig) => {
     setPopupConfig(config);
@@ -37,6 +40,12 @@ export const EndGamePopupProvider = ({ children }: { children: ReactNode }) => {
   const handleClose = () => {
     setPopupConfig(null);
   };
+
+  const returnToGames = async() => {
+    await apiUtils.user.getUser.invalidate();
+    navigate(RoutesValues.GAMES);
+    handleClose();
+  }
 
   const navigate = useNavigate();
 
@@ -47,10 +56,7 @@ export const EndGamePopupProvider = ({ children }: { children: ReactNode }) => {
         <EndGamePopup
           earnedCoins={popupConfig.earnedCoins}
           onPlayAgain={popupConfig.onPlayAgain}
-          onBack={() => {
-            navigate(RoutesValues.GAMES);
-            handleClose();
-          }}
+          onBack={returnToGames}
           onClose={handleClose}
         />
       )}
