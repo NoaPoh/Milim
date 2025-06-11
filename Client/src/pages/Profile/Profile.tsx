@@ -34,10 +34,10 @@ const Profile: React.FC = () => {
   };
 
   const getStreakMessage = (streak: number) => {
-    if (streak >= 30) return '🔥 אתה אגדה! רצף של 30 ימים ומעלה!';
-    if (streak >= 14) return '💪 ממשיך לשרוף! שמור על הקצב!';
-    if (streak >= 7) return '👏 שבוע שלם! המשך ככה!';
-    return ' התחלה מעולה! המשך את הרצף!';
+    if (streak >= 30) return '🔥 אגדה! רצף של 30 ימים ומעלה!';
+    if (streak >= 14) return '💪 מדהים! יאללה לשמור על הקצב';
+    if (streak >= 7) return '👏 שבוע שלם! איזה הישגגג!';
+    return ' התחלה מעולה! יש לאן לשאוף!';
   };
 
   if (isLoading) return <Loader />;
@@ -76,9 +76,13 @@ const Profile: React.FC = () => {
       </div>
       {currentStreak > 0 && (
         <div className="streak-section" title="Current Streak">
-          <span role="img" aria-label="fire" className="streak-icon">🔥</span>
+          <span role="img" aria-label="fire" className="streak-icon">
+            🔥
+          </span>
           <span className="streak-number">{currentStreak}</span>
-          <div className="streak-comment">{getStreakMessage(currentStreak)}</div>
+          <div className="streak-comment">
+            {getStreakMessage(currentStreak)}
+          </div>
         </div>
       )}
     </div>

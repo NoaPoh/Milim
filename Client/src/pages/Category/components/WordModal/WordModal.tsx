@@ -31,7 +31,7 @@ export const WordModal = (props: WordModalProps) => {
               className="WordCard__finish-button"
               onClick={() => props.closeModal()}
             >
-              אני יודע את זה!
+              עליתי על זה!
             </button>
           </div>
         </Modal>
