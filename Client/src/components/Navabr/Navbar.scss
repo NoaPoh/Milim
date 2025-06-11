@@ -5,9 +5,11 @@
   width: 100%;
   display: flex;
   justify-content: space-around;
-  padding: 0.75rem;
-  border-top: 1px solid #6d6d6d24;
-  background-color: var(--user-background, #fbf3df);
+  padding: 1rem;
+  background-color: #fffbf1;
+  background-color: rgb(175 221 239 / 22%);
+
+  border-radius: 30px 30px 0 0;
 
   &__link {
     color: #1f2937;
