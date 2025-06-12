@@ -25,11 +25,11 @@ export const WordModal = (props: WordModalProps) => {
               alt={props.originalText}
               className="object-cover"
             />
-            <div className="hebrew-row">
-              <p>{props.translatedText}</p>
-              <SpeakerButton text={props.translatedText} language="he-IL" />
+            <p>{props.translatedText}</p>
+            <div className="english-row">
+              <p>{props.originalText}</p>
+              <SpeakerButton text={props.originalText} language="en-US" />
             </div>
-            <p>{props.originalText}</p>
             <button
               className="WordCard__finish-button"
               onClick={() => props.closeModal()}
