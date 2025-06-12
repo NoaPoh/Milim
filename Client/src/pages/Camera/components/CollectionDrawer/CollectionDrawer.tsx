@@ -102,7 +102,7 @@ const CollectionDrawer = ({
               selectedCategoryId === null || saveWordInCategoryIsPending
             }
           >
-            הוסף לאוסף
+            הוספה לאוסף{' '}
           </button>
         )}
       </div>
