@@ -10,7 +10,8 @@
   color: #222;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.2s, transform 0.2s;
-  max-width: 20rem;
+  max-width: 9rem;
+  min-width: 9rem;
   max-height: 30rem;
 
   &:hover {
@@ -36,6 +37,7 @@
 
   &.WordCard__modal {
     padding: 1.2rem;
+    max-width: 20rem;
 
     img {
       width: 180px;
