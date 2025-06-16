@@ -1,10 +1,7 @@
 import './WordCard.scss';
 
 export interface WordCardProps {
-  wordId: number;
-  categoryId: number;
   originalText: string;
-  translatedText: string;
   picture: string;
   onClick?: () => void;
 }

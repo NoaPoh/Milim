@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import './Category.scss';
 import { useGetUserCategory } from './hooks/useGetUserCategory';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { RoutesValues } from '../../routes/routes';
 import WordCard from './components/WordCard/WordCard';
 import { ClickedWord, WordModal } from './components/WordModal/WordModal';
@@ -23,7 +23,6 @@ export default function Category() {
   const handleCardClick = (word: WordWithStringPic) => {
     setOpenedWord({
       wordId: word.id,
-      categoryId: word.categoryId,
       originalText: word.originalText,
       translatedText: word.translatedText,
       picture: word.picture,
@@ -54,11 +53,8 @@ export default function Category() {
           {category.words &&
             category.words.map((word) => (
               <WordCard
-                categoryId={word.categoryId}
                 originalText={word.originalText}
                 picture={word.picture}
-                translatedText={word.translatedText}
-                wordId={word.id}
                 key={word.id}
                 onClick={() => handleCardClick(word)}
               />
