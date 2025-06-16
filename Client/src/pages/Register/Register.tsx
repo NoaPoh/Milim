@@ -12,16 +12,14 @@ const Register = () => {
   const [spiritAnimal, setSpiritAnimal] = useState<number>(0);
   const navigate = useNavigate();
 
-  const navToLogin = () => {
-    showSuccessToast('Registration successful! Please log in.');
-    navigate(RoutesValues.LOGIN);
-  };
-
   const { data: freeAnimals } = api.award.getFreeAnimals.useQuery();
 
   const { mutateAsync: register, isPending: registerIsPending } =
     api.auth.register.useMutation({
-      onSuccess: navToLogin,
+      onSuccess: () => {
+        showSuccessToast('הרשמה בוצעה בהצלחה!');
+        navigate(RoutesValues.HOME);
+      },
       onError: (error) => {
         showErrorToast(error.message || 'ההרשמה נכשלה, אנא נסו שוב.');
       },
@@ -58,18 +56,18 @@ const Register = () => {
         />
 
         <input
-          type="password"
-          placeholder="סיסמה סופר חזקה"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="register__input"
-        />
-
-        <input
           type="email"
           placeholder="אימייל"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="register__input"
+        />
+
+        <input
+          type="password"
+          placeholder="סיסמה סופר חזקה"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           className="register__input"
         />
 

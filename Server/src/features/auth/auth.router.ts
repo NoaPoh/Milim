@@ -22,7 +22,7 @@ export const authRouter = router({
   register: publicProcedure
     .input(registerSchema)
     .mutation(async ({ ctx, input }) => {
-      return register(ctx.prisma, input);
+      return register(ctx.prisma, input, ctx.res);
     }),
 
   login: publicProcedure.input(loginSchema).mutation(async ({ ctx, input }) => {

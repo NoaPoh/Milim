@@ -17,16 +17,22 @@ const generateAccessToken = (userId: User['id']) => {
   });
 };
 
-const cookieOptions: CookieOptions = {
+const getCookieOptions = (): CookieOptions => ({
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'strict',
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+});
+
+const setUserCookie = (res: Response, userId: User['id']): void => {
+  const accessToken = generateAccessToken(userId);
+  res.cookie('access-token', accessToken, getCookieOptions());
 };
 
 export const register = async (
   prisma: PrismaClient,
-  input: RegisterInput
+  input: RegisterInput,
+  res: Response
 ): Promise<User> => {
   const { email, username, password, animalId } = input;
 
@@ -52,22 +58,20 @@ export const register = async (
       currentStreak: 0,
       lastUsedDate: new Date(),
       coinBalance: 30,
-    },
-  });
-  await prisma.purchase.create({
-    data: {
-      userId: newUser.id,
-      awardId: animalId,
+      purchases: {
+        create: [
+          {
+            awardId: animalId,
+          },
+          {
+            awardId: 14, // Default background
+          },
+        ],
+      },
     },
   });
 
-  // Default background should be automatically unlocked
-  await prisma.purchase.create({
-    data: {
-      userId: newUser.id,
-      awardId: 14,
-    },
-  });
+  setUserCookie(res, newUser.id);
 
   return newUser;
 };
@@ -97,14 +101,12 @@ export const login = async (
     });
   }
 
-  const accessToken = generateAccessToken(user.id);
-
-  res.cookie('access-token', accessToken, cookieOptions);
+  setUserCookie(res, user.id);
 
   return { userId: user.id };
 };
 
 export const logout = async (res: Response): Promise<MessageResponse> => {
-  res.clearCookie('access-token', cookieOptions);
+  res.clearCookie('access-token', getCookieOptions());
   return { message: 'יצאנו בהצלחה' };
 };
