@@ -1,4 +1,3 @@
-import React from 'react';
 import { Award } from '@prisma/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoins } from '@fortawesome/free-solid-svg-icons';
@@ -32,10 +31,10 @@ export default function AwardCard({
   const { mutate: purchaseAward, isPending } = api.award.purchase.useMutation({
     onSuccess: async () => {
       if (refreshUser) await refreshUser();
-      showSuccessToast(`award purchased <3`);
+      showSuccessToast(`קנית לך משהו!`);
     },
     onError: () => {
-      showErrorToast('Error purchasing award :(');
+      showErrorToast('הייתה בעיה בקנייה :(');
     },
   });
 
