@@ -28,8 +28,18 @@ const Login: React.FC = () => {
       },
     });
 
+  const isSubmitNotAllowed = !email || !password;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (loginIsPending) return;
+
+    if (isSubmitNotAllowed) {
+      showErrorToast('אנא מלאו את כל השדות לפני ההתחברות.');
+      return;
+    }
+
     login({ email, password });
   };
 
@@ -37,9 +47,13 @@ const Login: React.FC = () => {
     <div className="login-page">
       {/* Header hippos */}
       <div className="login-page__header">
-        <img src='/images/animals/crocodile.png' alt="Crocodile" className="left-animal" />
         <img
-          src='/images/animals/monkey.png'
+          src="/images/animals/crocodile.png"
+          alt="Crocodile"
+          className="left-animal"
+        />
+        <img
+          src="/images/animals/monkey.png"
           alt="Monkey"
           className="animated-animal pop-off-top"
         />
@@ -54,17 +68,18 @@ const Login: React.FC = () => {
               placeholder="אימייל"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
             />
             <input
               type="password"
               placeholder="סיסמה ממש חזקה"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
             />
-
-            <button type="submit" disabled={loginIsPending}>
+            <button
+              type="submit"
+              aria-disabled={loginIsPending || isSubmitNotAllowed}
+              disabled={loginIsPending}
+            >
               קדימה!
             </button>
           </form>
@@ -77,12 +92,12 @@ const Login: React.FC = () => {
       {/* Footer hippo */}
       <div className="login-page__footer">
         <img
-          src='/images/animals/hippo.png'
+          src="/images/animals/hippo.png"
           alt="Hippo"
           className="login-page__footer__hippo-img"
         />
         <img
-          src='/images/animals/tiger.png'
+          src="/images/animals/tiger.png"
           alt="Tiger"
           className="login-page__footer__tiger-img"
         />

@@ -100,7 +100,7 @@
       background-color: $primary-dark;
     }
 
-    &:disabled {
+    &[aria-disabled='true'] {
       background-color: $primary-light;
       cursor: not-allowed;
     }

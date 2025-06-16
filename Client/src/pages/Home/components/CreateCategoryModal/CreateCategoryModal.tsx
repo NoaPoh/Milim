@@ -42,6 +42,7 @@ const CreateCategoryModal = (props: Props) => {
             ביטול
           </button>
           <button
+            disabled={!name}
             className="createCategory__save"
             onClick={() => createCategory({ name })}
           >
