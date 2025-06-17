@@ -2,8 +2,6 @@
 @use '../../styles/variables' as *;
 
 $background-color: #fbf3df;
-// $primary-color: #4e2a01;
-// $button-hover: #3b82f6; // Tailwind's blue-600
 
 .login-page {
   display: flex;
@@ -80,11 +78,6 @@ $background-color: #fbf3df;
             border-color: #a41111; // Tailwind red-600
             box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
           }
-
-          //   &:focus {
-          //     border-color: $button-hover;
-          //     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
-          //   }
         }
 
         button {
@@ -97,11 +90,7 @@ $background-color: #fbf3df;
           font-weight: bold;
           transition: background-color 0.3s ease;
 
-          //   &:hover {
-          //     background-color: $button-hover;
-          //   }
-
-          &:disabled {
+          &[aria-disabled='true'] {
             opacity: 0.5;
             cursor: not-allowed;
           }
