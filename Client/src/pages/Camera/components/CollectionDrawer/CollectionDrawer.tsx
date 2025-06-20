@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './CollectionDrawer.scss';
 import { useGetCategoriesList } from '../../../Home/hooks/useGetCategoriesList.ts';
 import { api } from '../../../../utils/trpcClient';
