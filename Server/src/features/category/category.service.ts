@@ -1,14 +1,63 @@
 import { Category, PrismaClient, Word } from '@prisma/client';
-import { DisplayCategory, CategoryPageData } from '../../types';
+import {
+  DisplayCategory,
+  CategoryPageData,
+  IdentifiedPicture,
+  CategoryInList,
+} from '../../types';
 import { SYSTEM_USER_ID } from '../../utils/constants';
 import _ from 'lodash';
 import { uint8ArrayToClientReadyImage } from '../../utils/images.util';
+
+export const fetchCategoriesPictures = async (
+  userId: number,
+  categoriesIds: Category['id'][],
+  prisma: PrismaClient
+): Promise<IdentifiedPicture<Category>[]> => {
+  const categories = await prisma.category.findMany({
+    where: {
+      id: { in: categoriesIds },
+    },
+    include: {
+      words: {
+        where: {
+          userId,
+        },
+        take: 1, // Only fetch one word
+        orderBy: {
+          discoveredAt: 'asc',
+        },
+        select: {
+          id: true,
+          picture: true,
+        },
+      },
+    },
+  });
+
+  const categoriesPictures: IdentifiedPicture<Category>[] = categories.map(
+    (category) => {
+      let picture: string = '';
+
+      if (category.words.length !== 0) {
+        picture = uint8ArrayToClientReadyImage(category.words[0].picture);
+      }
+
+      return {
+        id: category.id,
+        picture,
+      };
+    }
+  );
+
+  return categoriesPictures;
+};
 
 export const fetchUserCategories = async (
   userId: number,
   wordToAdd: string | undefined,
   prisma: PrismaClient
-): Promise<DisplayCategory[]> => {
+): Promise<CategoryInList[]> => {
   const categories = await prisma.category.findMany({
     where: {
       OR: [
@@ -21,29 +70,15 @@ export const fetchUserCategories = async (
         where: {
           userId,
         },
-        take: 1, // Only fetch one word
-        orderBy: {
-          discoveredAt: 'asc',
-        },
-        select: {
-          translatedText: true,
-          picture: true,
-        },
       },
     },
   });
 
-  const displayCategories: DisplayCategory[] = categories.map((category) => {
-    const picture =
-      category.words.length !== 0
-        ? uint8ArrayToClientReadyImage(category.words[0].picture)
-        : '';
-
+  const displayCategories: CategoryInList[] = categories.map((category) => {
     const CategoryObjToUse = _.omit(category, 'words');
 
     return {
       ...CategoryObjToUse,
-      picture,
       hasThisWord: !wordToAdd
         ? false
         : category.words.some((word) => word.translatedText === wordToAdd),
@@ -53,7 +88,7 @@ export const fetchUserCategories = async (
   return displayCategories;
 };
 
-export const fetchUserCategoryById = async (
+export const fetchCategoryById = async (
   userId: number,
   prisma: PrismaClient,
   categoryId: number

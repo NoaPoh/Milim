@@ -4,7 +4,7 @@ import defaultCategoriesIcons from '../../../constants/defaultCategoriesIcons';
 import { Category } from '@prisma/client';
 
 export const useGetUserCategory = (categoryId: Category['id'] | undefined) => {
-  const query = api.category.fetchUserCategoryById.useQuery(
+  const query = api.category.fetchCategoryById.useQuery(
     { id: categoryId! },
     { enabled: !!categoryId }
   );

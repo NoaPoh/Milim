@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './CollectionDrawer.scss';
-import { useGetCategories } from '../../../Home/hooks/useGetCategories';
+import { useGetCategoriesList } from '../../../Home/hooks/useGetCategories';
 import { api } from '../../../../utils/trpcClient';
 import { showErrorToast, showSuccessToast } from '../../../../utils/toast';
 import { useNavigate } from 'react-router-dom';
@@ -21,7 +21,7 @@ const CollectionDrawer = ({
   translatedText,
   picture,
 }: CollectionDrawerProps) => {
-  const { data: categories } = useGetCategories(isOpen, translatedText);
+  const { data: categories } = useGetCategoriesList(isOpen, translatedText);
   const navigate = useNavigate();
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     null

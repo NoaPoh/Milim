@@ -1,9 +1,17 @@
 import { Award, Category, Prisma, User, Word } from '@prisma/client';
 import { ActiveAwards } from 'milim-client/src/constants/awards.types';
 
-export type DisplayCategory = Category & {
-  picture: string;
+export type DisplayCategory = CategoryInList & {
+  picture: string | 'loading';
+};
+
+export type CategoryInList = Omit<Category, 'picture'> & {
   hasThisWord: boolean;
+};
+
+export type IdentifiedPicture<T extends { id: unknown }> = {
+  id: T['id'];
+  picture: string;
 };
 
 export type MessageResponse = {
@@ -57,13 +65,15 @@ export interface UserDTO {
 
 export type PurchaseDTO = Pick<
   Prisma.PurchaseGetPayload<{
-    include: { award: {
+    include: {
+      award: {
         select: {
-          id: true,
-          name: true,
-          type: true,
-        },
-      } };
+          id: true;
+          name: true;
+          type: true;
+        };
+      };
+    };
   }>,
   'award' | 'createdAt' | 'awardId'
 >;

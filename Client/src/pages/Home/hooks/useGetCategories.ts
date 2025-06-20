@@ -2,24 +2,38 @@ import { DisplayCategory } from 'milim-server/types';
 import { api } from '../../../utils/trpcClient';
 import defaultCategoriesIcons from '../../../constants/defaultCategoriesIcons';
 
-export const useGetCategories = (enabled: boolean, wordToAdd?: string) => {
-  const query = api.category.fetchUserCategories.useQuery(
+export const useGetCategoriesList = (enabled: boolean, wordToAdd?: string) => {
+  const categoriesQuery = api.category.fetchUserCategories.useQuery(
     { wordToAdd },
     {
       enabled,
     }
   );
 
+  const picturesQuery = api.category.fetchCategoriesPictures.useQuery(
+    {
+      ids: categoriesQuery.data?.map((category) => category.id) || [],
+    },
+    {
+      enabled: !!categoriesQuery.data,
+    }
+  );
+
   const categoriesWithDefaultPictures: DisplayCategory[] | undefined =
-    query.data?.map((category) => {
+    categoriesQuery.data?.map((category) => {
+      const picture = picturesQuery.isPending
+        ? 'loading'
+        : picturesQuery.data?.find((pic) => pic.id === category.id)?.picture ||
+          defaultCategoriesIcons[category.id];
+
       return {
         ...category,
-        picture: category.picture || defaultCategoriesIcons[category.id],
+        picture,
       };
     });
 
   return {
-    ...query,
+    ...categoriesQuery,
     data: categoriesWithDefaultPictures,
   };
 };

@@ -1,15 +1,11 @@
 import './App.scss';
 import Router from './routes/router';
-import { useIsFetching, useIsMutating } from '@tanstack/react-query';
-import Loader from './components/Loader/Loader';
+import GlobalLoaderInstigator from './components/GlobalLoader/GlobalLoaderInstigator';
 
 const App = () => {
-  const howManyFetching = useIsFetching();
-  const howManyMutating = useIsMutating();
-
   return (
     <div className="app">
-      {howManyFetching + howManyMutating > 0 && <Loader />}
+      <GlobalLoaderInstigator />
       <Router />
     </div>
   );
