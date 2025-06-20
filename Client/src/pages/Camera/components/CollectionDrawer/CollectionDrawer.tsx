@@ -50,11 +50,6 @@ const CollectionDrawer = ({
 
   const handleCategoryClick = (categoryId: number) => {
     setSelectedCategoryId(categoryId);
-    console.log(
-      `Selected category ID: ${categoryId}, Category name: ${
-        categories?.find((cat) => cat.id === categoryId)?.name
-      }`
-    );
   };
 
   const handleAddClick = async () => {
@@ -80,9 +75,8 @@ const CollectionDrawer = ({
             categories.map((category) => (
               <li
                 key={category.id}
-                className={`drawer-item ${
-                  selectedCategoryId === category.id ? 'selected' : ''
-                }`}
+                aria-selected={selectedCategoryId === category.id}
+                className="drawer-item"
                 onClick={() => handleCategoryClick(category.id)}
                 aria-disabled={category.hasThisWord}
               >
