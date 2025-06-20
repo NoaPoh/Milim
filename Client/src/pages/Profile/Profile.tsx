@@ -3,7 +3,7 @@ import './Profile.scss';
 import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
 import coinsIcon from '../../assets/images/coins.png';
 import { useUser } from '../../context/UserContext';
-import Loader from '../../components/Loader/Loader';
+import GlobalLoader from '../../components/GlobalLoader/GlobalLoader.tsx';
 import { UserDTO } from 'milim-server/types';
 import { api } from '../../utils/trpcClient.ts';
 import { RoutesValues } from '../../routes/routes.ts';
@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
   const [isShopOpen, setShopOpen] = useState(false);
   const navigate = useNavigate();
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <GlobalLoader />;
 
   const { activeAwards, coins, purchases, currentStreak } = user;
 
@@ -40,7 +40,7 @@ const Profile: React.FC = () => {
     return ' התחלה מעולה! יש לאן לשאוף!';
   };
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <GlobalLoader />;
 
   return (
     <div className="profile-container">

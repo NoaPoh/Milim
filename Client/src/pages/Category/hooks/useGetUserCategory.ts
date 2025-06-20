@@ -1,28 +1,32 @@
-import { CategoryPageData, WordWithStringPic } from 'milim-server/types';
+import { WordWithStringPic } from 'milim-server/types';
 import { api } from '../../../utils/trpcClient.ts';
-import defaultCategoriesIcons from '../../../constants/defaultCategoriesIcons';
 import { Category } from '@prisma/client';
 
 export const useGetUserCategory = (categoryId: Category['id'] | undefined) => {
-  const query = api.category.fetchUserCategoryById.useQuery(
+  const categoryQuery = api.category.fetchCategoryById.useQuery(
     { id: categoryId! },
     { enabled: !!categoryId }
   );
-  const category: CategoryPageData | undefined = query.data
-    ? {
-        ...query.data,
-        words: query.data.words.map((word: WordWithStringPic) => ({
-          ...word,
-          picture: resolveImagePath(word.picture, query.data.id),
-        })),
-      }
-    : undefined;
+
+  const picturesQuery = api.word.fetchWordsPictures.useQuery(
+    categoryQuery.data?.words.map((word) => word.id) || [],
+    {
+      enabled: !!categoryQuery.data,
+    }
+  );
+
+  const returnData = {
+    ...categoryQuery.data,
+    words: categoryQuery.data?.words.map((word) => {
+      const picture = picturesQuery.isPending
+        ? 'loading'
+        : picturesQuery.data?.find((pic) => pic.id === word.id)?.picture || '';
+      return { ...word, picture } as WordWithStringPic;
+    }),
+  };
+
   return {
-    ...query,
-    category,
+    ...categoryQuery,
+    data: returnData,
   };
 };
-
-function resolveImagePath(picture: string, categoryId: Category['id']): string {
-  return picture ?? defaultCategoriesIcons[categoryId];
-}

@@ -6,7 +6,7 @@ import {
 } from '../../utils/images.util';
 import { Prisma } from '@prisma/client';
 import _ from 'lodash';
-import { WordWithStringPic } from '../../types';
+import { IdentifiedPicture, WordWithStringPic } from '../../types';
 
 export const fetchRandomUserWords = async (
   userId: number,
@@ -119,4 +119,31 @@ export const getWordSum = async (
   });
 
   return wordCount;
+};
+
+export const fetchWordsPicturesByIds = async (
+  userId: number,
+  ids: number[],
+  prisma: PrismaClient
+): Promise<IdentifiedPicture<Word>[]> => {
+  const words = await prisma.word.findMany({
+    select: {
+      id: true,
+      picture: true,
+    },
+    where: {
+      userId,
+      id: {
+        in: ids,
+      },
+    },
+  });
+
+  const idedPictures: IdentifiedPicture<Word>[] = words.map((word) => {
+    const picture = uint8ArrayToClientReadyImage(word.picture);
+    const objToUse = _.omit(word, 'picture');
+    return { ...objToUse, picture };
+  });
+
+  return idedPictures;
 };

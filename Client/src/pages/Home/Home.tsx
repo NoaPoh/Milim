@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Home.scss';
-import { useGetCategories } from './hooks/useGetCategories';
+import { useGetCategoriesList } from './hooks/useGetCategoriesList.ts';
 import { CategoryCard } from './components/CategoryCard/CategoryCard.tsx';
 import addIcon from '../../assets/images/categories/add.png';
 import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
-import Loader from '../../components/Loader/Loader';
 import { useUser } from '../../context/UserContext';
 import { AwardType } from '../../constants/awards.types.ts';
 import CreateCategoryModal from './components/CreateCategoryModal/CreateCategoryModal.tsx';
 
-const Home: React.FC = () => {
-  const { data: categories, isLoading } = useGetCategories(true);
+const Home = () => {
+  const { data: categories } = useGetCategoriesList(true);
   const { user } = useUser();
   const { activeAwards } = user || {};
   const [openCreateCategoryModal, setOpenCreateCategoryModal] = useState(false);
@@ -31,11 +30,9 @@ const Home: React.FC = () => {
             </p>
           </div>
         )}
-        {isLoading && <Loader />}
-
         {categories && (
           <div className="home__category-grid">
-            <div key={0} className="category__word">
+            <div id="plus">
               <img
                 onClick={() => setOpenCreateCategoryModal(true)}
                 src={addIcon}

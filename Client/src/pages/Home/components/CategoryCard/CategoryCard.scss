@@ -1,4 +1,32 @@
-.category-icon {
-  max-width: 7rem;
-  max-height: 6rem;
+.CategoryCard {
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  transition: box-shadow 0.2s ease-in-out;
+
+  p {
+    color: black;
+  }
+
+  .category-icon {
+    max-width: 7rem;
+    max-height: 6rem;
+
+    &[src='undefined'] {
+      width: 7rem;
+      height: 6rem;
+      background-color: #f3f4f6; // Tailwind's gray-200
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 }
