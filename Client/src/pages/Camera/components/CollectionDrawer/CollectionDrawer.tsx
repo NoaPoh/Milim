@@ -5,6 +5,7 @@ import { api } from '../../../../utils/trpcClient';
 import { showErrorToast, showSuccessToast } from '../../../../utils/toast';
 import { useNavigate } from 'react-router-dom';
 import { RoutesValues } from '../../../../routes/routes.ts';
+import { Skeleton } from '@mui/material';
 
 interface CollectionDrawerProps {
   isOpen: boolean;
@@ -85,11 +86,21 @@ const CollectionDrawer = ({
                 onClick={() => handleCategoryClick(category.id)}
                 aria-disabled={category.hasThisWord}
               >
-                <img
-                  src={category.picture}
-                  alt={category.name}
-                  className="drawer-icon"
-                />
+                <div className="drawer-icon">
+                  {category.picture === 'loading' ? (
+                    <Skeleton
+                      variant="circular"
+                      width="1.5rem"
+                      height="1.5rem"
+                    />
+                  ) : (
+                    <img
+                      src={category.picture}
+                      alt={category.name}
+                      className="drawer-icon"
+                    />
+                  )}
+                </div>
                 <span className="drawer-text">{category.name}</span>
               </li>
             ))}
@@ -102,7 +113,7 @@ const CollectionDrawer = ({
               selectedCategoryId === null || saveWordInCategoryIsPending
             }
           >
-            הוספה לאוסף{' '}
+            הוספה לאוסף
           </button>
         )}
       </div>
