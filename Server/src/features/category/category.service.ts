@@ -116,15 +116,8 @@ export const fetchCategoryById = async (
   const newCategory: CategoryPageData = {
     id: category.id,
     name: category.name,
-    words: [],
+    words: category.words,
   };
-
-  if (category.words.length !== 0) {
-    newCategory.words = category.words.map((word: Word) => ({
-      ...word,
-      picture: uint8ArrayToClientReadyImage(word.picture),
-    }));
-  }
 
   return newCategory;
 };

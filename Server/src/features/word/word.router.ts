@@ -5,6 +5,7 @@ import {
   saveWordInCategory,
   fetchRandomUserWords,
   getWordSum,
+  fetchWordsPicturesByIds,
 } from './word.service';
 import { WordWithStringPic } from '../../types';
 
@@ -54,4 +55,10 @@ export const wordRouter = router({
     const wordSum = await getWordSum(ctx.userId, ctx.prisma);
     return wordSum;
   }),
+
+  fetchWordsPictures: protectedProcedure
+    .input(z.array(z.number()))
+    .query(async ({ ctx, input }) => {
+      return await fetchWordsPicturesByIds(ctx.userId, input, ctx.prisma);
+    }),
 });

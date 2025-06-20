@@ -14,7 +14,7 @@ export default function Category() {
   const [openedWord, setOpenedWord] = useState<ClickedWord | null>(null);
   const navigate = useNavigate();
 
-  const { category } = useGetUserCategory(Number(id) || 0);
+  const { data: category } = useGetUserCategory(Number(id) || 0);
 
   const navToHome = () => {
     navigate(RoutesValues.HOME);

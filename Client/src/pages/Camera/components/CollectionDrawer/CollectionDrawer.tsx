@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './CollectionDrawer.scss';
-import { useGetCategoriesList } from '../../../Home/hooks/useGetCategories';
+import { useGetCategoriesList } from '../../../Home/hooks/useGetCategoriesList.ts';
 import { api } from '../../../../utils/trpcClient';
 import { showErrorToast, showSuccessToast } from '../../../../utils/toast';
 import { useNavigate } from 'react-router-dom';

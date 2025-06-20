@@ -12,6 +12,7 @@ import _ from 'lodash';
 function GlobalLoaderInstigator() {
   const queriesToIgnore: (readonly string[])[] = [
     api.category.fetchCategoriesPictures,
+    api.word.fetchWordsPictures,
   ].map((q) => getQueryKey(q)[0]);
 
   const mutationsToIgnore: (readonly string[])[] = [].map(

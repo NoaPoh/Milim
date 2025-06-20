@@ -38,14 +38,16 @@ export interface WinAGameInput {
   coins: number;
 }
 
-export type WordWithStringPic = Omit<Word, 'picture'> & {
+export type WordWithoutPic = Omit<Word, 'picture'>;
+
+export type WordWithStringPic = WordWithoutPic & {
   picture: string;
 };
 
 export type CategoryPageData = {
   id: Category['id'];
   name: Category['name'];
-  words: WordWithStringPic[];
+  words: WordWithoutPic[];
 };
 
 export type PrismaCategoryWithWords = Prisma.CategoryGetPayload<{

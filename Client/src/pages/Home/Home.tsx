@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Home.scss';
-import { useGetCategoriesList } from './hooks/useGetCategories';
+import { useGetCategoriesList } from './hooks/useGetCategoriesList.ts';
 import { CategoryCard } from './components/CategoryCard/CategoryCard.tsx';
 import addIcon from '../../assets/images/categories/add.png';
 import AnimalIcon from '../../components/AnimalIcon/AnimalIcon';
