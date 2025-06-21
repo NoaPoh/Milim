@@ -46,6 +46,11 @@ const Register = () => {
 
   return (
     <div className="register">
+      <img
+        src="/images/animals/hippo.png"
+        className="animated-animal pop-off-top"
+      />
+      <img src="/images/animals/tiger.png" className="tiger-img" />
       <form onSubmit={handleSubmit} className="register__form">
         <h2 className="register__title">בואו נכיר!</h2>
 
@@ -99,6 +104,7 @@ const Register = () => {
           אפשר להתחיל ללמוד!
         </button>
       </form>
+      <img src="/images/animals/giraffe.png" className="giraffe-img" />
     </div>
   );
 };
