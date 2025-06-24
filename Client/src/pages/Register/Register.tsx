@@ -26,13 +26,16 @@ const Register = () => {
         showErrorToast(error.message || 'ההרשמה נכשלה, אנא נסו שוב.');
       },
     });
-  const isSubmitDisabled =
-    registerIsPending || !username || !email || !password || !spiritAnimal;
+
+  const isSubmitNotAllowed = !username || !email || !password || !spiritAnimal;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (isSubmitDisabled) {
+    if (registerIsPending) return;
+
+    if (isSubmitNotAllowed) {
+      showErrorToast('אנא מלאו את כל השדות לפני ההרשמה.');
       return;
     }
 
@@ -94,7 +97,8 @@ const Register = () => {
         <button
           type="submit"
           className={`submit-button`}
-          disabled={isSubmitDisabled}
+          aria-disabled={registerIsPending || isSubmitNotAllowed}
+          disabled={registerIsPending}
         >
           אפשר להתחיל ללמוד!
         </button>
