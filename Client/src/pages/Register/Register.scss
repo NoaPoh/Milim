@@ -16,6 +16,29 @@
     // box-shadow: $shadow;
   }
 
+  .animated-animal {
+    width: 7rem;
+    position: absolute;
+    z-index: 0;
+    left: 66vw;
+    top: 0px;
+  }
+
+  .tiger-img {
+    width: 8rem;
+    position: absolute;
+    bottom: 0;
+    right: 15vw;
+  }
+
+  .giraffe-img {
+    width: 9rem;
+    transform: rotate(90deg);
+    position: absolute;
+    top: 1vh;
+    left: 0;
+  }
+
   &__title {
     font-size: 1.5rem;
     font-weight: bold;
@@ -57,13 +80,13 @@
     &-button {
       padding: 0.1rem;
       font-size: 1.5rem;
-      border: 1px solid $border-color;
-      background-color: $light-grey;
+      // border: 1px solid $border-color;
+      // background-color: $light-grey;
       border-radius: 8px;
       transition: all 0.2s;
 
       &:hover {
-        background-color: $hover-grey;
+        background-color: #afddef61;
       }
 
       &--selected {
