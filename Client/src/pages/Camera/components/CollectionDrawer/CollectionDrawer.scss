@@ -38,6 +38,7 @@
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 1rem;
+  color: #1f2937; /* Tailwind's gray-800 */
 }
 
 .drawer-list {
@@ -58,6 +59,10 @@
     background-color: #e5e7eb;
   }
 
+  &[aria-selected='true'] {
+    background-color: #d1d5db;
+  }
+
   &[aria-disabled='true'] {
     cursor: not-allowed;
     opacity: 0.6;
@@ -68,12 +73,15 @@
       filter: grayscale(100%);
     }
   }
-}
 
-.drawer-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-left: 0.5rem;
+  .drawer-icon {
+    margin-left: 0.5rem;
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+    }
+  }
 }
 
 .add-button {

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import './Loader.scss';
+import { useEffect, useState } from 'react';
+import './GlobalLoader.scss';
 
 const generateLetters = (count: number) => {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -23,7 +23,7 @@ const generateLetters = (count: number) => {
   }));
 };
 
-const Loader = () => {
+const GlobalLoader = () => {
   const [letters, setLetters] = useState(generateLetters(12));
 
   useEffect(() => {
@@ -58,4 +58,4 @@ const Loader = () => {
   );
 };
 
-export default Loader;
+export default GlobalLoader;
