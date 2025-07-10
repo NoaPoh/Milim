@@ -1,10 +1,8 @@
+import { Skeleton } from '@mui/material';
 import './WordCard.scss';
 
 export interface WordCardProps {
-  wordId: number;
-  categoryId: number;
   originalText: string;
-  translatedText: string;
   picture: string;
   onClick?: () => void;
 }
@@ -12,11 +10,15 @@ export interface WordCardProps {
 export default function WordCard(props: WordCardProps) {
   return (
     <div className="WordCard__container" onClick={() => props.onClick?.()}>
-      <img
-        src={props.picture}
-        alt={props.originalText}
-        className="object-cover"
-      />
+      {props.picture === 'loading' ? (
+        <Skeleton variant="rectangular" width={100} height={100} />
+      ) : (
+        <img
+          src={props.picture}
+          alt={props.originalText}
+          className="object-cover"
+        />
+      )}
       <p>{props.originalText}</p>
     </div>
   );

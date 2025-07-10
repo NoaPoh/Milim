@@ -3,7 +3,6 @@ import SpeakerButton from '../../../../components/SpeakerButton.tsx';
 
 export interface ClickedWord {
   wordId: number;
-  categoryId: number;
   originalText: string;
   translatedText: string;
   picture: string;
@@ -18,8 +17,7 @@ export const WordModal = (props: WordModalProps) => {
     <>
       {props.wordId && (
         <Modal>
-          <div
-            className="WordCard__container WordCard__modal">
+          <div className="WordCard__container WordCard__modal">
             <img
               src={props.picture}
               alt={props.originalText}
