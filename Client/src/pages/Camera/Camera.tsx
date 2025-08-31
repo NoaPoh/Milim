@@ -33,6 +33,8 @@ export default function CameraPage() {
     },
     onError: (error) => {
       console.error('Error detecting object:', error);
+      showErrorToast(error.message);
+      // showErrorToast('אויש, לא נמצאו חפצים בתמונה :(');
       restartFeed();
       apiUtils.externals.translateWord.invalidate();
     },

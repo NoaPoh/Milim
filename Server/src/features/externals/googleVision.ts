@@ -115,6 +115,6 @@ export async function detectObjectFromBase64(
     return bestObject.name;
   } catch (error) {
     console.error('Error in detectObject:', error);
-    throw new Error('Failed to detect object.');
+    throw new Error('לא הצלחנו לזהות חפצים בתמונה.');
   }
 }
