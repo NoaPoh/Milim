@@ -4,7 +4,7 @@ import { convertVideoToData } from '../../../utils/video';
 
 const FRAME_INTERVAL = 300; // check every 0.3s
 const STABILITY_DURATION = 500; // require stability for 0.5s
-const DIFFERENCE_THRESHOLD = 500; // different pixels threshold
+const DIFFERENCE_THRESHOLD = 1000; // different pixels threshold
 const START_DELAY = 2000; // delay before starting stability checks (1 second)
 
 export function useVideoStability(
