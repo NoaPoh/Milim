@@ -49,9 +49,9 @@ export default function Category() {
           <p className="category__title">{category.name}</p>
         </div>
 
-        <div className="category__words">
-          {category.words &&
-            category.words.map((word) => (
+        {Array.isArray(category.words) && category.words.length > 0 ? (
+          <div className="category__words">
+            {category.words.map((word) => (
               <WordCard
                 originalText={word.originalText}
                 picture={word.picture}
@@ -59,7 +59,15 @@ export default function Category() {
                 onClick={() => handleCardClick(word)}
               />
             ))}
-        </div>
+          </div>
+        ) : (
+          <p className="category__no-words">
+            Oops... it's empty! <br />
+            <span style={{ fontSize: '1rem', color: '#666' }}>
+              Add some words to fill it{' '}
+            </span>
+          </p>
+        )}
       </div>
       {openedWord && (
         <WordModal {...openedWord} closeModal={() => setOpenedWord(null)} />
