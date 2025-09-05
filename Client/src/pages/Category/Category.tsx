@@ -19,6 +19,9 @@ export default function Category() {
   const navToHome = () => {
     navigate(RoutesValues.HOME);
   };
+  const navToCamera = () => {
+    navigate(RoutesValues.CAMERA);
+  };
 
   const handleCardClick = (word: WordWithStringPic) => {
     setOpenedWord({
@@ -61,10 +64,10 @@ export default function Category() {
             ))}
           </div>
         ) : (
-          <p className="category__no-words">
+          <p className="category__no-words" onClick={navToCamera}>
             אופס... הקטגוריה הזו ריקה <br />
             <span style={{ fontSize: '1rem', color: '#666' }}>
-              תוסיפו אליה מילים!
+              לחצו והוסיפו אליה מילים!
             </span>
           </p>
         )}
