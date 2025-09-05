@@ -33,4 +33,15 @@
     margin: auto;
     justify-items: center;
   }
+
+  &__no-words {
+    text-align: center;
+    margin: 2rem;
+    font-size: 1.3rem;
+    color: #333;
+    background: #fdfbfb;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
 }

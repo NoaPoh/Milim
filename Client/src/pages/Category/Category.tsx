@@ -19,6 +19,9 @@ export default function Category() {
   const navToHome = () => {
     navigate(RoutesValues.HOME);
   };
+  const navToCamera = () => {
+    navigate(RoutesValues.CAMERA);
+  };
 
   const handleCardClick = (word: WordWithStringPic) => {
     setOpenedWord({
@@ -49,9 +52,9 @@ export default function Category() {
           <p className="category__title">{category.name}</p>
         </div>
 
-        <div className="category__words">
-          {category.words &&
-            category.words.map((word) => (
+        {Array.isArray(category.words) && category.words.length > 0 ? (
+          <div className="category__words">
+            {category.words.map((word) => (
               <WordCard
                 originalText={word.originalText}
                 picture={word.picture}
@@ -59,7 +62,15 @@ export default function Category() {
                 onClick={() => handleCardClick(word)}
               />
             ))}
-        </div>
+          </div>
+        ) : (
+          <p className="category__no-words" onClick={navToCamera}>
+            אופס... הקטגוריה הזו ריקה <br />
+            <span style={{ fontSize: '1rem', color: '#666' }}>
+              לחצו והוסיפו אליה מילים!
+            </span>
+          </p>
+        )}
       </div>
       {openedWord && (
         <WordModal {...openedWord} closeModal={() => setOpenedWord(null)} />
