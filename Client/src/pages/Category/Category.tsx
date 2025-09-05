@@ -62,9 +62,9 @@ export default function Category() {
           </div>
         ) : (
           <p className="category__no-words">
-            Oops... it's empty! <br />
+            אופס... הקטגוריה הזו ריקה <br />
             <span style={{ fontSize: '1rem', color: '#666' }}>
-              Add some words to fill it{' '}
+              תוסיפו אליה מילים!
             </span>
           </p>
         )}
