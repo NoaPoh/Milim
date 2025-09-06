@@ -24,28 +24,57 @@ const CrosswordBoard = ({ boardSize, word, setSuccess, disabled }: Props) => {
   const handleCellClick = (row: number, col: number, letter: string) => {
     if (disabled) return;
 
-    const alreadyClicked = clickedCells.some(
-      (cell) => cell.row === row && cell.col === col
+    const cell = { row, col };
+    const alreadyClickedIndex = clickedCells.findIndex(
+      (c) => c.row === row && c.col === col
     );
 
-    if (alreadyClicked) {
+    // 🔄 If cell is already selected → deselect it
+    if (alreadyClickedIndex !== -1) {
       setClickedCells((prev) =>
-        prev.filter((cell) => cell.row !== row || cell.col !== col)
+        prev.filter((_, i) => i !== alreadyClickedIndex)
       );
-      setSelectedLetters((prev) => {
-        const index = prev.findIndex(
-          (_, i) => clickedCells[i]?.row === row && clickedCells[i]?.col === col
-        );
-        if (index !== -1) {
-          const updated = [...prev];
-          updated.splice(index, 1);
-          return updated;
-        }
-        return prev;
-      });
-    } else {
-      if (selectedLetters.length >= word.length) return;
-      setClickedCells((prev) => [...prev, { row, col }]);
+      setSelectedLetters((prev) =>
+        prev.filter((_, i) => i !== alreadyClickedIndex)
+      );
+      return;
+    }
+
+    const nextIndex = selectedLetters.length;
+
+    // First letter: free choice
+    if (nextIndex === 0) {
+      setClickedCells([cell]);
+      setSelectedLetters([letter]);
+      return;
+    }
+
+    const prevCell = clickedCells[clickedCells.length - 1];
+
+    // Second letter: determines direction (including diagonals)
+    if (nextIndex === 1) {
+      const rowDiff = row - prevCell.row;
+      const colDiff = col - prevCell.col;
+
+      // must be adjacent (horizontal, vertical, or diagonal)
+      if (Math.abs(rowDiff) > 1 || Math.abs(colDiff) > 1) return;
+
+      setClickedCells((prev) => [...prev, cell]);
+      setSelectedLetters((prev) => [...prev, letter]);
+      return;
+    }
+
+    // From third letter onward: must follow the same direction
+    const firstCell = clickedCells[0];
+    const secondCell = clickedCells[1];
+    const dirRow = secondCell.row - firstCell.row;
+    const dirCol = secondCell.col - firstCell.col;
+
+    const expectedRow = prevCell.row + dirRow;
+    const expectedCol = prevCell.col + dirCol;
+
+    if (row === expectedRow && col === expectedCol) {
+      setClickedCells((prev) => [...prev, cell]);
       setSelectedLetters((prev) => [...prev, letter]);
     }
   };
