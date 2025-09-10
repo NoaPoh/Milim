@@ -10,7 +10,7 @@ export type JWTPayload = {
 export const isConnectedToDB = base.middleware<Context>(
   async ({ ctx, next }) => {
     try {
-      await ctx.prisma.$connect(); // Attempt to connect
+      await ctx.prisma.$queryRaw`SELECT 1`; // Test connectivity
       console.log('Successfully connected to the database.');
 
       return next();
