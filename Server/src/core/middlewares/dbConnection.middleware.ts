@@ -11,8 +11,6 @@ export const isConnectedToDB = base.middleware<Context>(
   async ({ ctx, next }) => {
     try {
       await ctx.prisma.$queryRaw`SELECT 1`; // Test connectivity
-      console.log('Successfully connected to the database.');
-
       return next();
     } catch (error) {
       if (error instanceof PrismaClientInitializationError) {
@@ -20,7 +18,6 @@ export const isConnectedToDB = base.middleware<Context>(
           'PrismaClientInitializationError: Could not connect to the database.'
         );
         console.error('Error details:', error.message);
-        // Implement specific error handling here, e.g., retry logic, exit application.
       } else {
         console.error(
           'An unexpected error occurred during database connection:',
