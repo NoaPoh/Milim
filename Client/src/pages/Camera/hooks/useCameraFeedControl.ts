@@ -1,11 +1,6 @@
 import { useRef, useState } from 'react';
 import { convertVideoToBase64 } from '../../../utils/video';
 
-export enum CameraFacingMode {
-  FRONT = 'user',
-  BACK = 'environment',
-}
-
 function useCameraFeedControl() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -20,15 +15,49 @@ function useCameraFeedControl() {
 
   const getCameraStream = async (): Promise<MediaStream> => {
     try {
-      return await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: { exact: CameraFacingMode.BACK } }, // request back camera
-      });
-    } catch (error: any) {
-      if (error.name === 'OverconstrainedError') {
+      // For iphones: Ask for any back camera just to unlock permissions ---
+      (
+        await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment' },
+        })
+      )
+        .getTracks()
+        .forEach((track) => track.stop());
+
+      const devices = await navigator.mediaDevices.enumerateDevices();
+
+      // Look for "camera 0, facing back"
+      const mainBackCamera = devices.find(
+        (d) =>
+          d.kind === 'videoinput' &&
+          d.label.toLowerCase().includes('camera 0, facing back')
+      );
+
+      if (mainBackCamera) {
+        console.log('Using main back camera:', mainBackCamera.label);
         return await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: { exact: CameraFacingMode.FRONT } }, // fallback to front camera
+          video: { deviceId: { exact: mainBackCamera.deviceId } },
         });
       }
+
+      // fallback: just pick any back camera
+      const fallback = devices.find(
+        (d) => d.kind === 'videoinput' && d.label.toLowerCase().includes('back')
+      );
+
+      if (fallback) {
+        console.log('Using fallback back camera:', fallback.label);
+        return await navigator.mediaDevices.getUserMedia({
+          video: { deviceId: { exact: fallback.deviceId } },
+        });
+      }
+
+      // fallback to front camera if nothing matched
+      console.log('Using default front camera (facingMode)');
+      return await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'user' },
+      });
+    } catch (error: any) {
       console.error('Error accessing camera:', error);
       throw error;
     }

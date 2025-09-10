@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import pixelmatch from 'pixelmatch';
 import { convertVideoToData } from '../../../utils/video';
 
-const FRAME_INTERVAL = 300; // check every 0.3s
-const STABILITY_DURATION = 500; // require stability for 0.5s
+const FRAME_INTERVAL = 200; // check every 0.2s
+const STABILITY_DURATION = 400; // require stability for 0.4s
 const DIFFERENCE_THRESHOLD = 5000; // different pixels threshold
 const START_DELAY = 2000; // delay before starting stability checks (1 second)
 
@@ -38,7 +38,7 @@ export function useVideoStability(
           undefined,
           currentImageData.width,
           currentImageData.height,
-          { threshold: 0.1 } // this threshold is pixelmatch-specific (0 to 1)
+          { threshold: 0.4 } // this threshold is pixelmatch-specific (0 to 1)
         );
 
         // If the difference in pixels is below the threshold, consider it stable
