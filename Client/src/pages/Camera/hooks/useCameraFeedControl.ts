@@ -15,14 +15,21 @@ function useCameraFeedControl() {
 
   const getCameraStream = async (): Promise<MediaStream> => {
     try {
-      // For iphones: Ask for any back camera just to unlock permissions ---
-      (
-        await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: 'environment' },
-        })
-      )
-        .getTracks()
-        .forEach((track) => track.stop());
+      // iOS-specific workaround: Request access to any back camera to unlock device labels.
+      // On iPhones, device labels are not available until camera permission is granted.
+      // This step ensures we can enumerate and select the correct camera afterwards.
+      try {
+        (
+          await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'environment' },
+          })
+        )
+          .getTracks()
+          .forEach((track) => track.stop());
+      } catch (iosUnlockError) {
+        console.warn('iOS camera permission unlock step failed:', iosUnlockError);
+        // Continue: fallback logic will attempt to enumerate devices and select a camera.
+      }
 
       const devices = await navigator.mediaDevices.enumerateDevices();
 
