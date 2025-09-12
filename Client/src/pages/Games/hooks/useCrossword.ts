@@ -8,7 +8,7 @@ export const useCrossword = (word: string, boardSize: number) => {
   const [boardLetters, setBoardLetters] = useState<string[][]>([]);
 
   // Randomly choose the direction the word will be displayed
-  const chooseRandomDirection = () => {
+  const chooseRandomDirection = (): Directions => {
     const directionValues = Object.values(Directions).filter(
       (value) => typeof value === 'number'
     ) as Directions[];
@@ -20,11 +20,7 @@ export const useCrossword = (word: string, boardSize: number) => {
   //Set the displayed word and the direction it will be displayed
   useEffect(() => {
     setDisplayDirection(chooseRandomDirection());
-
-    // Randomly reverse the word or keep it as is
-    setDisplayedWord(
-      Math.random() < 0.5 ? word : word.split('').reverse().join('')
-    );
+    setDisplayedWord(word);
   }, []);
 
   useEffect(() => {
