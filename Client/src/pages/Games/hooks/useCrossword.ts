@@ -65,11 +65,12 @@ export const useCrossword = (word: string, boardSize: number) => {
       }
 
       case Directions.REVERSE_DIAGONAL: {
-        const startRow =
-          Math.floor(Math.random() * (maxStart + 1)) + word.length - 1;
-        const startCol = Math.floor(Math.random() * (maxStart + 1));
+        const startRow = Math.floor(Math.random() * (maxStart + 1));
+        const startCol =
+          Math.floor(Math.random() * (boardSize - word.length + 1)) +
+          (word.length - 1);
         for (let i = 0; i < word.length; i++) {
-          letters[startRow - i][startCol + i] = word[i];
+          letters[startRow + i][startCol - i] = word[i];
         }
         break;
       }
