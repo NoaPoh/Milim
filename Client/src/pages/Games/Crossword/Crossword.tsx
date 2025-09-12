@@ -8,12 +8,9 @@ type CrosswordProps = {
   image: string;
 };
 
-const Crossword = ({ onComplete, words, image }: CrosswordProps) => {
+const Crossword = ({ onComplete, words: word, image }: CrosswordProps) => {
   const [success, setSuccess] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [boardSize] = useState(
-    () => words.length + Math.floor(Math.random() * 2)
-  );
 
   const handleClick = () => {
     if (!submitted) {
@@ -27,17 +24,17 @@ const Crossword = ({ onComplete, words, image }: CrosswordProps) => {
 
   return (
     <div className="crossword-page">
-      <img src={image} alt={words} className="image" />
+      <img src={image} alt={word} className="image" />
       <CrosswordBoard
-        boardSize={boardSize}
-        word={words}
+        boardSize={7}
+        word={word}
         setSuccess={setSuccess}
         disabled={submitted}
       />
 
       {submitted && (
         <div className={`feedback ${success ? 'success' : 'error'}`}>
-          {success ? 'כל הכבוד!' : `אופס... המילה הנכונה היא- ${words}`}
+          {success ? 'כל הכבוד!' : `אופס... המילה הנכונה היא- ${word}`}
         </div>
       )}
 

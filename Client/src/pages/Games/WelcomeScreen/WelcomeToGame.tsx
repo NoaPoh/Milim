@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import './WelcomeToGame.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { games } from '../../../constants/games'; // Update the path as needed
@@ -21,7 +21,7 @@ const WelcomeToGame = () => {
   return (
     <div className="welcome-screen">
       <p className="text">ברוך הבא למשחק</p>
-      <p className="text__game-name">{game.name}</p>
+      <p className="text__game-name">{game.nameToShow}</p>
       <img src={game.image} alt={game.name} />
       <button className="button" onClick={() => navigate(path)}>
         בואו נתחיל!
