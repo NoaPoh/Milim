@@ -7,6 +7,7 @@
   table {
     border-collapse: collapse;
     margin: 15px auto;
+    direction: ltr;
 
     td {
       border: 3px solid black;
@@ -24,7 +25,7 @@
         cursor: pointer;
         background-color: white;
         color: black;
-        font-size: 1.5rem;
+        font-size: 1.7rem;
 
         &.selected {
           background-color: #add8e6;

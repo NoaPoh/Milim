@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import CrosswordBoard from './CrosswordBoard';
 import './Crossword.scss';
 
@@ -26,7 +26,7 @@ const Crossword = ({ onComplete, words: word, image }: CrosswordProps) => {
     <div className="crossword-page">
       <img src={image} alt={word} className="image" />
       <CrosswordBoard
-        boardSize={word.length}
+        boardSize={7}
         word={word}
         setSuccess={setSuccess}
         disabled={submitted}
