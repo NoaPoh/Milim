@@ -48,15 +48,24 @@ function useCameraFeedControl() {
       }
 
       // fallback: just pick any back camera
-      const fallback = devices.find(
+      const fallback1 = devices.find(
         (d) => d.kind === 'videoinput' && d.label.toLowerCase().includes('back')
       );
 
-      if (fallback) {
-        console.log('Using fallback back camera:', fallback.label);
+      if (fallback1) {
+        console.log('Using fallback back camera:', fallback1.label);
         return await navigator.mediaDevices.getUserMedia({
           video: { deviceId: { exact: fallback.deviceId } },
         });
+      }
+
+      const fallback2 = navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' },
+      });
+
+      if (fallback2) {
+        console.log('Using fallback back camera (environment):', fallback2);
+        return await fallback2;
       }
 
       // fallback to front camera if nothing matched
