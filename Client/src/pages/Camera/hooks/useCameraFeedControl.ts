@@ -27,7 +27,10 @@ function useCameraFeedControl() {
           .getTracks()
           .forEach((track) => track.stop());
       } catch (iosUnlockError) {
-        console.warn('iOS camera permission unlock step failed:', iosUnlockError);
+        console.warn(
+          'iOS camera permission unlock step failed:',
+          iosUnlockError
+        );
         // Continue: fallback logic will attempt to enumerate devices and select a camera.
       }
 
@@ -55,7 +58,7 @@ function useCameraFeedControl() {
       if (fallback1) {
         console.log('Using fallback back camera:', fallback1.label);
         return await navigator.mediaDevices.getUserMedia({
-          video: { deviceId: { exact: fallback.deviceId } },
+          video: { deviceId: { exact: fallback1.deviceId } },
         });
       }
 
