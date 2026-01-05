@@ -25,4 +25,5 @@ export const useGetUserCategory = (categoryId: Category['id'] | undefined) => {
 
 function resolveImagePath(picture: string, categoryId: Category['id']): string {
   return picture ?? defaultCategoriesIcons[categoryId];
+  console.log("ff");
 }
